@@ -16,7 +16,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * Created by Guanghua He on 2018-10-16.
+ *
  */
 
 public class OCRoute {

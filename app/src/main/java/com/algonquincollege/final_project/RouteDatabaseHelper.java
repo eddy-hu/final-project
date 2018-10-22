@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 /**
- * Created by 17146 on 3/6/2018.
+ *
  */
 
 public class RouteDatabaseHelper extends SQLiteOpenHelper {
