@@ -201,7 +201,8 @@ public class OCTranspoActivity extends AppCompatActivity {
     }
 
 
-    // FOLLOWING METHOD ChangeFragment written by 'ProgrammingKnowledge', Mar 5\ 2015.
+    // FOLLOWING METHOD Ch
+    // angeFragment written by 'ProgrammingKnowledge', Mar 5\ 2015.
     // URL: https://www.youtube.com/watch?v=FF-e6CnBwYY
     public void ChangeFragment (View view) {
         Log.i(ACTIVITY_NAME, "Changing fragment..");

@@ -14,14 +14,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity" />
-        <activity android:name=".OCTranspoActivity" >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-        </activity>
+        <activity android:name=".OCTranspoActivity"></activity>
         <activity android:name=".OCRouteInformation" />
-        <activity android:name=".OCStationInformation"></activity>
+        <activity android:name=".OCStationInformation" />
+        <activity android:name=".StartActivity">
+
+        </activity>
+        <activity android:name=".BusActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

@@ -2,6 +2,19 @@
     <string name="app_name">final-project</string>
     <string name="hello">Hello World</string>
 
+    <!-- StartActivity Menu -->
+    <string name="octranspo_button">OCTranspo</string>
+    <string name="nutrition_button">Nutrition</string>
+    <string name="news_button">News</string>
+    <string name="movie_button">Movies</string>
+    <string name="hockey_button">Hockey</string>
+
+
+    <!--  OC TRANSPO STRING VARIABLES-->
+    <string name="bus_searchButton">Search</string>
+    <string name="bus_deleteButton">Delete</string>
+
+
     <!--  OC TRANSPO STRING VARIABLES-->
     <string name="oc_badinput">Station number must be an integer value</string>
     <string name="oc_station_w_number">Station with number </string>
