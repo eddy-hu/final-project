@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 public class Dialog extends AppCompatDialogFragment {
-   private TextView dialogTextV;
+    private TextView dialogTextV;
 
     @Override
     public android.app.Dialog onCreateDialog(Bundle savedInstanceState) {

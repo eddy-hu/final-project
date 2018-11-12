@@ -53,9 +53,10 @@ public class NutritionDetail extends AppCompatActivity {
 
 
     }
-    public void openDialog(){
+
+    public void openDialog() {
         Dialog dialog = new Dialog();
-        dialog.show(getSupportFragmentManager(),"example dialog" );
+        dialog.show(getSupportFragmentManager(), "example dialog");
     }
 
 }
