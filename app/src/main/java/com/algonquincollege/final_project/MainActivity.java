@@ -1,3 +1,12 @@
+/**
+ * File name: MainActivity.java
+ * Author: Feng Cheng, ID#:040719618
+ * Course: CST2335 - Mobile Graphical Interface Prog.
+ * Final project
+ * Date: 2018-11-12
+ * Professor: Eric
+ * Purpose: To set up main activity of the application
+ */
 package com.algonquincollege.final_project;
 
 import android.app.ProgressDialog;
@@ -6,6 +15,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +32,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Feng Cheng
+ */
 public class MainActivity extends AppCompatActivity {
     private ProgressDialog loading = null;
     private JsonAdapter adapter;
@@ -34,12 +47,16 @@ public class MainActivity extends AppCompatActivity {
     private Context ctx = null;
     private String app_id = "40cb1f76", app_key = "9dd571cf4d9e83a7796c460130be79dd";
     private List<NewBean> newBeanList = new ArrayList<>();
-    ;
     public String food;
     private String jsonUrl = " https://api.edamam.com/api/food-database/parser?ingr=" + food + "&app_id=" + app_id + "&app_key=" + app_key;
     private FoodDatabaseHelper foodDatabaseHelper = new FoodDatabaseHelper(this);
     private NewBean newBean;
 
+    /**
+     * to create the activity
+     *
+     * @param savedInstanceState Bundle
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,9 +85,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 food = searchTxt.getText().toString();
-                double fat = adapter.fatData;
-                double cal = adapter.calData;
-                AddData(food, cal, fat);
+
+                if (food != null && !(food.isEmpty())) {
+                    double fat = adapter.fatData;
+                    double cal = adapter.calData;
+                    AddData(food, cal, fat);
+                } else {
+                    Snackbar.make(v, "Please enter the name of the food !", Snackbar.LENGTH_LONG).setAction(
+                            "Action", null
+                    ).show();
+                }
 
             }
         });
@@ -85,6 +109,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * to add the data
+     *
+     * @param food primary key in the database
+     * @param cal  the detail that needs to be inserted in the calory column
+     * @param fat  the detail that needs to be insterted in the fat column
+     */
     public void AddData(String food, double cal, double fat) {
         boolean insertData = foodDatabaseHelper.addData(food, cal, fat);
         if (insertData) {
@@ -94,15 +125,27 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * inner class
+     */
     class MyAsyncTask extends AsyncTask<String, Void, List<NewBean>> {
         private String jsonUrl = " https://api.edamam.com/api/food-database/parser?ingr=" + food + "&app_id=" + app_id + "&app_key=" + app_key;
         JsonData jsonData = new JsonData();
 
+        /**
+         * the get the data from the Json Object
+         *
+         * @param params String
+         * @return the data of the Json Object
+         */
         @Override
         protected List<NewBean> doInBackground(String... params) {
             return newBeanList = jsonData.getJsonData(jsonUrl);
         }
 
+        /**
+         * the show the progress bar
+         */
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -113,7 +156,11 @@ public class MainActivity extends AppCompatActivity {
             ;
         }
 
-
+        /**
+         * to set up the listview of the searched result
+         *
+         * @param result the data from the Json Object
+         */
         @Override
         protected void onPostExecute(List<NewBean> result) {
             super.onPostExecute(result);
@@ -125,6 +172,9 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        /**
+         * @param values
+         */
         @Override
         protected void onProgressUpdate(Void... values) {
 
@@ -135,6 +185,12 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * to create the option menu
+     *
+     * @param menu Menu
+     * @return true
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -142,6 +198,12 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * to get the menu item
+     *
+     * @param item MenuItem
+     * @return three menu items
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

@@ -1,3 +1,12 @@
+/**
+ * File name: NutritionDetail.java
+ * Author: Feng Cheng, ID#:040719618
+ * Course: CST2335 - Mobile Graphical Interface Prog.
+ * Final project
+ * Date: 2018-11-12
+ * Professor: Eric
+ * Purpose: To show the calories and fat
+ */
 package com.algonquincollege.final_project;
 
 import android.app.Activity;
@@ -12,6 +21,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+/**
+ * @author Feng Cheng
+ */
 public class NutritionDetail extends AppCompatActivity {
     private TextView textViewF;
     private TextView textViewC;
@@ -19,7 +31,6 @@ public class NutritionDetail extends AppCompatActivity {
     private FoodDatabaseHelper foodDatabaseHelper = new FoodDatabaseHelper(this);
     private Button yesBtn;
     private Button noBtn;
-    ;
     SQLiteDatabase sqLiteDatabase;
 
 
@@ -33,15 +44,15 @@ public class NutritionDetail extends AppCompatActivity {
         textViewC = (TextView) findViewById(R.id.calDetail);
 
         final String foodId = getIntent().getStringExtra("id");
-        textViewF.setText("Fat: " + getIntent().getStringExtra("fat"));
-        textViewC.setText("Calories: " + getIntent().getStringExtra("calories"));
+        textViewF.setText("Fat: " + getIntent().getStringExtra("fat")); // to get the fat data
+        textViewC.setText("Calories: " + getIntent().getStringExtra("calories")); // to get the calories data
 
         delBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Snackbar.make(v,"Food deleted !", Snackbar.LENGTH_LONG).setAction(
-//                        "Action", null
-//                ).show();
+                Snackbar.make(v, "Food deleted !", Snackbar.LENGTH_LONG).setAction(
+                        "Action", null
+                ).show();
 //                sqLiteDatabase = foodDatabaseHelper.getWritableDatabase();
 //                foodDatabaseHelper.delFood(foodId, sqLiteDatabase);
 //                textViewC.setText("");
@@ -54,6 +65,9 @@ public class NutritionDetail extends AppCompatActivity {
 
     }
 
+    /**
+     * to open the customized dialog
+     */
     public void openDialog() {
         Dialog dialog = new Dialog();
         dialog.show(getSupportFragmentManager(), "example dialog");

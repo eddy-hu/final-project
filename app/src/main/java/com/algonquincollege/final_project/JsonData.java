@@ -1,3 +1,12 @@
+/**
+ * File name: JsonData.java
+ * Author: Feng Cheng, ID#:040719618
+ * Course: CST2335 - Mobile Graphical Interface Prog.
+ * Final project
+ * Date: 2018-11-12
+ * Professor: Eric
+ * Purpose: To get the connection to the URL
+ */
 package com.algonquincollege.final_project;
 
 
@@ -5,7 +14,6 @@ import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -13,9 +21,17 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Feng Cheng
+ */
 public class JsonData {
     private List<NewBean> newBeanList = new ArrayList<>();
 
+    /**
+     * to get the data from the Json Object
+     * @param jsonUrl the URL for the connection
+     * @return the data of the Json Object
+     */
     public List<NewBean> getJsonData(String jsonUrl) {
 
         try {

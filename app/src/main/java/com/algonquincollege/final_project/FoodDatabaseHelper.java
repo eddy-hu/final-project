@@ -1,3 +1,12 @@
+/**
+ * File name: FoodDatabaseHelper.java
+ * Author: Feng Cheng, ID#:040719618
+ * Course: CST2335 - Mobile Graphical Interface Prog.
+ * Final project
+ * Date: 2018-11-12
+ * Professor: Eric
+ * Purpose: To set up the database
+ */
 package com.algonquincollege.final_project;
 
 import android.content.ContentValues;
@@ -7,22 +16,32 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-public class FoodDatabaseHelper extends SQLiteOpenHelper
-{
+/**
+ * @author Feng Cheng
+ */
+public class FoodDatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "FoodNutrition.db";
     public static final int VERSION_NUM = 3;
     public static final String KEY_ID = "food";
-    public static final String COL2= "Calory";
-    public static final String COL3= "Fat";
-
+    public static final String COL2 = "Calory";
+    public static final String COL3 = "Fat";
     public static final String TABLE_NAME = "Nutrition_Table";
     public static final String TAG = "FoodDatabaseHelper";
 
+    /**
+     * the constructor for instantiation
+     *
+     * @param cxt Context
+     */
     public FoodDatabaseHelper(Context cxt) {
         super(cxt, DATABASE_NAME, null, VERSION_NUM);
     }
 
-
+    /**
+     * to create the database
+     *
+     * @param db SOLiteDatabase
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(" CREATE TABLE " + TABLE_NAME + " (" +
@@ -32,6 +51,13 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper
         Log.i(TAG, "Calling onCreate()");
     }
 
+    /**
+     * to upgrade the database
+     *
+     * @param db         SQLiteDatabase
+     * @param oldVersion the old database
+     * @param newVersion the new database
+     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME); //delete current table
@@ -39,7 +65,15 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper
         Log.i(TAG, "Calling onUpdate(), oldVersion=" + oldVersion + ", newVersion=" + newVersion);
     }
 
-    public boolean addData(String food, double cal, double fat){
+    /**
+     * to add data
+     *
+     * @param food primary id
+     * @param cal  the attribute
+     * @param fat  the attribute
+     * @return the data inserted successfully or not
+     */
+    public boolean addData(String food, double cal, double fat) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(KEY_ID, food);
@@ -51,14 +85,19 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper
 
         long result = db.insert(TABLE_NAME, null, contentValues);
 
-        if(result == -1){
+        if (result == -1) {
             return false;
-        }else{
+        } else {
             return true;
         }
     }
 
-    public Cursor getData(){
+    /**
+     * to retrieve data from the database
+     *
+     * @return Cursor the data
+     */
+    public Cursor getData() {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT * FROM " + TABLE_NAME;
         Cursor data = db.rawQuery(query, null);
@@ -72,11 +111,18 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper
 //        return data;
 //    }
 
-    public Cursor getContact(String id,SQLiteDatabase sqLiteDatabase){
-        String[] projections = {KEY_ID,COL2,COL3};
-        String selections = KEY_ID +" LIKE ?";
-        String[] selection_args={id};
-        Cursor cursor = sqLiteDatabase.query(TABLE_NAME,projections,selections,selection_args,null,null,null);
+    /**
+     * to retrieve a specific row from the database
+     *
+     * @param id             primary key
+     * @param sqLiteDatabase SQLiteDatabase
+     * @return Cursor the specific the row
+     */
+    public Cursor getContact(String id, SQLiteDatabase sqLiteDatabase) {
+        String[] projections = {KEY_ID, COL2, COL3};
+        String selections = KEY_ID + " LIKE ?";
+        String[] selection_args = {id};
+        Cursor cursor = sqLiteDatabase.query(TABLE_NAME, projections, selections, selection_args, null, null, null);
         return cursor;
     }
 
@@ -90,18 +136,24 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper
 //        db.execSQL(query);
 //    }
 
-    public void deleteName(String id){
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query  = "DELETE FROM " + TABLE_NAME + " WHERE " + KEY_ID + " = '" + id + " ';";
-        Log.d(TAG, "deleteName: query: " + query);
-        db.execSQL(query);
-    }
+//    public void deleteName(String id) {
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        String query = "DELETE FROM " + TABLE_NAME + " WHERE " + KEY_ID + " = '" + id + " ';";
+//        Log.d(TAG, "deleteName: query: " + query);
+//        db.execSQL(query);
+//    }
 
-    public void delFood(String id,SQLiteDatabase sqLiteDatabase){
+    /**
+     * to delete a specific row from the database
+     *
+     * @param id             primary key
+     * @param sqLiteDatabase SQLiteDatabase
+     */
+    public void delFood(String id, SQLiteDatabase sqLiteDatabase) {
         SQLiteDatabase database = this.getWritableDatabase();
-        String selection = KEY_ID +" LIKE ?";
+        String selection = KEY_ID + " LIKE ?";
         String[] selection_args = {id};
-        sqLiteDatabase.delete(TABLE_NAME,selection,selection_args);
+        sqLiteDatabase.delete(TABLE_NAME, selection, selection_args);
     }
 
 

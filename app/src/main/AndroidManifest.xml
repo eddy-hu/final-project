@@ -20,7 +20,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".listview_item" />
+        <activity android:name=".Listview_item" />
         <activity android:name=".FavouriteList" />
         <activity android:name=".NutritionDetail" />
         <activity android:name=".Author"

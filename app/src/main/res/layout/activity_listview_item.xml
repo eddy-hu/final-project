@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".listview_item">
+    tools:context=".Listview_item">
 
     <TextView
         android:id="@+id/calories"
