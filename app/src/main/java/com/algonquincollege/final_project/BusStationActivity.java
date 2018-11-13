@@ -30,7 +30,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class OCStationInformation extends Activity {
+public class BusStationActivity extends Activity {
 
     private static boolean deleteStation = false;
     private static String lastStation = "";
@@ -100,7 +100,7 @@ public class OCStationInformation extends Activity {
         routes.setOnItemClickListener((parent, view, position, id) -> {
             String s = routesInfo.get(position);
             Log.i(ACTIVITY_NAME, "Message: " + s);
-            Intent i = new Intent(OCStationInformation.this, OCRouteInformation.class);
+            Intent i = new Intent(BusStationActivity.this, BusRouteActivity.class);
             i.putExtra("routeno", allRoutes.get(position).getRouteno());
             i.putExtra("destination", allRoutes.get(position).getDestination());
             i.putExtra("stationNum", allRoutes.get(position).getStationNum());
@@ -196,7 +196,7 @@ public class OCStationInformation extends Activity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            LayoutInflater inflater = OCStationInformation.this.getLayoutInflater();
+            LayoutInflater inflater = BusStationActivity.this.getLayoutInflater();
 
             View result = inflater.inflate(R.layout.oc_route, null);
 

@@ -1,5 +1,4 @@
 package com.algonquincollege.final_project;
-
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -18,11 +17,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.concurrent.Executor;
 
-public class OCRouteInformation extends Activity {
+public class BusRouteActivity extends Activity {
     public static final String ACTIVITY_NAME = "OCRouteInformation";
 
-    OCRouteBean route;
-
+    RouteBean route;
     TextView routenoDestination;
     TextView direction;
     TextView startTime;
@@ -48,7 +46,7 @@ public class OCRouteInformation extends Activity {
 
         Bundle extras = getIntent().getExtras();
 
-        route = new OCRouteBean(extras.getString("routeno"), extras.getString("destination"),
+        route = new RouteBean(extras.getString("routeno"), extras.getString("destination"),
                 extras.getString("direction"), extras.getString("stationNum")
         );
 
@@ -88,7 +86,7 @@ public class OCRouteInformation extends Activity {
             return null;
         }
     }
-    class OCRouteBean {
+    class RouteBean {
 
         private String stationNum;
         private String routeno;
@@ -101,10 +99,10 @@ public class OCRouteInformation extends Activity {
 
         private boolean ready = false;
 
-        public final String getRouteInfo = "https://api.octranspo1.com/v1.2/GetNextTripsForStop?appID=223eb5c3&&apiKey=ab27db5b435b8c8819ffb8095328e775&stopNo=";
-        public final String getRouteInfoTrailer = "&routeNo=";
+        final String getRouteInfo = "https://api.octranspo1.com/v1.2/GetNextTripsForStop?appID=223eb5c3&&apiKey=ab27db5b435b8c8819ffb8095328e775&stopNo=";
+        final String getRouteInfoTrailer = "&routeNo=";
 
-        public OCRouteBean (String stationNum, String routeno, String destination, String coordinates, String speed, String startTime, String adjustedTime, String direction) {
+        public RouteBean (String stationNum, String routeno, String destination, String coordinates, String speed, String startTime, String adjustedTime, String direction) {
             this.stationNum = ((stationNum != null) ? stationNum : "Information unavailable");
             this.routeno = ((routeno != null) ? routeno : "Information unavailable");
             this.destination = ((destination != null) ? destination : "Information unavailable");
@@ -117,7 +115,7 @@ public class OCRouteInformation extends Activity {
             ready = true;
         }
 
-        public OCRouteBean(String routeno, String destination, String direction, String stationNum) {
+        public RouteBean(String routeno, String destination, String direction, String stationNum) {
             this.routeno = routeno;
             this.destination = destination;
             this.direction = direction;
@@ -125,7 +123,7 @@ public class OCRouteInformation extends Activity {
         }
 
         public void updateData() {
-            new OCRouteQuery().execute("");
+            new RouteQuery().execute("");
         }
 
 
@@ -147,7 +145,7 @@ public class OCRouteInformation extends Activity {
 
 
 
-        public class OCRouteQuery extends AsyncTask<String, Integer, String> {
+        public class RouteQuery extends AsyncTask<String, Integer, String> {
 
             @Override
             protected String doInBackground(String... array) {

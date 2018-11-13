@@ -20,7 +20,7 @@ public class StartActivity extends Activity {
 
         Log.i(ACTIVITY_NAME, "In onCreate()");
         setContentView(R.layout.activity_start);
-
+        /**
         Button buttonStart = (Button) findViewById(R.id.octranspo_button);
         buttonStart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -28,20 +28,20 @@ public class StartActivity extends Activity {
                 Intent intent = new Intent(StartActivity.this, OCTranspoActivity.class);
                 startActivityForResult(intent, 5);
             }
-        });
+        }); **/
 
-        /*
 
-        Button startChartBtn = (Button) findViewById(R.id.startChartBtn);
-        startChartBtn.setOnClickListener(new View.OnClickListener() {
+
+        Button startBusBtn = (Button) findViewById(R.id.bus_button);
+        startBusBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.i(ACTIVITY_NAME, "User clicked Start Chat");
-                Intent intent = new Intent(StartActivity.this, ChatWindow.class);
+                Intent intent = new Intent(StartActivity.this, BusActivity.class);
                 startActivity(intent);
 
             }
-        }); */
+        });
 
     }
     @Override

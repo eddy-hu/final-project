@@ -4,36 +4,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".BusActivity">
-<!--
-    <SnackBar
-        android:id="@+id/progressBar"
-        style="@android:style/Widget.ProgressBar.Horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:progress="25"/>
-        -->
-    <ProgressBar
-        android:id="@+id/pbLoading"
-        android:visibility="invisible"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+
 
     <ProgressBar
-        android:id="@+id/progress_bar"
-        style="@android:style/Widget.ProgressBar.Large"
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:layout_alignParentTop="true"
+
+        />
 
     <ListView
         android:id="@+id/busListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_above="@+id/busSearchButton"
+        android:layout_above="@+id/busAddButton"
+        android:layout_below="@id/progressBar"
 
         />
 
@@ -50,10 +42,10 @@
         />
 
     <Button
-        android:id="@+id/busSearchButton"
+        android:id="@+id/busAddButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/bus_searchButton"
+        android:text="@string/bus_addButton"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
@@ -65,7 +57,16 @@
         android:layout_height="wrap_content"
         android:text="@string/bus_deleteButton"
         android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/busSearchButton"
+        android:layout_toLeftOf="@+id/busAddButton"
+
+        />
+    <Button
+        android:id="@+id/busHelpButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bus_helpButton"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/busDeleteButton"
 
         />
 
