@@ -30,12 +30,23 @@ public class StartActivity extends Activity {
             }
         }); **/
 
-        Button nutritionBusBtn = (Button) findViewById(R.id.nutrition_button);
-        nutritionBusBtn.setOnClickListener(new View.OnClickListener() {
+        Button nutritionBtn = (Button) findViewById(R.id.nutrition_button);
+        nutritionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.i(ACTIVITY_NAME, "User clicked Nutrition Chat");
-                Intent intent = new Intent(StartActivity.this, MainActivity.class);
+                Intent intent = new Intent(StartActivity.this, NutritionStartActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+        Button movieBtn = (Button) findViewById(R.id.movie_button);
+        movieBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(ACTIVITY_NAME, "User clicked Nutrition Chat");
+                Intent intent = new Intent(StartActivity.this, MovieStartActivity.class);
                 startActivity(intent);
 
             }
