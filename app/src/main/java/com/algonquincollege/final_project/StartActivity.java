@@ -30,7 +30,16 @@ public class StartActivity extends Activity {
             }
         }); **/
 
+        Button nutritionBusBtn = (Button) findViewById(R.id.nutrition_button);
+        nutritionBusBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(ACTIVITY_NAME, "User clicked Nutrition Chat");
+                Intent intent = new Intent(StartActivity.this, MainActivity.class);
+                startActivity(intent);
 
+            }
+        });
 
         Button startBusBtn = (Button) findViewById(R.id.bus_button);
         startBusBtn.setOnClickListener(new View.OnClickListener() {
