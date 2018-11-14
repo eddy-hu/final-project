@@ -37,7 +37,7 @@ public class Dialog extends AppCompatDialogFragment {
     public android.app.Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.dialog_box, null);
+        View view = inflater.inflate(R.layout.nutrition_activity_dialog_box, null);
 
         builder.setView(view).setTitle("").setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
