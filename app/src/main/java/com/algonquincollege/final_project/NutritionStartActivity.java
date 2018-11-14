@@ -31,7 +31,7 @@ import java.util.List;
 /**
  * @author Feng Cheng
  */
-public class MainActivity extends AppCompatActivity {
+public class NutritionStartActivity extends AppCompatActivity {
     private ProgressDialog loading = null;
     private JsonAdapter adapter;
     private EditText searchTxt;
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         btnFavourite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, FavouriteList.class);
+                Intent intent = new Intent(NutritionStartActivity.this, FavouriteList.class);
                 startActivity(intent);
             }
         });
@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loading = new ProgressDialog(MainActivity.this);
+            loading = new ProgressDialog(NutritionStartActivity.this);
             loading.setMessage("Please wait");
             loading.setCancelable(false);
             loading.show();
@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(List<NewBean> result) {
             super.onPostExecute(result);
-            adapter = new JsonAdapter(MainActivity.this, newBeanList);
+            adapter = new JsonAdapter(NutritionStartActivity.this, newBeanList);
             listView.setAdapter(adapter);
             adapter.notifyDataSetChanged();
             if (loading.isShowing()) {
@@ -204,15 +204,15 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.author:
-                Intent intent1 = new Intent(MainActivity.this, Author.class);
+                Intent intent1 = new Intent(NutritionStartActivity.this, Author.class);
                 this.startActivity(intent1);
                 return true;
             case R.id.version:
-                Intent intent2 = new Intent(MainActivity.this, Version.class);
+                Intent intent2 = new Intent(NutritionStartActivity.this, Version.class);
                 this.startActivity(intent2);
                 return true;
             case R.id.instruction:
-                Intent intent3 = new Intent(MainActivity.this, Instruction.class);
+                Intent intent3 = new Intent(NutritionStartActivity.this, Instruction.class);
                 this.startActivity(intent3);
                 return true;
             default:
