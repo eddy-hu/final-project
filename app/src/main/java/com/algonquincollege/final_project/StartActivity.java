@@ -29,12 +29,22 @@ public class StartActivity extends Activity {
                 startActivityForResult(intent, 5);
             }
         }); **/
+        Button newsBtn = (Button) findViewById(R.id.news_button);
+        newsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(ACTIVITY_NAME, "User clicked cbc news ");
+                Intent intent = new Intent(StartActivity.this, Spencer_MainActivity.class);
+                startActivity(intent);
+
+            }
+        });
 
         Button nutritionBtn = (Button) findViewById(R.id.nutrition_button);
         nutritionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(ACTIVITY_NAME, "User clicked Nutrition Chat");
+                Log.i(ACTIVITY_NAME, "User clicked Nutrition ");
                 Intent intent = new Intent(StartActivity.this, NutritionStartActivity.class);
                 startActivity(intent);
 
