@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.algonquincollege.final_project">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,13 +13,38 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Spencer_MainActivity">
+
+
+
+        <activity android:name=".Spencer_MainActivity"/>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".OCTranspoActivity" />
+        <activity android:name=".OCRouteInformation" />
+        <activity android:name=".OCStationInformation" />
+        <activity android:name=".StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Movies" />
+        <activity android:name=".Listview_item" />
+        <activity android:name=".FavouriteList" />
+        <activity android:name=".NutritionDetail" />
+        <activity
+            android:name=".Author"
+            android:label="Author"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".Version"
+            android:label="Version"
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".BusActivity" />
+        <activity android:name=".BusRouteActivity" />
+        <activity android:name=".BusStationActivity" />
+        <activity android:name=".MovieStartActivity" />
+        <activity android:name=".NutritionStartActivity"></activity>
     </application>
 
 </manifest>
