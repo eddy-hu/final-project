@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">final-project</string>
+    <string name="email_hint">Enter your e-mail address</string>
+    <string name="pass_hint">Enter your password</string>
+    <string name="login_button">Login!</string>
+    <string name="searchButton">Search</string>
+    <string name="movieName">Enter a movie name</string>
+
+
 </resources>
