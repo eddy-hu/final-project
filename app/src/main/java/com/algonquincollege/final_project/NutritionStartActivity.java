@@ -58,7 +58,7 @@ public class NutritionStartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.nutrition_activity_main);
 
-        listView = (ListView) findViewById(R.id.nutritionCtnt);
+        listView = (ListView) findViewById(R.id.nutritionListView);
         searchTxt = (EditText) findViewById(R.id.searchTxt);
         btnSearch = (Button) findViewById(R.id.btn_search);
         btnAdd = (Button) findViewById(R.id.btn_add);

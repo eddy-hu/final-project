@@ -4,8 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".StartActivity">
+
+    tools:context=".StartActivity"
+    android:orientation="vertical">
+
+
 
     <TextView
         android:layout_width="match_parent"
@@ -65,5 +68,6 @@
         tools:layout_editor_absoluteX="147dp"
         tools:layout_editor_absoluteY="284dp"
         />
+
 
 </LinearLayout>

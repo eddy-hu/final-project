@@ -44,7 +44,7 @@
         android:text="@string/btn_search" />
 
     <ListView
-        android:id="@+id/nutritionCtnt"
+        android:id="@+id/nutritionListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/btn_search"

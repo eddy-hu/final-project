@@ -1,6 +1,7 @@
 package com.algonquincollege.final_project;
 
 import android.os.AsyncTask;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,7 +23,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class Movies extends AppCompatActivity {
+public class MoviesActivity extends AppCompatActivity {
     /**
      * Declaration of variables
      * */
@@ -39,11 +40,10 @@ public class Movies extends AppCompatActivity {
         return progressBar;
     }
 
-    public Button getButton() {
-        return button;
-    }
 
-
+    /**
+    Initializes the variables
+    */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,8 +52,17 @@ public class Movies extends AppCompatActivity {
         editText = findViewById(R.id.find);
         listView = findViewById(R.id.list);
         button = findViewById(R.id.button);
-
-        onClick();
+        /**
+         *  onClickListener for searching button, currently just makes snackbar.
+         */
+        button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                movieName = editText.getText().toString();
+                new Connection().execute();
+                Snackbar.make(v, "Example", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+            }
+        });
     }
     private void onClick(){
         button.setOnClickListener(e->{
@@ -65,13 +74,18 @@ public class Movies extends AppCompatActivity {
 
     class Connection extends AsyncTask<Void, Void, String>{
 
-
+        /**
+         * Shows toast message and progress bar
+         * */
         protected void onPreExecute(){
             super.onPreExecute();
             progressBar.setVisibility(View.VISIBLE);
-            Toast.makeText(Movies.this, "Almost there...", Toast.LENGTH_LONG).show();
+            Toast.makeText(MoviesActivity.this, "Almost there...", Toast.LENGTH_LONG).show();
             editText.setText("");
         }
+        /**
+         *  doInBackground searches the movie details
+         */
         @Override
         protected String doInBackground(Void... voids) {
 
@@ -97,6 +111,9 @@ public class Movies extends AppCompatActivity {
                 return null;
             }
         }
+        /**
+         *  <p> onClickListener for opening saved methods, currently only creates snackBar.</p>
+         */
         @Override
         protected void onPostExecute(String response){
             super.onPostExecute(response);
@@ -105,7 +122,7 @@ public class Movies extends AppCompatActivity {
             }
             try {
                 JSONObject json = new JSONObject(response);
-                Log.i("Movies",json + "");
+                Log.i("MoviesActivity",json + "");
                 JSONArray jsonArray = json.getJSONArray("Search");
                 JSONObject movie;
                 String[] movieArr = new String[jsonArray.length()];

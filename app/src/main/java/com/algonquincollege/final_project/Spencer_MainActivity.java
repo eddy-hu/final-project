@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 public class Spencer_MainActivity extends Activity {
@@ -25,6 +26,8 @@ private Button s_open;
      */
 private Button s_button2;
 
+private ProgressBar s_progress;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,7 @@ private Button s_button2;
         s_search = (Button)findViewById(R.id.s_search);
         s_open =  (Button)findViewById(R.id.s_open);
         s_button2 = (Button)findViewById(R.id.s_button2);
+        s_progress = (ProgressBar) findViewById(R.id.s_progress);
 
         /**
          *  onClickListener for searching button, currently just makes toast.
@@ -43,6 +47,7 @@ private Button s_button2;
             public void onClick(View v) {
                 CharSequence text = "This will search for keywords.";
                 int duration = Toast.LENGTH_SHORT;
+                s_progress.setVisibility(View.VISIBLE);
                 Toast toast = Toast.makeText(getApplicationContext(), text, duration);
                 toast.show();
             }

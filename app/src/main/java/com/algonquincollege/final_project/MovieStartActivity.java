@@ -25,7 +25,7 @@ public class MovieStartActivity extends Activity {
                             Intent resultIntent = new Intent();
                             resultIntent.putExtra("Response", "Here is my response");
                             setResult(Activity.RESULT_OK, resultIntent);
-                            Intent intent = new Intent(MovieStartActivity.this, Movies.class);
+                            Intent intent = new Intent(MovieStartActivity.this, MoviesActivity.class);
                             startActivity(intent);
                             finish(); // User clicked OK button
                         }

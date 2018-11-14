@@ -60,6 +60,7 @@
         android:layout_toLeftOf="@+id/busAddButton"
 
         />
+
     <Button
         android:id="@+id/busHelpButton"
         android:layout_width="wrap_content"

@@ -31,50 +31,65 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
 import java.util.ArrayList;
 
 /**
- * Bus main activity class
+ * NHL mian activity class
  */
-public class BusActivity extends Activity {
-
-    protected static final String ACTIVITY_NAME = "BusActivity";
+public class Mordechai_mainActivity extends Activity  {
+    protected static final String ACTIVITY_NAME = "Mordechai_mainActivity";
     private ArrayList<String> list;
-    private BusAdapter busAdapter;
-    private BusListDBHelper dbHelper;
+    private Button sBtn;
+    private Button aBtn;
+    private Button dBtn;
     private ProgressBar progressBar;
-    private Context ctx = this;
+    private EditText editText;
+    private Adapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bus);
-        dbHelper = new BusListDBHelper(this);
-        //history search list
+        setContentView(R.layout.activity_mordechai_mainactivity);
+
         list = new ArrayList<>();
-        busAdapter = new BusAdapter(this);
-        final ListView listView = (ListView) findViewById(R.id.busListView);
-        listView.setAdapter(busAdapter);
-        final EditText editText = (EditText) findViewById(R.id.busEditText);
-        final Button addButton = (Button) findViewById(R.id.busAddButton);
-        editText.setHint("Enter bus number");
-        final Button deleteButton = (Button) findViewById(R.id.busDeleteButton);
-        final Button busHelp  = (Button) findViewById(R.id.busHelpButton);
+        adapter = new Adapter(this);
+        final ListView listView = (ListView) findViewById(R.id.list_view);
+        listView.setAdapter(adapter);
+
+        editText = (EditText) findViewById(R.id.input);
+        sBtn = (Button)findViewById(R.id.search_btn);
+        aBtn = (Button)findViewById(R.id.add_btn);
+        dBtn = (Button)findViewById(R.id.del_btn);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progressBar.setVisibility(View.VISIBLE);
-
-
-        Query query = new Query();
+        NHLQuery query = new NHLQuery();
         query.execute();
 
-        // help button on click action
-        busHelp.setOnClickListener(new View.OnClickListener() {
+        sBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog alertDialog = new AlertDialog.Builder(BusActivity.this).create();
-                alertDialog.setTitle("dialog notification");
-                alertDialog.setMessage("Welcome to OCTranspo");
+                String text = editText.getText().toString();
+                 list.add(text);
+                adapter.notifyDataSetChanged(); //this restarts the process of getCount() & getView(
+                editText.setText("");
+                Toast toast = Toast.makeText(getApplicationContext(), text+" searching toast", Toast.LENGTH_SHORT);
+                toast.show();
+
+            }
+        });
+        aBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Snackbar.make(v, "You have clicked on Add", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+
+            }
+        });
+
+        dBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog alertDialog = new AlertDialog.Builder(Mordechai_mainActivity.this).create();
+                alertDialog.setMessage("Delete button");
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
@@ -83,124 +98,15 @@ public class BusActivity extends Activity {
                         });
                 alertDialog.show();
             }
-                                   });
-        // add button on click action
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String text = editText.getText().toString();
-                list.add(text);
-                busAdapter.notifyDataSetChanged(); //this restarts the process of getCount() & getView(
-                dbHelper.insertEntry(editText.getText().toString());
-                editText.setText("");
-                Toast toast = Toast.makeText(getApplicationContext(), text+" has been added", Toast.LENGTH_SHORT);
-                toast.show();
 
-            }
-        });
-        busAdapter = new BusAdapter(this);
-        Log.i(ACTIVITY_NAME, "In onCreate()");
-
-        // delete button on click action
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                delete();
-                editText.setText("");
-                Snackbar.make(v, "History records have been deleted.", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-
-            }
         });
 
-    }
-
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        dbHelper.openDatabase();
-        query();
-        Log.i(ACTIVITY_NAME, "In onStart()");
-
-    }
-
-
-    @Override
-    protected void onPause() {
-        Log.i(ACTIVITY_NAME, "In onPause()");
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        Log.i(ACTIVITY_NAME, "In onStop()");
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        Log.i(ACTIVITY_NAME, "In onDestroy()");
-        dbHelper.closeDatabase();
-        super.onDestroy();
     }
 
     /**
-     * List view adapter
+     * example query from lab6
      */
-    private class BusAdapter extends ArrayAdapter<String> {
-
-        public BusAdapter(Context ctx) {
-            super(ctx, 0);
-        }
-
-        public String getItem(int position) {
-            return list.get(position);
-        }
-
-        public long getItemId(int position) {
-            return position;
-        }
-
-        public int getCount() {
-            return list.size();
-        }
-
-        public View getView(int position, View oldView, ViewGroup parent) {
-            LayoutInflater inflater = getLayoutInflater();
-
-            View result = inflater.inflate(R.layout.bus_history_list_layout, null);
-
-            TextView busSearchList = (TextView) result.findViewById(R.id.bus_serach_list);
-
-            busSearchList.setText(getItem(position)); // get the string at position
-            return result;
-
-        }
-    }
-    public void query() {
-        Cursor cursor = dbHelper.getRecords();
-        if (cursor.moveToFirst()) {
-            while (!cursor.isAfterLast()) {
-                Log.i(ACTIVITY_NAME, "SQL MESSAGE:" + cursor.getString(cursor.getColumnIndex(BusListDBHelper.KEY_MESSAGE)));
-
-                list.add(cursor.getString(cursor.getColumnIndex(BusListDBHelper.KEY_MESSAGE)));
-                cursor.moveToNext();
-            }
-            Log.i(ACTIVITY_NAME, "Cursor's column count = " + cursor.getColumnCount());
-
-        }
-
-        for (int i = 0; i < cursor.getColumnCount(); i++) {
-            Log.i(ACTIVITY_NAME, "The " + i + " row is " + cursor.getColumnName(i));
-        }
-        }
-        public void delete(){
-            list = new ArrayList<>();
-            dbHelper.delete();
-        }
-
-    public class Query extends AsyncTask<String, Integer, String> {
+    public class NHLQuery extends AsyncTask<String, Integer, String> {
         private String currentTemperature;
         private String minTemperature;
         private String maxTemperature;
@@ -208,6 +114,11 @@ public class BusActivity extends Activity {
         private String icon;
         private Bitmap bitmap;
 
+        /**
+         *  do it in backgraound
+         * @param args
+         * @return String
+         */
         @Override
         protected String doInBackground(String ...args) {
             InputStream stream;
@@ -302,11 +213,41 @@ public class BusActivity extends Activity {
 
         }
 
-    }
 
 
     }
 
+    /**
+     * list view adapter
+     */
+    public class Adapter extends ArrayAdapter<String> {
 
+        public Adapter(Context ctx) {
+            super(ctx, 0);
+        }
 
+        public String getItem(int position) {
+            return list.get(position);
+        }
 
+        public long getItemId(int position) {
+            return position;
+        }
+
+        public int getCount() {
+            return list.size();
+        }
+
+        public View getView(int position, View oldView, ViewGroup parent) {
+            LayoutInflater inflater = getLayoutInflater();
+
+            View result = inflater.inflate(R.layout.nhl_list_layout, null);
+
+            TextView nhlList = (TextView) result.findViewById(R.id.nhl_serach_list);
+
+            nhlList.setText(getItem(position)); // get the string at position
+            return result;
+
+        }
+    }
+}

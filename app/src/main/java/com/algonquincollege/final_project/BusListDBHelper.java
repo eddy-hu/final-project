@@ -8,6 +8,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+/**
+ *  Bus list database helper
+ */
 public class BusListDBHelper extends SQLiteOpenHelper {
     protected static final String ACTIVITY_NAME = "BusListDBHelper";
     public static final String DATABASE_NAME = "buslist.db";

@@ -1,6 +1,10 @@
 package com.algonquincollege.final_project;
 
 import android.app.Activity;
+
+import android.os.Bundle;
+import android.widget.Button;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,7 +21,6 @@ public class StartActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-
         Log.i(ACTIVITY_NAME, "In onCreate()");
         setContentView(R.layout.activity_start);
         /**
@@ -35,6 +38,16 @@ public class StartActivity extends Activity {
             public void onClick(View v) {
                 Log.i(ACTIVITY_NAME, "User clicked cbc news ");
                 Intent intent = new Intent(StartActivity.this, Spencer_MainActivity.class);
+                startActivity(intent);
+
+            }
+        });
+        Button hockyBtn = (Button) findViewById(R.id.hockey_button);
+        hockyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(ACTIVITY_NAME, "User clicked hockey ");
+                Intent intent = new Intent(StartActivity.this, Mordechai_mainActivity.class);
                 startActivity(intent);
 
             }
@@ -115,3 +128,4 @@ public class StartActivity extends Activity {
 
     }
 }
+
