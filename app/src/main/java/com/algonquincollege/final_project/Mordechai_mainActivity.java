@@ -31,21 +31,32 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
+/**
+ * NHL mian activity class
+ */
 public class Mordechai_mainActivity extends Activity  {
     protected static final String ACTIVITY_NAME = "Mordechai_mainActivity";
+    private ArrayList<String> list;
     private Button sBtn;
     private Button aBtn;
     private Button dBtn;
     private ProgressBar progressBar;
-
-
+    private EditText editText;
+    private Adapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mordechai_mainactivity);
-        EditText editText = (EditText) findViewById(R.id.input);
+
+        list = new ArrayList<>();
+        adapter = new Adapter(this);
+        final ListView listView = (ListView) findViewById(R.id.list_view);
+        listView.setAdapter(adapter);
+
+        editText = (EditText) findViewById(R.id.input);
         sBtn = (Button)findViewById(R.id.search_btn);
         aBtn = (Button)findViewById(R.id.add_btn);
         dBtn = (Button)findViewById(R.id.del_btn);
@@ -58,9 +69,8 @@ public class Mordechai_mainActivity extends Activity  {
             @Override
             public void onClick(View v) {
                 String text = editText.getText().toString();
-              //  list.add(text);
-                //busAdapter.notifyDataSetChanged(); //this restarts the process of getCount() & getView(
-                //dbHelper.insertEntry(editText.getText().toString());
+                 list.add(text);
+                adapter.notifyDataSetChanged(); //this restarts the process of getCount() & getView(
                 editText.setText("");
                 Toast toast = Toast.makeText(getApplicationContext(), text+" searching toast", Toast.LENGTH_SHORT);
                 toast.show();
@@ -75,10 +85,27 @@ public class Mordechai_mainActivity extends Activity  {
             }
         });
 
+        dBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog alertDialog = new AlertDialog.Builder(Mordechai_mainActivity.this).create();
+                alertDialog.setMessage("Delete button");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
+            }
+
+        });
 
     }
 
-
+    /**
+     * example query from lab6
+     */
     public class NHLQuery extends AsyncTask<String, Integer, String> {
         private String currentTemperature;
         private String minTemperature;
@@ -87,6 +114,11 @@ public class Mordechai_mainActivity extends Activity  {
         private String icon;
         private Bitmap bitmap;
 
+        /**
+         *  do it in backgraound
+         * @param args
+         * @return String
+         */
         @Override
         protected String doInBackground(String ...args) {
             InputStream stream;
@@ -181,5 +213,41 @@ public class Mordechai_mainActivity extends Activity  {
 
         }
 
+
+
+    }
+
+    /**
+     * list view adapter
+     */
+    public class Adapter extends ArrayAdapter<String> {
+
+        public Adapter(Context ctx) {
+            super(ctx, 0);
+        }
+
+        public String getItem(int position) {
+            return list.get(position);
+        }
+
+        public long getItemId(int position) {
+            return position;
+        }
+
+        public int getCount() {
+            return list.size();
+        }
+
+        public View getView(int position, View oldView, ViewGroup parent) {
+            LayoutInflater inflater = getLayoutInflater();
+
+            View result = inflater.inflate(R.layout.nhl_list_layout, null);
+
+            TextView nhlList = (TextView) result.findViewById(R.id.nhl_serach_list);
+
+            nhlList.setText(getItem(position)); // get the string at position
+            return result;
+
+        }
     }
 }
