@@ -1,6 +1,6 @@
 /**
- * File name: MainActivity.java
- * Author: Feng Cheng, ID#:040719618
+ * File name: NutritionSearchActivity.java
+ * NutritionAuthor: Feng Cheng, ID#:040719618
  * Course: CST2335 - Mobile Graphical Interface Prog.
  * Final project
  * Date: 2018-11-12
@@ -25,31 +25,32 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Feng Cheng
+ * This is the activity for searching food.
  */
-public class MainActivity extends AppCompatActivity {
+public class NutritionSearchActivity extends AppCompatActivity {
     private ProgressDialog loading = null;
-    private JsonAdapter adapter;
+    private NutritionJsonAdapter adapter;
     private EditText searchTxt;
     private Button btnAdd;
     private Button btnFavourite;
     private Button btnSearch;
     private ListView listView;
-    protected static final String ACTIVITY_NAME = "MainActivity";
+    protected static final String ACTIVITY_NAME = "NutritionSearchActivity";
     private Context ctx = null;
     private String app_id = "40cb1f76", app_key = "9dd571cf4d9e83a7796c460130be79dd";
-    private List<NewBean> newBeanList = new ArrayList<>();
+    private List<NutritionNewBean> newBeanList = new ArrayList<>();
     public String food;
     private String jsonUrl = " https://api.edamam.com/api/food-database/parser?ingr=" + food + "&app_id=" + app_id + "&app_key=" + app_key;
-    private FoodDatabaseHelper foodDatabaseHelper = new FoodDatabaseHelper(this);
-    private NewBean newBean;
+    private NutritionDatabaseHelper foodDatabaseHelper = new NutritionDatabaseHelper(this);
+    private NutritionNewBean newBean;
 
     /**
-     * to create the activity
+     * to create the search activity
      *
      * @param savedInstanceState Bundle
      */
@@ -58,8 +59,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.nutrition_activity_main);
 
-        listView = (ListView) findViewById(R.id.nutritionCtnt);
-        searchTxt = (EditText) findViewById(R.id.searchTxt);
+        listView = (ListView) findViewById(R.id.searchResult);
+        searchTxt = (EditText) findViewById(R.id.searchEditTxt);
         btnSearch = (Button) findViewById(R.id.btn_search);
         btnAdd = (Button) findViewById(R.id.btn_add);
         btnFavourite = (Button) findViewById(R.id.btn_favourite);
@@ -70,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
                 food = searchTxt.getText().toString();
                 if (food != null && !food.isEmpty()) {
                     new MyAsyncTask().execute(jsonUrl);
-                    //searchTxt.setText("");
                 } else {
                     toastMessage("Please enter something.");
                 }
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         btnFavourite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, FavouriteList.class);
+                Intent intent = new Intent(NutritionSearchActivity.this, NutritionFavouriteList.class);
                 startActivity(intent);
             }
         });
@@ -124,9 +124,9 @@ public class MainActivity extends AppCompatActivity {
     /**
      * inner class
      */
-    class MyAsyncTask extends AsyncTask<String, Void, List<NewBean>> {
+    class MyAsyncTask extends AsyncTask<String, Void, List<NutritionNewBean>> {
         private String jsonUrl = " https://api.edamam.com/api/food-database/parser?ingr=" + food + "&app_id=" + app_id + "&app_key=" + app_key;
-        JsonData jsonData = new JsonData();
+        NutritionJsonData jsonData = new NutritionJsonData();
 
         /**
          * the get the data from the Json Object
@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
          * @return the data of the Json Object
          */
         @Override
-        protected List<NewBean> doInBackground(String... params) {
+        protected List<NutritionNewBean> doInBackground(String... params) {
             return newBeanList = jsonData.getJsonData(jsonUrl);
         }
 
@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loading = new ProgressDialog(MainActivity.this);
+            loading = new ProgressDialog(NutritionSearchActivity.this);
             loading.setMessage("Please wait");
             loading.setCancelable(false);
             loading.show();
@@ -158,9 +158,9 @@ public class MainActivity extends AppCompatActivity {
          * @param result the data from the Json Object
          */
         @Override
-        protected void onPostExecute(List<NewBean> result) {
+        protected void onPostExecute(List<NutritionNewBean> result) {
             super.onPostExecute(result);
-            adapter = new JsonAdapter(MainActivity.this, newBeanList);
+            adapter = new NutritionJsonAdapter(NutritionSearchActivity.this, newBeanList);
             listView.setAdapter(adapter);
             adapter.notifyDataSetChanged();
             if (loading.isShowing()) {
@@ -192,6 +192,7 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
         return true;
+
     }
 
     /**
@@ -204,15 +205,15 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.author:
-                Intent intent1 = new Intent(MainActivity.this, Author.class);
+                Intent intent1 = new Intent(NutritionSearchActivity.this, NutritionAuthor.class);
                 this.startActivity(intent1);
                 return true;
             case R.id.version:
-                Intent intent2 = new Intent(MainActivity.this, Version.class);
+                Intent intent2 = new Intent(NutritionSearchActivity.this, NutritionVersion.class);
                 this.startActivity(intent2);
                 return true;
             case R.id.instruction:
-                Intent intent3 = new Intent(MainActivity.this, Instruction.class);
+                Intent intent3 = new Intent(NutritionSearchActivity.this, NutritionInstruction.class);
                 this.startActivity(intent3);
                 return true;
             default:

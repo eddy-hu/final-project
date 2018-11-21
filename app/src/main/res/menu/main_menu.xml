@@ -3,18 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-    android:id="@+id/author"
-    android:title="Author"
-    app:showAsAction ="never"/>
+        android:id="@+id/author"
+        android:title="@string/author_item"
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/version"
-        android:title="Version Number"
-        app:showAsAction ="never"/>
+        android:title="@string/version_number"
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/instruction"
-        android:title="Instruction"
-        app:showAsAction ="never"/>
+        android:title="@string/instruction_item"
+        app:showAsAction="never" />
 
 </menu>

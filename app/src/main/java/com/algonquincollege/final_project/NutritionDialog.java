@@ -1,6 +1,6 @@
 /**
- * File name: Dialog.java
- * Author: Feng Cheng, ID#:040719618
+ * File name: NutritionDialog.java
+ * NutritionAuthor: Feng Cheng, ID#:040719618
  * Course: CST2335 - Mobile Graphical Interface Prog.
  * Final project
  * Date: 2018-11-12
@@ -19,9 +19,9 @@ import android.view.View;
 import android.widget.TextView;
 
 /**
- * @author Feng Cheng
+ * This activity is to show the customized dialog box.
  */
-public class Dialog extends AppCompatDialogFragment {
+public class NutritionDialog extends AppCompatDialogFragment {
     private TextView dialogTextV;
     private TextView textViewF;
     private TextView textViewC;

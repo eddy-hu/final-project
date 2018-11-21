@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Listview_item">
+    tools:context=".NutritionListview_item">
 
     <TextView
         android:id="@+id/calories"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="30dp"
+        android:text="@string/calories"
          />
 
 
@@ -20,6 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/calories"
         android:textSize="30dp"
+        android:text="@string/fat"
          />
 
 </RelativeLayout>

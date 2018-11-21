@@ -1,25 +1,21 @@
 /**
- * File name: Listview_item.java
- * Author: Feng Cheng, ID#:040719618
+ * File name: NutritionVersion.java
+ * NutritionAuthor: Feng Cheng, ID#:040719618
  * Course: CST2335 - Mobile Graphical Interface Prog.
  * Final project
  * Date: 2018-11-12
  * Professor: Eric
- * Purpose: To create the view of detailed searched item
+ * Purpose: To show version of the application
  */
 package com.algonquincollege.final_project;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.TextView;
 
 /**
  * @author Feng Cheng
  */
-public class Listview_item extends AppCompatActivity {
-    private TextView cal;
-    private TextView fat;
-
+public class NutritionVersion extends AppCompatActivity {
     /**
      * to create the activity
      *
@@ -28,8 +24,8 @@ public class Listview_item extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.nutrition_activity_listview_item);
+        setContentView(R.layout.nutrition_activity_version);
 
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }

@@ -1,6 +1,6 @@
 /**
- * File name: JsonData.java
- * Author: Feng Cheng, ID#:040719618
+ * File name: NutritionJsonData.java
+ * NutritionAuthor: Feng Cheng, ID#:040719618
  * Course: CST2335 - Mobile Graphical Interface Prog.
  * Final project
  * Date: 2018-11-12
@@ -14,6 +14,7 @@ import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -24,15 +25,16 @@ import java.util.List;
 /**
  * @author Feng Cheng
  */
-public class JsonData {
-    private List<NewBean> newBeanList = new ArrayList<>();
+public class NutritionJsonData {
+    private List<NutritionNewBean> newBeanList = new ArrayList<>();
 
     /**
      * to get the data from the Json Object
+     *
      * @param jsonUrl the URL for the connection
      * @return the data of the Json Object
      */
-    public List<NewBean> getJsonData(String jsonUrl) {
+    public List<NutritionNewBean> getJsonData(String jsonUrl) {
 
         try {
             //create http URL
@@ -64,7 +66,7 @@ public class JsonData {
             double calories = (double) foodObject.getJSONObject("nutrients").get("ENERC_KCAL");
             double fat = (double) foodObject.getJSONObject("nutrients").get("FAT");
 
-            NewBean newBean = new NewBean();
+            NutritionNewBean newBean = new NutritionNewBean();
             newBean.calories = calories;
             newBean.fat = fat;
             newBeanList.add(newBean);

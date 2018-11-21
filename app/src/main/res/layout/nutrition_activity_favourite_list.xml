@@ -4,17 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FavouriteList">
+    tools:context=".NutritionFavouriteList">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Your Favourite List"
+        android:text = "@string/your_favourite_list"
         android:id="@+id/favList"
         android:textSize="40dp"/>
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/favListView"
+        android:textSize="20dp"
         android:layout_below="@+id/favList">
 
     </ListView>

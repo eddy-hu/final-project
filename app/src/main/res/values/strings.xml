@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Food Nutrition Database</string>
-
     <string name="btn_search">Search</string>
     <string name="btn_add">Add</string>
     <string name="btn_favourite">Favourite</string>
@@ -14,6 +13,11 @@
     <string name="delConf">Do you really want to delete it ?</string>
     <string name="yes">YES</string>
     <string name="no">NO</string>
+    <string name="your_favourite_list">Your Favourite List</string>
+    <string name="delete_btn">Delete</string>
+    <string name="author_item">Author</string>
+    <string name="instruction_item">Instruction</string>
+    <string name="version_number">Version Number</string>
 
 
 </resources>

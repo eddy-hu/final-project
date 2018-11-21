@@ -1,6 +1,6 @@
 /**
  * File name: NutritionDetail.java
- * Author: Feng Cheng, ID#:040719618
+ * NutritionAuthor: Feng Cheng, ID#:040719618
  * Course: CST2335 - Mobile Graphical Interface Prog.
  * Final project
  * Date: 2018-11-12
@@ -24,7 +24,7 @@ public class NutritionDetail extends AppCompatActivity {
     private TextView textViewF;
     private TextView textViewC;
     private Button delBtn;
-    private FoodDatabaseHelper foodDatabaseHelper = new FoodDatabaseHelper(this);
+    private NutritionDatabaseHelper foodDatabaseHelper = new NutritionDatabaseHelper(this);
     private Button yesBtn;
     private Button noBtn;
     SQLiteDatabase sqLiteDatabase;
@@ -65,7 +65,7 @@ public class NutritionDetail extends AppCompatActivity {
      * to open the customized dialog
      */
     public void openDialog() {
-        Dialog dialog = new Dialog();
+        NutritionDialog dialog = new NutritionDialog();
         dialog.show(getSupportFragmentManager(), "example dialog");
     }
 

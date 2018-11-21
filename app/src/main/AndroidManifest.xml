@@ -12,26 +12,30 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".MainActivity">
+        <activity android:name=".NutritionSearchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Listview_item" />
-        <activity android:name=".FavouriteList" />
+        <activity android:name=".NutritionListview_item" />
+        <activity android:name=".NutritionFavouriteList" />
         <activity android:name=".NutritionDetail" />
-        <activity android:name=".Author"
+        <activity
+            android:name=".NutritionAuthor"
             android:label="Author"
-            android:parentActivityName=".MainActivity"/>
-        <activity android:name=".Version"
+            android:parentActivityName=".NutritionSearchActivity" />
+        <activity
+            android:name=".NutritionVersion"
             android:label="Version"
-            android:parentActivityName=".MainActivity"/>
-        <activity android:name=".Instruction"
+            android:parentActivityName=".NutritionSearchActivity" />
+        <activity
+            android:name=".NutritionInstruction"
             android:label="Instruction"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".NutritionSearchActivity" />
+        <activity android:name=".NutritionDetailFrag" />
+        <activity android:name=".NutritionFragment"></activity>
     </application>
 
 </manifest>

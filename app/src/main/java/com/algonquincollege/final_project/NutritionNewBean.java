@@ -1,6 +1,6 @@
 /**
- * File name: NewBean.java
- * Author: Feng Cheng, ID#:040719618
+ * File name: NutritionNewBean.java
+ * NutritionAuthor: Feng Cheng, ID#:040719618
  * Course: CST2335 - Mobile Graphical Interface Prog.
  * Final project
  * Date: 2018-11-12
@@ -12,7 +12,7 @@ package com.algonquincollege.final_project;
 /**
  * @author Feng Cheng
  */
-public class NewBean {
+public class NutritionNewBean {
     public double calories;
     public double fat;
 
@@ -22,7 +22,7 @@ public class NewBean {
      * @param calories double
      * @param fat      double
      */
-    public NewBean(double calories, double fat) {
+    public NutritionNewBean(double calories, double fat) {
         super();
         this.calories = calories;
         this.fat = fat;
@@ -72,7 +72,7 @@ public class NewBean {
      * ]
      * the constructor
      */
-    public NewBean() {
+    public NutritionNewBean() {
         super();
     }
 

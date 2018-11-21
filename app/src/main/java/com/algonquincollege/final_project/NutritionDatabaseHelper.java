@@ -1,6 +1,6 @@
 /**
- * File name: FoodDatabaseHelper.java
- * Author: Feng Cheng, ID#:040719618
+ * File name: NutritionDatabaseHelper.java
+ * NutritionAuthor: Feng Cheng, ID#:040719618
  * Course: CST2335 - Mobile Graphical Interface Prog.
  * Final project
  * Date: 2018-11-12
@@ -19,21 +19,25 @@ import android.util.Log;
 /**
  * @author Feng Cheng
  */
-public class FoodDatabaseHelper extends SQLiteOpenHelper {
+public class NutritionDatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "FoodNutrition.db";
     public static final int VERSION_NUM = 3;
     public static final String KEY_ID = "food";
     public static final String COL2 = "Calory";
     public static final String COL3 = "Fat";
     public static final String TABLE_NAME = "Nutrition_Table";
-    public static final String TAG = "FoodDatabaseHelper";
+    public static final String TAG = "NutritionDatabaseHelper";
+    private SQLiteDatabase database;
+    public static String[] NUTRITION_FIELDS = new String[]{
+            KEY_ID, COL2, COL3
+    };
 
     /**
      * the constructor for instantiation
      *
      * @param cxt Context
      */
-    public FoodDatabaseHelper(Context cxt) {
+    public NutritionDatabaseHelper(Context cxt) {
         super(cxt, DATABASE_NAME, null, VERSION_NUM);
     }
 
@@ -98,9 +102,9 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
      * @return Cursor the data
      */
     public Cursor getData() {
-        SQLiteDatabase db = this.getWritableDatabase();
+        database = this.getWritableDatabase();
         String query = "SELECT * FROM " + TABLE_NAME;
-        Cursor data = db.rawQuery(query, null);
+        Cursor data = database.rawQuery(query, null);
         return data;
     }
 
@@ -136,12 +140,12 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
 //        db.execSQL(query);
 //    }
 
-//    public void deleteName(String id) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        String query = "DELETE FROM " + TABLE_NAME + " WHERE " + KEY_ID + " = '" + id + " ';";
-//        Log.d(TAG, "deleteName: query: " + query);
-//        db.execSQL(query);
-//    }
+    public void deleteName(String id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM " + TABLE_NAME + " WHERE " + KEY_ID + " = '" + id + " ';";
+        Log.d(TAG, "deleteName: query: " + query);
+        db.execSQL(query);
+    }
 
     /**
      * to delete a specific row from the database
@@ -150,12 +154,29 @@ public class FoodDatabaseHelper extends SQLiteOpenHelper {
      * @param sqLiteDatabase SQLiteDatabase
      */
     public void delFood(String id, SQLiteDatabase sqLiteDatabase) {
-        SQLiteDatabase database = this.getWritableDatabase();
+        database = this.getWritableDatabase();
         String selection = KEY_ID + " LIKE ?";
         String[] selection_args = {id};
         sqLiteDatabase.delete(TABLE_NAME, selection, selection_args);
     }
 
+    public Cursor getRecords() {
+        return database.query(TABLE_NAME, null, null, null, null, null, null);
+    }
+
+    public void openDatabase() {
+        database = this.getWritableDatabase();
+    }
+
+    public void closeDatabase() {
+        if (database != null && database.isOpen()) {
+            database.close();
+        }
+    }
+
+    public Cursor getNutritionContent(){
+        return database.query(DATABASE_NAME, NUTRITION_FIELDS, null, null, null, null, null);
+    }
 
 }
 
