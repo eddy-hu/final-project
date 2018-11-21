@@ -204,17 +204,21 @@ public class NutritionSearchActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.author:
+            case R.id.octranspo:
                 Intent intent1 = new Intent(NutritionSearchActivity.this, NutritionAuthor.class);
                 this.startActivity(intent1);
                 return true;
-            case R.id.version:
+            case R.id.movies:
                 Intent intent2 = new Intent(NutritionSearchActivity.this, NutritionVersion.class);
                 this.startActivity(intent2);
                 return true;
-            case R.id.instruction:
+            case R.id.news:
                 Intent intent3 = new Intent(NutritionSearchActivity.this, NutritionInstruction.class);
                 this.startActivity(intent3);
+                return true;
+            case R.id.nhl:
+                Intent intent4 = new Intent(NutritionSearchActivity.this, NutritionInstruction.class);
+                this.startActivity(intent4);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

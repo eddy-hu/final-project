@@ -2,19 +2,28 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
+
     <item
-        android:id="@+id/author"
-        android:title="@string/author_item"
+        android:id="@+id/octranspo"
+        android:title="Octranspo"
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/version"
-        android:title="@string/version_number"
+        android:id="@+id/movies"
+        android:title="Movies"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/news"
+        android:title="CBC News"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/nhl"
+        android:title="NHL"
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/instruction"
-        android:title="@string/instruction_item"
+        android:id="@+id/help"
+        android:title="Help"
         app:showAsAction="never" />
-
 </menu>

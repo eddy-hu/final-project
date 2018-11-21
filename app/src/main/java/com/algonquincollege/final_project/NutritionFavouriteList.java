@@ -15,6 +15,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -30,7 +31,7 @@ import static com.algonquincollege.final_project.NutritionDatabaseHelper.TABLE_N
 /**
  * This activity is to store the searched food items.
  */
-public class NutritionFavouriteList extends Activity {
+public class NutritionFavouriteList extends AppCompatActivity {
     private static final String TAG = "NutritionFavouriteList";
     private NutritionDatabaseHelper foodDatabaseHelper;
     private ListView fListView;
@@ -181,9 +182,9 @@ public class NutritionFavouriteList extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == 1 ) {
-            sqLiteDatabase.delete(NutritionDatabaseHelper.TABLE_NAME, NutritionDatabaseHelper.KEY_ID + " = ?", new String[] {selectedName}) ;
-//            sqLiteDatabase = foodDatabaseHelper.getWritableDatabase();
-//            foodDatabaseHelper.delFood(selectedName, sqLiteDatabase);
+            //sqLiteDatabase.delete(NutritionDatabaseHelper.TABLE_NAME, NutritionDatabaseHelper.KEY_ID + " = ?", new String[] {selectedName}) ;
+            sqLiteDatabase = foodDatabaseHelper.getWritableDatabase();
+           foodDatabaseHelper.delFood(selectedName, sqLiteDatabase);
             notifyChange();
 
 
