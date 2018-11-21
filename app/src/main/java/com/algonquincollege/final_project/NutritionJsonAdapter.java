@@ -89,7 +89,7 @@ public class NutritionJsonAdapter extends BaseAdapter {
             viewHolder.fat = (TextView) convertView
                     .findViewById(R.id.fat);
             viewHolder.calories = (TextView) convertView
-                    .findViewById(R.id.calories);
+                    .findViewById(R.id.author);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();

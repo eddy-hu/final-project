@@ -181,10 +181,10 @@ public class NutritionFavouriteList extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == 1 ) {
+        if (requestCode == 1 && resultCode == 1) {
             //sqLiteDatabase.delete(NutritionDatabaseHelper.TABLE_NAME, NutritionDatabaseHelper.KEY_ID + " = ?", new String[] {selectedName}) ;
             sqLiteDatabase = foodDatabaseHelper.getWritableDatabase();
-           foodDatabaseHelper.delFood(selectedName, sqLiteDatabase);
+            foodDatabaseHelper.delFood(selectedName, sqLiteDatabase);
             notifyChange();
 
 
