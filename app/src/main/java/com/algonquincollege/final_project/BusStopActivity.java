@@ -1,11 +1,10 @@
 package com.algonquincollege.final_project;
 
 import android.app.Activity;
-import android.app.Dialog;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,96 +13,82 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class BusStationActivity extends Activity {
+public class BusStopActivity extends Activity {
 
+    public static final String API_URL = "https://api.octranspo1.com/v1.2/GetRouteSummaryForStop?appID=223eb5c3&&apiKey=ab27db5b435b8c8819ffb8095328e775&stopNo=";
+    protected static final String ACTIVITY_NAME = "BusStopActivity";
     private static boolean deleteStation = false;
     private static String lastStation = "";
-
-    public static String getRouteSummaryForStop = "https://api.octranspo1.com/v1.2/GetRouteSummaryForStop?appID=223eb5c3&&apiKey=ab27db5b435b8c8819ffb8095328e775&stopNo=";
-
-    protected static final String ACTIVITY_NAME = "OCStationInformation";
-
-    int stationNumber;
-    String stationName = "";
-
+    private int busStopNumber;
+    private String stopName = "";
     private Context ctx = this;
-    ArrayList<OCRoute> allRoutes = new ArrayList<>();
-    ArrayList<String> routesInfo = new ArrayList<>();
-    ListView routes;
-    ProgressBar progressBar;
-    int progress;
-    TextView stationNameView;
+    private ArrayList<BusRouteBean> allRoutes = new ArrayList<>();
+    private ArrayList<String> routesInfo = new ArrayList<>();
+    private ListView routeListView;
+    private ProgressBar progressBar;
+    private int progress;
+    private TextView stopNameView;
+    private Button backButton;
+    private Button deleteStopButton;
 
 
-    Button delete;
-
-    public static void resetDeleteStation() {
-        deleteStation = false;
-    }
-
-    public static boolean getDeleteStation() {
-        return deleteStation;
-    }
-
-    public static String getDeletedStationNo() { return lastStation; }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ocstation_information);
+        setContentView(R.layout.activity_bus_stop);
 
-        routes = (ListView) findViewById(R.id.routesView);
+        routeListView = (ListView) findViewById(R.id.routesView);
+        backButton = (Button) findViewById(R.id.busStopBackButton);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progress = 0;
-        stationNameView = (TextView) findViewById(R.id.stationName);
-        delete = (Button) findViewById(R.id.deleteStationButton);
+        stopNameView = (TextView) findViewById(R.id.stationName);
+        deleteStopButton = (Button) findViewById(R.id.deleteStationButton);
 
         Bundle extras = getIntent().getExtras();
         if (extras == null) {
             Log.i(ACTIVITY_NAME, "Error: no stop number could be found");
         } else {
-            stationNumber = Integer.parseInt(extras.getString("stationNumber"));
-            stationNameView.setText("Station name: " + stationName);
+            busStopNumber = Integer.parseInt(extras.getString("busStopNumber"));
+            stopNameView.setText("Stop: " + stopName);
         }
 
         new OCQuery().execute("");
 
 
-        RouteAdapter adapter = new RouteAdapter(this);
-        routes.setAdapter(adapter);
+        StopAdapter adapter = new StopAdapter(this);
+        routeListView.setAdapter(adapter);
 
+        backButton.setOnClickListener((e) ->{
+            finish();
+        });
 
-        delete.setOnClickListener((e) -> {
+        deleteStopButton.setOnClickListener((e) -> {
             Log.i(ACTIVITY_NAME, "Delete button clicked!");
             deleteStation = true;
-            lastStation = Integer.toString(stationNumber);
+            lastStation = Integer.toString(busStopNumber);
             finish();
         });
 
 
-        routes.setOnItemClickListener((parent, view, position, id) -> {
+        routeListView.setOnItemClickListener((parent, view, position, id) -> {
             String s = routesInfo.get(position);
             Log.i(ACTIVITY_NAME, "Message: " + s);
-            Intent i = new Intent(BusStationActivity.this, BusRouteActivity.class);
-            i.putExtra("routeno", allRoutes.get(position).getRouteno());
+            Intent i = new Intent(BusStopActivity.this, BusRouteActivity.class);
+            i.putExtra("routeno", allRoutes.get(position).getRouteNum());
             i.putExtra("destination", allRoutes.get(position).getDestination());
-            i.putExtra("stationNum", allRoutes.get(position).getStationNum());
+            i.putExtra("stationNum", allRoutes.get(position).getStopNum());
             i.putExtra("direction", allRoutes.get(position).getDirection());
             startActivity(i);
         });
@@ -150,37 +135,20 @@ public class BusStationActivity extends Activity {
     }
 
     private void stationNotFoundProcedure() {
-        //   *************************************************   //
-        /*      FOR FOLLOWING CODE BLOCK:
-                Author: mkyong
-                url: https://www.mkyong.com/android/android-custom-dialog-example/
-        */
-        Dialog dialog = new Dialog(ctx);
-        dialog.setContentView(R.layout.oc_custom_dialog);
-        dialog.setTitle("Station not found");
-
-
-        TextView text = (TextView) dialog.findViewById(R.id.textDialog);
-        text.setText(getString(R.string.oc_station_w_number) + " " + stationNumber + " "+ getString(R.string.oc_station_not_found));
-
-        ImageView image = (ImageView) dialog.findViewById(R.id.image);
-        image.setImageResource(R.drawable.ic_launcher_foreground);
-
-        Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
-
-        dialogButton.setOnClickListener((x) -> {
-            dialog.dismiss();
-        });
-        dialog.show();
-        //   *************************************************   //
+        AlertDialog alertDialog = new AlertDialog.Builder(BusStopActivity.this).create();
+        alertDialog.setTitle("Stop not found");
+        alertDialog.setMessage("Stop not found, please try another one");
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
     }
 
-
-
-
-
-    public class RouteAdapter extends ArrayAdapter<String> {
-        public RouteAdapter(Context ctx) {
+    public class StopAdapter extends ArrayAdapter<String> {
+        public StopAdapter(Context ctx) {
             super(ctx, 0);
         }
 
@@ -196,9 +164,9 @@ public class BusStationActivity extends Activity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            LayoutInflater inflater = BusStationActivity.this.getLayoutInflater();
+            LayoutInflater inflater = BusStopActivity.this.getLayoutInflater();
 
-            View result = inflater.inflate(R.layout.oc_route, null);
+            View result = inflater.inflate(R.layout.bus_route, null);
 
             TextView routeText = (TextView)result.findViewById(R.id.route_text);
 
@@ -215,52 +183,34 @@ public class BusStationActivity extends Activity {
     }
 
 
-
     public class OCQuery extends AsyncTask<String, Integer, String> {
         public String connStationNumber;
-
-        public ArrayList<OCRoute> routesList = new ArrayList<OCRoute>();
-
+        public ArrayList<BusRouteBean> routesList = new ArrayList<BusRouteBean>();
         private String currentRouteno;
         private String currentRouteDirection;
         private String currentRouteDestination;
 
-
         @Override
         protected String doInBackground(String... array) {
-            Log.i(ACTIVITY_NAME, "background activity begun..");
-
-            connStationNumber = Integer.toString(stationNumber); // test with algonquin stop for now.
-
+            Log.i(ACTIVITY_NAME, "Do in background");
+            String lastTag = "";
             try {
-                //      URL url = new URL(getRouteSummaryForStop + connStationNumber);
-                URL url = new URL(getRouteSummaryForStop.concat(connStationNumber));
+                URL url = new URL(API_URL.concat(Integer.toString(busStopNumber)));
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setReadTimeout(10000 /* milliseconds */);
-                conn.setConnectTimeout(15000 /* milliseconds */);
+                conn.setReadTimeout(10000);
+                conn.setConnectTimeout(15000);
                 conn.setRequestMethod("GET");
                 conn.setDoInput(true);
                 conn.connect();
                 updateProgressBar(10, 10);
 
-                Log.i(ACTIVITY_NAME, "attempting parse..");
-                parse(conn.getInputStream());
-                Log.i(ACTIVITY_NAME, "parse complete");
-            } catch (Exception e) {
-                Log.i(ACTIVITY_NAME, "Error: " + e.toString());
-                return ("Error: " + e.toString());
-            }
-            return null;
-        }
+                Log.i(ACTIVITY_NAME, "Attempting parse.");
 
-        protected void parse(InputStream in) throws XmlPullParserException, IOException {
-            String lastTag = "";
-            try {
                 XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
                 factory.setNamespaceAware(false);
 
                 XmlPullParser xpp = factory.newPullParser();
-                xpp.setInput(in, "UTF-8");
+                xpp.setInput(conn.getInputStream(), "UTF-8");
 
 
                 int eventType = xpp.getEventType();
@@ -270,15 +220,15 @@ public class BusStationActivity extends Activity {
                 while (eventType != XmlPullParser.END_DOCUMENT) {
                     switch (eventType) {
                         case XmlPullParser.START_TAG:
-                            Log.i(ACTIVITY_NAME, "Tag found.");
+                            Log.i(ACTIVITY_NAME, "Tag is found.");
                             lastTag = xpp.getName();
                             updateProgressBar(3,80);
                             Log.i(ACTIVITY_NAME, "Tag is " + lastTag);
                             break;
                         case XmlPullParser.TEXT:
                             if (lastTag.equals("StopDescription")) {
-                                Log.i(ACTIVITY_NAME, "Station name found: ");
-                                stationName = xpp.getText();
+                                Log.i(ACTIVITY_NAME, "Stop name found: ");
+                                stopName = xpp.getText();
                                 updateProgressBar(12,80);
                             } else if (lastTag.equals("RouteNo")) {
                                 currentRouteno = xpp.getText();
@@ -289,7 +239,7 @@ public class BusStationActivity extends Activity {
                             } else if (lastTag.equals("RouteHeading")) {
                                 currentRouteDestination = xpp.getText();
                                 updateProgressBar(10,80);
-                                routesList.add(new OCRoute(currentRouteno, currentRouteDestination, currentRouteDirection, Integer.toString(stationNumber)));
+                                routesList.add(new BusRouteBean(currentRouteno, currentRouteDestination, currentRouteDirection, Integer.toString(busStopNumber)));
                             }
                             break;
                         default:
@@ -298,26 +248,31 @@ public class BusStationActivity extends Activity {
                     xpp.next();
                     eventType = xpp.getEventType();
                 }
-            } finally {
-                in.close();
+                conn.getInputStream().close();
                 Log.i(ACTIVITY_NAME, "closed input stream");
                 updateProgressBar(100,90);
-            }
-        }
+                Log.i(ACTIVITY_NAME, "parse complete");
+            } catch (Exception e) {
 
+                Log.i(ACTIVITY_NAME, "Error: " + e.toString());
+                return ("Error: " + e.toString());
+            }
+
+            return null;
+        }
 
         @Override
         protected void onPostExecute(String result) {
 
-            RouteAdapter adapter = new RouteAdapter(ctx);
-            ListView routesview = (ListView)findViewById(R.id.routesView);
-            routesview.setAdapter(adapter);
+            StopAdapter adapter = new StopAdapter(ctx);
+            ListView routesView = (ListView)findViewById(R.id.routesView);
+            routesView.setAdapter(adapter);
 
-            stationNameView.setText("Station name: " + stationName);
+            stopNameView.setText("Stop: " + stopName);
 
-            for (OCRoute r : routesList) {
+            for (BusRouteBean r : routesList) {
                 String newRoute = "";
-                newRoute = newRoute.concat(r.getRouteno());
+                newRoute = newRoute.concat(r.getRouteNum());
                 newRoute = newRoute.concat(" ");
                 newRoute = newRoute.concat(r.getDestination());
                 routesInfo.add(newRoute);
@@ -327,8 +282,20 @@ public class BusStationActivity extends Activity {
             }
             updateProgressBar(100,100);
 
-            if (stationName.equals(""))
+            if (stopName.equals(""))
                 stationNotFoundProcedure();
         }
     }
+    public static void resetDeleteStation()
+    {
+        deleteStation = false;
+    }
+
+    public static boolean getDeleteStation() {
+
+        return deleteStation;
+    }
+
+    public static String getDeletedStationNo() {
+        return lastStation; }
 }

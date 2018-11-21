@@ -4,8 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".OCTranspo" >
+    tools:context=".BusStopActivity" >
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="center_horizontal"
+        />
 
     <TextView
         android:id="@+id/stationName"
@@ -22,6 +29,8 @@
 
 
 
+
+
     <!--
     android:visibility="invisible"
     -->
@@ -32,18 +41,18 @@
             android:id="@+id/deleteStationButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/oc_deletestationbutton"
+            android:text="@string/bus_deletestationbutton"
             android:layout_alignParentBottom="true"
+
+            />
+        <Button
+            android:id="@+id/busStopBackButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/busBackButton"
+            android:layout_above="@id/deleteStationButton"
             />
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_above="@+id/deleteStationButton"
-            />
     </RelativeLayout>
 
 

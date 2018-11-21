@@ -3,73 +3,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BusActivity">
+    tools:context=".BusActivity" >
 
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleHorizontal"
+    <fragment
+        android:name="com.algonquincollege.final_project.BusFragment"
+        android:id="@+id/fragmentSpace"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"
-        android:layout_alignParentTop="true"
-
+        android:layout_height="match_parent"
         />
 
-    <ListView
-        android:id="@+id/busListView"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/addStationNoButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_above="@+id/busAddButton"
-        android:layout_below="@id/progressBar"
-
-        />
-
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@id/busHelpButton"
+        android:text="@string/bus_addButton" />
 
     <EditText
-        android:layout_width="wrap_content"
+        android:id="@+id/stationNoInput"
+        android:layout_toLeftOf="@+id/addStationNoButton"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/busEditText"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:ems="10"
-
-        />
-
-    <Button
-        android:id="@+id/busAddButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/bus_addButton"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-
-        />
-    <Button
-        android:id="@+id/busDeleteButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/bus_deleteButton"
-        android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/busAddButton"
-
-        />
+        android:inputType="text" />
 
     <Button
         android:id="@+id/busHelpButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/bus_helpButton"
         android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/busDeleteButton"
-
-        />
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/bus_helpButton" />
 
 
 </RelativeLayout>

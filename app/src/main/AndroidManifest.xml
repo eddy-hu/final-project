@@ -12,16 +12,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true"
-        >
-
-
-        <activity android:name=".Spencer_MainActivity"/>
-
-        <activity android:name=".OCTranspoActivity" />
-        <activity android:name=".OCRouteInformation" />
-        <activity android:name=".OCStationInformation" />
+        android:theme="@style/Theme.AppCompat"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".Spencer_MainActivity" />
         <activity android:name=".StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,15 +28,11 @@
         <activity android:name=".NutritionDetail" />
         <activity android:name=".BusActivity" />
         <activity android:name=".BusRouteActivity" />
-        <activity android:name=".BusStationActivity" />
+        <activity android:name=".BusStopActivity" />
         <activity android:name=".MovieStartActivity" />
-        <activity android:name=".NutritionStartActivity"></activity>
-
-        <activity android:name=".Mordechai_mainActivity">
-
-        </activity>
-
-        <activity android:name=".ListItems"></activity>
+        <activity android:name=".NutritionStartActivity" />
+        <activity android:name=".Mordechai_mainActivity"></activity>
+        <activity android:name=".ListItems" />
     </application>
 
 </manifest>
