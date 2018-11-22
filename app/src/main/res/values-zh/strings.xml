@@ -19,4 +19,5 @@
     <string name="author_item">作者</string>
     <string name="instruction_item">使用指南</string>
     <string name="version_number">版本号</string>
+    <string name="search_hint">Enter a food name</string>
 </resources>

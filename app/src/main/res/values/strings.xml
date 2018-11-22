@@ -18,6 +18,7 @@
     <string name="author_item">Author</string>
     <string name="instruction_item">Instruction</string>
     <string name="version_number">Version Number</string>
+    <string name="search_hint">Enter a food name</string>
 
 
 </resources>

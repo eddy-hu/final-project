@@ -57,7 +57,7 @@ public class NutritionSearchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.nutrition_activity_main);
+        setContentView(R.layout.nutrition_activity_search);
 
         listView = (ListView) findViewById(R.id.searchResult);
         searchTxt = (EditText) findViewById(R.id.searchEditTxt);
@@ -72,7 +72,7 @@ public class NutritionSearchActivity extends AppCompatActivity {
                 if (food != null && !food.isEmpty()) {
                     new MyAsyncTask().execute(jsonUrl);
                 } else {
-                    toastMessage("Please enter something.");
+                    toastMessage("ToastMessage: Please enter something.");
                 }
             }
         });
@@ -87,7 +87,7 @@ public class NutritionSearchActivity extends AppCompatActivity {
                     double cal = adapter.calData;
                     AddData(food, cal, fat);
                 } else {
-                    Snackbar.make(v, "Please enter the name of the food !", Snackbar.LENGTH_LONG).setAction(
+                    Snackbar.make(v, "Snackbar: Please enter the name of the food !", Snackbar.LENGTH_LONG).setAction(
                             "Action", null
                     ).show();
                 }
@@ -115,9 +115,9 @@ public class NutritionSearchActivity extends AppCompatActivity {
     public void AddData(String food, double cal, double fat) {
         boolean insertData = foodDatabaseHelper.addData(food, cal, fat);
         if (insertData) {
-            toastMessage("Data successfully inserted");
+            toastMessage("ToastMessage: Data successfully inserted");
         } else {
-            toastMessage("Something went wrong");
+            toastMessage("ToastMessage: Something went wrong");
         }
     }
 

@@ -10,7 +10,7 @@ public class NutritionDetailFrag extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_nutrition_detail_frag);
+        setContentView(R.layout.nutrition_activity_detail_frag);
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             finish();
         }

@@ -4,7 +4,8 @@
     xmlns:tools = "http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NutritionSearchActivity">
+    tools:context=".NutritionSearchActivity"
+    android:background="@color/blue">
 
     <Button
         android:id="@+id/btn_add"
@@ -13,6 +14,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:textStyle="italic|bold"
+        android:background="@drawable/buttonshapecolor"
         android:text="@string/btn_add" />
 
     <Button
@@ -22,6 +25,8 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
+        android:background="@drawable/buttonshapecolor"
+        android:textStyle="italic|bold"
         android:text="@string/btn_favourite" />
 
 
@@ -32,6 +37,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
+        android:hint="@string/search_hint"
         android:layout_toLeftOf="@id/btn_search" />
 
     <Button
@@ -41,6 +47,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
+        android:textStyle="italic|bold"
+        android:background="@drawable/buttonshapecolor"
         android:text="@string/btn_search" />
 
     <ListView
@@ -51,9 +59,10 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="75dp"
         >
 
     </ListView>
+
 
 </RelativeLayout>

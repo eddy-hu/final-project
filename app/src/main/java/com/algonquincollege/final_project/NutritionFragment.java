@@ -1,6 +1,8 @@
 package com.algonquincollege.final_project;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
@@ -28,7 +30,7 @@ public class NutritionFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.activity_nutrition_fragment, container, false);
+        view = inflater.inflate(R.layout.nutrition_activity_fragment, container, false);
         return view;
     }
 
@@ -45,20 +47,38 @@ public class NutritionFragment extends Fragment {
         delBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (getArguments().getBoolean("isTablet")) {
-                    foodDatabaseHelper = new NutritionDatabaseHelper((getActivity()));
-                    sqLiteDatabase = foodDatabaseHelper.getWritableDatabase();
-                    foodDatabaseHelper.delFood(getArguments().getString("id"), sqLiteDatabase);
-                    ((NutritionFavouriteList) getActivity()).notifyChange();
-                    ((NutritionFavouriteList) getActivity()).query();
-                    getFragmentManager().beginTransaction().remove(NutritionFragment.this).commit();
-                } else {
-                    Intent resultIntent = new Intent();
-                    resultIntent.putExtra("id", getArguments().getString("id"));
-                    getActivity().setResult(1, resultIntent);
-                    getActivity().finish();
-                }
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(getActivity());
+                mBuilder.setMessage("Do you really want to delete it?").setCancelable(false).setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (getArguments().getBoolean("isTablet")) {
+                            foodDatabaseHelper = new NutritionDatabaseHelper((getActivity()));
+                            sqLiteDatabase = foodDatabaseHelper.getWritableDatabase();
+                            foodDatabaseHelper.delFood(getArguments().getString("id"), sqLiteDatabase);
+                            ((NutritionFavouriteList) getActivity()).notifyChange();
+                            ((NutritionFavouriteList) getActivity()).query();
+                            getFragmentManager().beginTransaction().remove(NutritionFragment.this).commit();
+                        } else {
+                            Intent resultIntent = new Intent();
+                            resultIntent.putExtra("id", getArguments().getString("id"));
+                            getActivity().setResult(1, resultIntent);
+                            getActivity().finish();
+                        }
+
+                    }
+                }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog alert = mBuilder.create();
+                alert.setTitle("Alert!!");
+                alert.show();
+
             }
         });
+
+
     }
 }
