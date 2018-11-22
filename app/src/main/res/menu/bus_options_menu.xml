@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+        <item android:id="@+id/bus_bus_icon"
+            android:title="Bus"
+            android:icon="@drawable/bus_icon"
+            app:showAsAction="always"
+            android:orderInCategory="100"
+            />
+        <item android:id="@+id/bus_nutrition_app"
+            android:title="Nutrition"
+            app:showAsAction="always"
+            android:icon="@drawable/food_icon"
+            android:orderInCategory="300"
+            />
+        <item android:id="@+id/bus_movie_app"
+            android:title="Nutrition"
+            app:showAsAction="always"
+            android:icon="@drawable/movie_icon"
+            android:orderInCategory="600"
+            />
+        <item android:id="@+id/bus_news_app"
+            android:title="Nutrition"
+            app:showAsAction="always"
+            android:icon="@drawable/news_icon"
+            android:orderInCategory="900"
+            />
+        <item android:id="@+id/bus_hockey_app"
+            android:title="Nutrition"
+            app:showAsAction="always"
+            android:icon="@drawable/hockey_icon"
+            android:orderInCategory="1300"
+            />
+
+        <item android:id="@+id/bus_help"
+            android:title="HELP" />
+    </menu>
+
+

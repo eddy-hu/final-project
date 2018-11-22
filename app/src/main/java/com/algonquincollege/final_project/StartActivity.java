@@ -1,8 +1,11 @@
 package com.algonquincollege.final_project;
 
+import android.app.ActionBar;
 import android.app.Activity;
 
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Window;
 import android.widget.Button;
 
 import android.content.Intent;
@@ -21,8 +24,11 @@ public class StartActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+
         Log.i(ACTIVITY_NAME, "In onCreate()");
         setContentView(R.layout.activity_start);
+
+
         /**
         Button buttonStart = (Button) findViewById(R.id.octranspo_button);
         buttonStart.setOnClickListener(new View.OnClickListener() {

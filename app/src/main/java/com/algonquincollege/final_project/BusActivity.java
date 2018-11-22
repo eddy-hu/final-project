@@ -1,6 +1,9 @@
 package com.algonquincollege.final_project;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -8,12 +11,16 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -224,5 +231,52 @@ public class BusActivity extends AppCompatActivity {
             return position;
         }
 
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.bus_options_menu, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
+        Toast.makeText(this, "Selected Item: " +item.getTitle(), Toast.LENGTH_SHORT).show();
+        switch (item.getItemId()) {
+            case R.id.bus_help:
+                AlertDialog alertDialog = new AlertDialog.Builder(BusActivity.this).create();
+                alertDialog.setTitle("Help dialog notification");
+                alertDialog.setMessage("Welcome to OCTranspo \nAuthor: Yongpan Hu");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
+                return true;
+            case R.id.bus_nutrition_app:
+
+                intent = new Intent(this, NutritionStartActivity.class);
+                this.startActivity(intent);
+                // do your code
+                return true;
+            case R.id.bus_movie_app:
+                intent = new Intent(this, MovieStartActivity.class);
+                this.startActivity(intent);
+                // do your code
+                return true;
+            case R.id.bus_news_app:
+                intent = new Intent(this, Spencer_MainActivity.class);
+                this.startActivity(intent);
+                // do your code
+                return true;
+            case R.id.bus_hockey_app:
+                intent = new Intent(this, Mordechai_mainActivity.class);
+                this.startActivity(intent);
+                // do your code
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

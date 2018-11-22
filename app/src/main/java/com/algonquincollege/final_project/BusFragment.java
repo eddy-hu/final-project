@@ -15,14 +15,6 @@ public class BusFragment extends Fragment {
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.bus_fragment, container, false);
     }
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        Log.i(ACTIVITY_NAME, "is  running");
-
-    }
-
-
 
 
 }
