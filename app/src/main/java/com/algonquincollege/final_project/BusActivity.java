@@ -1,80 +1,103 @@
 package com.algonquincollege.final_project;
 
-import android.app.Activity;
+import android.app.ActionBar;
 import android.app.AlertDialog;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
-import android.os.Bundle;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.NotificationCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-import android.util.Xml;
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 import java.util.ArrayList;
 
 /**
- * Bus main activity class
+ * Bus start activity class which handles user landing and add stop number functions
  */
-public class BusActivity extends Activity {
+public class BusActivity extends AppCompatActivity {
 
     protected static final String ACTIVITY_NAME = "BusActivity";
-    private ArrayList<String> list;
-    private BusAdapter busAdapter;
-    private BusListDBHelper dbHelper;
-    private ProgressBar progressBar;
-    private Context ctx = this;
+    ArrayList<String> stopList = new ArrayList<String>();
+    ArrayList<String> stopNumbers = new ArrayList<String>();
+    ListView stopListView;
+    EditText stopInputText;
+    Button addStopButton;
+    private Context ctx;
+    private SQLiteDatabase database;
+    private Cursor cursor;
+
+    private int currentStopIndex = 0;
+
+    BusAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ctx = this;
+        //database helper
+        BusDBHelper dbHelper = new BusDBHelper(ctx);
+        database = dbHelper.getWritableDatabase();
+
         setContentView(R.layout.activity_bus);
-        dbHelper = new BusListDBHelper(this);
-        //history search list
-        list = new ArrayList<>();
-        busAdapter = new BusAdapter(this);
-        final ListView listView = (ListView) findViewById(R.id.busListView);
-        listView.setAdapter(busAdapter);
-        final EditText editText = (EditText) findViewById(R.id.busEditText);
-        final Button addButton = (Button) findViewById(R.id.busAddButton);
-        editText.setHint("Enter bus number");
-        final Button deleteButton = (Button) findViewById(R.id.busDeleteButton);
-        final Button busHelp  = (Button) findViewById(R.id.busHelpButton);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        progressBar.setVisibility(View.VISIBLE);
+
+        stopListView = (ListView) findViewById(R.id.stopView);
+        stopInputText = (EditText) findViewById(R.id.stationNoInput);
+        addStopButton = (Button) findViewById(R.id.addStationNoButton);
+        adapter = new BusAdapter(this);
+        stopListView.setAdapter(adapter);
+        Button busHelp  = (Button) findViewById(R.id.busHelpButton);
+
+        Log.i(ACTIVITY_NAME, "Attempted query:    SELECT " +
+                BusDBHelper.STATION_NAME + ", " +
+                BusDBHelper.STATION_NO + " FROM " +
+                BusDBHelper.TABLE_NAME);
+
+        cursor = database.rawQuery("SELECT " +
+                BusDBHelper.STATION_NAME + ", " +
+                BusDBHelper.STATION_NO + " FROM " +
+                BusDBHelper.TABLE_NAME, null, null);
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast()) {
+            Log.i(ACTIVITY_NAME, "Current cursor position: " + cursor.getPosition());
+            String newStation = "Stop number ";
+            newStation = newStation.concat(cursor.getString(1));
+
+            stopList.add(newStation);
+            stopNumbers.add(cursor.getString(1));
 
 
-        Query query = new Query();
-        query.execute();
-
-        // help button on click action
+            cursor.moveToNext();
+        }
+        /**
+         * add click listener action to help button
+         * when user clicks it, it will display the author information
+         */
         busHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog alertDialog = new AlertDialog.Builder(BusActivity.this).create();
-                alertDialog.setTitle("dialog notification");
-                alertDialog.setMessage("Welcome to OCTranspo");
+                alertDialog.setTitle("Help dialog notification");
+                alertDialog.setMessage("Welcome to OCTranspo \nAuthor: Yongpan Hu");
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
@@ -83,46 +106,152 @@ public class BusActivity extends Activity {
                         });
                 alertDialog.show();
             }
-                                   });
-        // add button on click action
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String text = editText.getText().toString();
-                list.add(text);
-                busAdapter.notifyDataSetChanged(); //this restarts the process of getCount() & getView(
-                dbHelper.insertEntry(editText.getText().toString());
-                editText.setText("");
-                Toast toast = Toast.makeText(getApplicationContext(), text+" has been added", Toast.LENGTH_SHORT);
+        });
+        /**
+         * add click listener action to add button
+         * when user typed the stop number and clicks add button, it will add
+         * the stop information to list and database;
+         */
+        addStopButton.setOnClickListener((e) -> {
+            String stopInput = stopInputText.getText().toString();
+            if (stopInput.matches("-?\\d+")) { //check the input if is an integer;
+                ContentValues newData = new ContentValues();
+
+                newData.put(BusDBHelper.STATION_NAME, "NAME_NOT_FOUND");
+                newData.put(BusDBHelper.STATION_NO, stopInput);
+
+                database.insert(BusDBHelper.TABLE_NAME, BusDBHelper.STATION_NAME, newData);
+
+                String newStop = "Stop number ";
+                newStop = newStop.concat(stopInput);
+                stopList.add(newStop);
+                stopNumbers.add(stopInput);
+                stopInputText.setText("");
+                adapter.notifyDataSetChanged();
+                Toast toast = Toast.makeText(getApplicationContext(), stopInput+" has been added", Toast.LENGTH_SHORT);
                 toast.show();
-
+            } else {
+                Snackbar badinput = Snackbar.make(findViewById(android.R.id.content), getString(R.string.bus_badinput), Snackbar.LENGTH_SHORT);
+                badinput.show();
+                stopInputText.setText("");
             }
-        });
-        busAdapter = new BusAdapter(this);
-        Log.i(ACTIVITY_NAME, "In onCreate()");
 
-        // delete button on click action
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                delete();
-                editText.setText("");
-                Snackbar.make(v, "History records have been deleted.", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-
-            }
         });
+
+        /**
+         * add click listener action to stop listView
+         * when user clicks the item, it will jump to the BusStopActivity;
+         */
+        stopListView.setOnItemClickListener((parent, view, position, id) -> {
+            String s = stopList.get(position);
+            Log.i(ACTIVITY_NAME, "Stop: " + s);
+            String stationNumber = stopNumbers.get(position);
+            Intent i = new Intent(BusActivity.this, BusStopActivity.class);
+            i.putExtra("busStopNumber", stationNumber);
+            currentStopIndex = position;
+            currentStopIndex = position;
+            startActivity(i);
+        });
+
 
     }
 
+    /**
+     * add the options menu to this activity
+     * @param menu
+     * @return true
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.bus_options_menu, menu);
+        return true;
+    }
+
+    /**
+     * add the options menu to this activity
+     * @param item
+     * @return true
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
+        Toast.makeText(this, "Selected Item: " +item.getTitle(), Toast.LENGTH_SHORT).show();
+        switch (item.getItemId()) {
+            case R.id.bus_help:
+                AlertDialog alertDialog = new AlertDialog.Builder(BusActivity.this).create();
+                alertDialog.setTitle("Help dialog notification");
+                alertDialog.setMessage("Welcome to OCTranspo \nAuthor: Yongpan Hu");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
+                return true;
+            case R.id.bus_nutrition_app:
+
+                intent = new Intent(this, NutritionStartActivity.class);
+                this.startActivity(intent);
+                // do your code
+                return true;
+            case R.id.bus_movie_app:
+                intent = new Intent(this, MovieStartActivity.class);
+                this.startActivity(intent);
+                // do your code
+                return true;
+            case R.id.bus_news_app:
+                intent = new Intent(this, Spencer_MainActivity.class);
+                this.startActivity(intent);
+                // do your code
+                return true;
+            case R.id.bus_hockey_app:
+                intent = new Intent(this, Mordechai_mainActivity.class);
+                this.startActivity(intent);
+                // do your code
+                return true;
+            case R.id.home_page_icon:
+                intent = new Intent(this, StartActivity.class);
+                this.startActivity(intent);
+                // do your code
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        Log.i(ACTIVITY_NAME, "In onResume()");
+
+        if (BusStopActivity.getDeleteStation() == true) {
+            Log.i(ACTIVITY_NAME, "Deleting stop " + currentStopIndex);
+            String[] params = new String[1];
+            params[0] = stopNumbers.get(currentStopIndex);
+            database.delete(BusDBHelper.TABLE_NAME, BusDBHelper.STATION_NO + "=?", params);
+
+            adapter = new BusAdapter(this);
+            stopListView.setAdapter(adapter);
+
+            stopList.remove(currentStopIndex);
+            stopNumbers.remove(currentStopIndex);
+            adapter.notifyDataSetChanged();
+
+
+            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),
+                     BusStopActivity.getDeletedStationNo() + " has been deleted", Snackbar.LENGTH_SHORT);
+            snackbar.show();
+
+            BusStopActivity.resetDeleteStation();
+        }
+
+        super.onResume();
+    }
 
     @Override
     protected void onStart() {
-        super.onStart();
-        dbHelper.openDatabase();
-        query();
         Log.i(ACTIVITY_NAME, "In onStart()");
-
+        super.onStart();
     }
 
 
@@ -141,172 +270,45 @@ public class BusActivity extends Activity {
     @Override
     protected void onDestroy() {
         Log.i(ACTIVITY_NAME, "In onDestroy()");
-        dbHelper.closeDatabase();
+        database.close();
         super.onDestroy();
     }
 
     /**
-     * List view adapter
+     * bus list adapter to handles bus stops list array list view;
      */
-    private class BusAdapter extends ArrayAdapter<String> {
-
+    public class BusAdapter extends ArrayAdapter<String> {
         public BusAdapter(Context ctx) {
             super(ctx, 0);
         }
 
-        public String getItem(int position) {
-            return list.get(position);
+        @Override
+        public int getCount() {
+            return (stopList.size());
         }
 
+        @Override
+        public String getItem(int position) {
+            return stopList.get(position);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            LayoutInflater inflater = BusActivity.this.getLayoutInflater();
+
+            View result = inflater.inflate(R.layout.bus_stop, null);
+
+            TextView stationText = (TextView) result.findViewById(R.id.station_text);
+            stationText.setText(getItem(position));
+
+            return result;
+        }
+
+        @Override
         public long getItemId(int position) {
             return position;
         }
 
-        public int getCount() {
-            return list.size();
-        }
-
-        public View getView(int position, View oldView, ViewGroup parent) {
-            LayoutInflater inflater = getLayoutInflater();
-
-            View result = inflater.inflate(R.layout.bus_history_list_layout, null);
-
-            TextView busSearchList = (TextView) result.findViewById(R.id.bus_serach_list);
-
-            busSearchList.setText(getItem(position)); // get the string at position
-            return result;
-
-        }
-    }
-    public void query() {
-        Cursor cursor = dbHelper.getRecords();
-        if (cursor.moveToFirst()) {
-            while (!cursor.isAfterLast()) {
-                Log.i(ACTIVITY_NAME, "SQL MESSAGE:" + cursor.getString(cursor.getColumnIndex(BusListDBHelper.KEY_MESSAGE)));
-
-                list.add(cursor.getString(cursor.getColumnIndex(BusListDBHelper.KEY_MESSAGE)));
-                cursor.moveToNext();
-            }
-            Log.i(ACTIVITY_NAME, "Cursor's column count = " + cursor.getColumnCount());
-
-        }
-
-        for (int i = 0; i < cursor.getColumnCount(); i++) {
-            Log.i(ACTIVITY_NAME, "The " + i + " row is " + cursor.getColumnName(i));
-        }
-        }
-        public void delete(){
-            list = new ArrayList<>();
-            dbHelper.delete();
-        }
-
-    public class Query extends AsyncTask<String, Integer, String> {
-        private String currentTemperature;
-        private String minTemperature;
-        private String maxTemperature;
-        private String windSpeed;
-        private String icon;
-        private Bitmap bitmap;
-
-        @Override
-        protected String doInBackground(String ...args) {
-            InputStream stream;
-            String iconUrl = "http://openweathermap.org/img/w/";
-            try {
-                URL url = new URL("http://api.openweathermap.org/data/2.5/weather?q=ottawa,ca&APPID=d99666875e0e51521f0040a3d97d0f6a&mode=xml&units=metric");
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setReadTimeout(10000);
-                conn.setConnectTimeout(15000);
-                conn.setRequestMethod("GET");
-                conn.setDoInput(true);
-                conn.connect();
-                stream = conn.getInputStream();
-                XmlPullParser parser = Xml.newPullParser();
-                parser.setInput(stream,null);
-
-                while(parser.next() != XmlPullParser.END_DOCUMENT) {
-                    if (parser.getEventType() != XmlPullParser.START_TAG) {
-                        continue;
-                    }
-
-                    if(parser.getName().equals("temperature")) {//get temperature
-                        currentTemperature = parser.getAttributeValue(null, "value");
-                        publishProgress(10);
-                        android.os.SystemClock.sleep(200);
-                        minTemperature = parser.getAttributeValue(null, "min");
-                        publishProgress(20);
-                        android.os.SystemClock.sleep(200);
-                        maxTemperature = parser.getAttributeValue(null, "max");
-                        publishProgress(30);
-                        android.os.SystemClock.sleep(200);
-                    }
-                    if (parser.getName().equals("speed")){//get wind speed
-                        windSpeed = parser.getAttributeValue(null, "value");
-                        publishProgress(40);
-                        android.os.SystemClock.sleep(200);
-                    }
-
-                    if(parser.getName().equals("weather")) {
-                        icon = parser.getAttributeValue(null, "icon");
-                    }
-                }
-                conn.disconnect();
-
-                if(getBaseContext().getFileStreamPath(icon + ".png").exists()){ //check the local folder
-                    FileInputStream fis = null;
-                    try {
-                        fis = new FileInputStream(getBaseContext().getFileStreamPath(icon + ".png"));
-                        Log.d(ACTIVITY_NAME, "File is found");
-                    }
-                    catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                    bitmap = BitmapFactory.decodeStream(fis);
-                }
-                else { // if it doesn't exits, connect to the api
-                    Log.d(ACTIVITY_NAME, "File is not found");
-                    URL imageUrl =  new URL(iconUrl + icon + ".png");
-                    conn = (HttpURLConnection) imageUrl.openConnection();
-                    conn.connect();
-                    stream = conn.getInputStream();
-                    bitmap = BitmapFactory.decodeStream(stream);//decode an input stream into a bitmap.
-                    FileOutputStream outputStream = openFileOutput(icon + ".png", Context.MODE_PRIVATE);
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
-                    outputStream.flush();
-                    outputStream.close();
-                }
-                publishProgress(100);
-            }
-            catch (FileNotFoundException e) {
-                Log.e(ACTIVITY_NAME, e.getMessage());
-            }
-            catch (XmlPullParserException e) {
-                Log.e(ACTIVITY_NAME, e.getMessage());
-            }
-            catch (IOException e) {
-                Log.e(ACTIVITY_NAME, e.getMessage());
-            }
-            return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer ... value){
-            progressBar.setVisibility(View.VISIBLE);
-            progressBar.setProgress(value[0]);
-            Log.i(ACTIVITY_NAME, "In onProgressUpdate");
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            progressBar.setVisibility(View.INVISIBLE);
-
-        }
-
     }
 
-
-    }
-
-
-
-
+}
