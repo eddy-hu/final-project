@@ -27,7 +27,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,7 +66,7 @@ public class NutritionSearchActivity extends AppCompatActivity {
         btnAdd = (Button) findViewById(R.id.btn_add);
         btnFavourite = (Button) findViewById(R.id.btn_favourite);
 
-        Toolbar nutritionToolbar = (Toolbar)findViewById(R.id.nutrition_toolbar);
+        Toolbar nutritionToolbar = (Toolbar) findViewById(R.id.nutrition_toolbar);
         setSupportActionBar(nutritionToolbar);
 
 
@@ -229,11 +228,11 @@ public class NutritionSearchActivity extends AppCompatActivity {
             case R.id.help:
                 Intent intent5 = new Intent(NutritionSearchActivity.this, NutritionHelp.class);
                 this.startActivity(intent5);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+                 return true;
+//            default:
+//                return super.onOptionsItemSelected(item);
         }
-
+        return true;
 
     }
 }
