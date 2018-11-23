@@ -210,6 +210,11 @@ public class BusActivity extends AppCompatActivity {
                 this.startActivity(intent);
                 // do your code
                 return true;
+            case R.id.bus_bus_icon:
+                intent = new Intent(this, BusActivity.class);
+                this.startActivity(intent);
+                // do your code
+                return true;
             case R.id.home_page_icon:
                 intent = new Intent(this, StartActivity.class);
                 this.startActivity(intent);
