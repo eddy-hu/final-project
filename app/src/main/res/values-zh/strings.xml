@@ -20,4 +20,29 @@
     <string name="instruction_item">使用指南</string>
     <string name="version_number">版本号</string>
     <string name="search_hint">Enter a food name</string>
+
+
+
+
+    <!--  BUS APP STRINGS-->
+   <string name="bus_addButton">添加</string>
+   <string name="bus_deleteButton">删除</string>
+   <string name="bus_helpButton">帮助</string>
+   <string name="busBackButton">返回</string>
+   <string name="bus_badinput">必须是数字</string>
+   <string name="bus_stop_w_number">站点号码 </string>
+   <string name="bus_stop_not_found"> 没有此数据.</string>
+   <string name="bus_route">线路 </string>
+   <string name="bus_direction">方向:</string>
+   <string name="bus_starttime">开始时间: </string>
+   <string name="bus_adjustedtime">调整时间: </string>
+   <string name="bus_latlong">经纬度:</string>
+   <string name="bus_gpsspeed">GPS速度: </string>
+   <string name="bus_infounavailable">无数据</string>
+   <string name="bus_deletestationbutton">删除</string>
+
+
 </resources>
+
+
+

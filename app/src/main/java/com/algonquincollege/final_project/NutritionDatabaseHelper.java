@@ -64,7 +64,7 @@ public class NutritionDatabaseHelper extends SQLiteOpenHelper {
      */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME); //delete current table
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME); //deleteStopButton current table
         onCreate(db);
         Log.i(TAG, "Calling onUpdate(), oldVersion=" + oldVersion + ", newVersion=" + newVersion);
     }
@@ -148,7 +148,7 @@ public class NutritionDatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * to delete a specific row from the database
+     * to deleteStopButton a specific row from the database
      *
      * @param id             primary key
      * @param sqLiteDatabase SQLiteDatabase

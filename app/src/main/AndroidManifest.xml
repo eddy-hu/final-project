@@ -3,6 +3,7 @@
     package="com.algonquincollege.final_project">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
@@ -11,14 +12,24 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".NutritionSearchActivity">
+        android:theme="@style/Theme.AppCompat"
+        android:usesCleartextTraffic="true">
+
+        <activity android:name=".NutritionSearchActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        />
+
+
+        <activity android:name=".Spencer_MainActivity" />
+        <activity android:name=".StartActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".NutritionListview_item" />
         <activity android:name=".NutritionFavouriteList" />
         <activity
@@ -27,6 +38,14 @@
             android:parentActivityName=".NutritionSearchActivity" />
         <activity android:name=".NutritionDetailFrag" />
 
+        <activity android:name=".MoviesActivity" />
+        <activity android:name=".BusActivity" />
+        <activity android:name=".BusRouteActivity" />
+        <activity android:name=".BusStopActivity" />
+        <activity android:name=".MovieStartActivity" />
+        <activity android:name=".Mordechai_mainActivity"></activity>
+        <activity android:name=".ListItems" />
+>>>>>>> master
     </application>
 
 </manifest>
