@@ -7,23 +7,39 @@
     <item
         android:id="@+id/octranspo"
         android:title="Octranspo"
-        app:showAsAction="never" />
+        android:icon="@drawable/octranspo"
+        android:orderInCategory="101"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/movies"
         android:title="Movies"
-        app:showAsAction="never" />
+        android:orderInCategory="102"
+        android:icon="@drawable/movies"
+        app:showAsAction="always" />
     <item
         android:id="@+id/news"
         android:title="CBC News"
-        app:showAsAction="never" />
+        android:orderInCategory="103"
+        android:icon="@drawable/news"
+        app:showAsAction="always" />
     <item
         android:id="@+id/nhl"
         android:title="NHL"
+        android:orderInCategory="103"
+        android:icon="@drawable/nhl"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/nutrition"
+        android:title="Nutrition"
+        android:orderInCategory="103"
+        android:icon="@drawable/nutrition"
+        app:showAsAction="never" />
+
 
     <item
         android:id="@+id/help"
+        android:orderInCategory="103"
         android:title="Help"
         app:showAsAction="never" />
 </menu>
