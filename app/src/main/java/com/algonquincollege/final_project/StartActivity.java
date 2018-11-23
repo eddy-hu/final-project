@@ -69,7 +69,7 @@ public class StartActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.i(ACTIVITY_NAME, "User clicked Nutrition ");
-                Intent intent = new Intent(StartActivity.this, NutritionStartActivity.class);
+                Intent intent = new Intent(StartActivity.this, NutritionSearchActivity.class);
                 startActivity(intent);
 
             }
@@ -134,7 +134,7 @@ public class StartActivity extends AppCompatActivity {
                 return true;
             case R.id.bus_nutrition_app:
 
-                intent = new Intent(this, NutritionStartActivity.class);
+                intent = new Intent(this, NutritionSearchActivity.class);
                 this.startActivity(intent);
                 // do your code
                 return true;

@@ -224,7 +224,7 @@ public class BusStopActivity extends AppCompatActivity {
                 return true;
             case R.id.bus_nutrition_app:
 
-                intent = new Intent(this, NutritionStartActivity.class);
+                intent = new Intent(this, NutritionSearchActivity.class);
                 this.startActivity(intent);
                 // do your code
                 return true;

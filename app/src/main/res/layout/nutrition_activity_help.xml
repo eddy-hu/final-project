@@ -4,25 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NutritionListview_item"
+    tools:context=".NutritionHelp"
     android:background="@color/blue">
 
     <TextView
         android:id="@+id/author"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="30dp"
-        android:text="@string/calories"
-         />
+        android:text="@string/author"
+        android:textSize="20sp" />
 
 
     <TextView
-        android:id="@+id/fat"
+        android:id="@+id/version"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/author"
-        android:textSize="30dp"
-        android:text="@string/fat"
-         />
+        android:text="@string/version"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/version"
+        android:text="@string/instruction"
+        android:textSize="20sp" />
 
 </RelativeLayout>

@@ -1,6 +1,6 @@
 /**
- * File name: JsonAdapter.java
- * Author: Feng Cheng, ID#:040719618
+ * File name: NutritionJsonAdapter.java
+ * NutritionAuthor: Feng Cheng, ID#:040719618
  * Course: CST2335 - Mobile Graphical Interface Prog.
  * Final project
  * Date: 2018-11-12
@@ -21,9 +21,9 @@ import java.util.List;
 /**
  * @author Feng Cheng
  */
-public class JsonAdapter extends BaseAdapter {
+public class NutritionJsonAdapter extends BaseAdapter {
 
-    private List<NewBean> data;
+    private List<NutritionNewBean> data;
     LayoutInflater inflater;
     public double calData;
     public double fatData;
@@ -32,9 +32,9 @@ public class JsonAdapter extends BaseAdapter {
      * constructor for instantiation
      *
      * @param context Context
-     * @param data    List<NewBean>
+     * @param data    List<NutritionNewBean>
      */
-    public JsonAdapter(Context context, List<NewBean> data) {
+    public NutritionJsonAdapter(Context context, List<NutritionNewBean> data) {
         super();
         this.data = data;
         inflater = LayoutInflater.from(context);
@@ -89,7 +89,7 @@ public class JsonAdapter extends BaseAdapter {
             viewHolder.fat = (TextView) convertView
                     .findViewById(R.id.fat);
             viewHolder.calories = (TextView) convertView
-                    .findViewById(R.id.calories);
+                    .findViewById(R.id.author);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();

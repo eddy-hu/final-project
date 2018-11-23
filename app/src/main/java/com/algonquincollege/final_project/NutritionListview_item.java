@@ -1,6 +1,6 @@
 /**
- * File name: Listview_item.java
- * Author: Feng Cheng, ID#:040719618
+ * File name: NutritionListview_item.java
+ * NutritionAuthor: Feng Cheng, ID#:040719618
  * Course: CST2335 - Mobile Graphical Interface Prog.
  * Final project
  * Date: 2018-11-12
@@ -16,7 +16,7 @@ import android.widget.TextView;
 /**
  * @author Feng Cheng
  */
-public class Listview_item extends AppCompatActivity {
+public class NutritionListview_item extends AppCompatActivity {
     private TextView cal;
     private TextView fat;
 

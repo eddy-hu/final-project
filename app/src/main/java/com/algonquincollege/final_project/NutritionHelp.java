@@ -1,6 +1,6 @@
 /**
- * File name: Version.java
- * Author: Feng Cheng, ID#:040719618
+ * File name: NutritionHelp.java
+ * NutritionAuthor: Feng Cheng, ID#:040719618
  * Course: CST2335 - Mobile Graphical Interface Prog.
  * Final project
  * Date: 2018-11-12
@@ -15,7 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 /**
  * @author Feng Cheng
  */
-public class Version extends AppCompatActivity {
+public class NutritionHelp extends AppCompatActivity {
     /**
      * to create the activity
      *
@@ -24,8 +24,7 @@ public class Version extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.nutrition_activity_version);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setContentView(R.layout.nutrition_activity_help);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }

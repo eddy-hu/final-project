@@ -1,4 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">食物营养数据库</string>
+    <string name="btn_search">搜索</string>
+    <string name="btn_add">添加</string>
+    <string name="btn_favourite">最喜爱</string>
+    <string name="author">作者：程峰</string>
+    <string name="version">页面版本号: CST2335 2018 Fall</string>
+    <string name="instruction">使用指南： 你可以搜索一种食物的卡路里和脂肪含量， 你可以添加这个食物到你的最喜欢列表上，你也可以删除食物。 你还可以
+    在食物中添加标签，它可以自动计算在这个标签里所有食物的卡路里和脂肪总含量。</string>
+    <string name="calories">卡路里：</string>
+    <string name="fat">脂肪: </string>
+    <string name="delete">删除</string>
+    <string name="delConf">Do you really want to delete it ?</string>
+    <string name="yes">YES</string>
+    <string name="no">NO</string>
+    <string name="your_favourite_list">最爱列表</string>
+    <string name="delete_btn">删除</string>
+    <string name="author_item">作者</string>
+    <string name="instruction_item">使用指南</string>
+    <string name="version_number">版本号</string>
+    <string name="search_hint">Enter a food name</string>
+
 
 
 
@@ -21,5 +43,6 @@
 
 
 </resources>
+
 
 
