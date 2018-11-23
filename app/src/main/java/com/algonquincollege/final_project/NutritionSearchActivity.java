@@ -9,8 +9,10 @@
  */
 package com.algonquincollege.final_project;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
@@ -186,53 +188,56 @@ public class NutritionSearchActivity extends AppCompatActivity {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    /**
-     * to create the option menu
-     *
-     * @param menu Menu
-     * @return true
-     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu, menu);
+        getMenuInflater().inflate(R.menu.bus_options_menu, menu);
         return true;
-
     }
-
-    /**
-     * to get the menu item
-     *
-     * @param item MenuItem
-     * @return three menu items
-     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
+        Toast.makeText(this, "Selected Item: " +item.getTitle(), Toast.LENGTH_SHORT).show();
         switch (item.getItemId()) {
-            case R.id.octranspo:
-                Intent intent1 = new Intent(NutritionSearchActivity.this, NutritionHelp.class);
-                this.startActivity(intent1);
+            case R.id.bus_help:
+                AlertDialog alertDialog = new AlertDialog.Builder(NutritionSearchActivity.this).create();
+                alertDialog.setTitle("Help dialog notification");
+                alertDialog.setMessage("Welcome to Final Project \nAuthor: Feng Cheng");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
                 return true;
-            case R.id.movies:
-                Intent intent2 = new Intent(NutritionSearchActivity.this, NutritionHelp.class);
-                this.startActivity(intent2);
-                return true;
-            case R.id.news:
-                Intent intent3 = new Intent(NutritionSearchActivity.this, NutritionHelp.class);
-                this.startActivity(intent3);
-                return true;
-            case R.id.nhl:
-                Intent intent4 = new Intent(NutritionSearchActivity.this, NutritionHelp.class);
-                this.startActivity(intent4);
-                return true;
-            case R.id.help:
-                Intent intent5 = new Intent(NutritionSearchActivity.this, NutritionHelp.class);
-                this.startActivity(intent5);
-                 return true;
-//            default:
-//                return super.onOptionsItemSelected(item);
-        }
-        return true;
+            case R.id.bus_nutrition_app:
 
+                intent = new Intent(this, NutritionSearchActivity.class);
+                this.startActivity(intent);
+                // do your code
+                return true;
+            case R.id.bus_movie_app:
+                intent = new Intent(this, MovieStartActivity.class);
+                this.startActivity(intent);
+                // do your code
+                return true;
+            case R.id.bus_news_app:
+                intent = new Intent(this, Spencer_MainActivity.class);
+                this.startActivity(intent);
+                // do your code
+                return true;
+            case R.id.bus_hockey_app:
+                intent = new Intent(this, Mordechai_mainActivity.class);
+                this.startActivity(intent);
+                // do your code
+                return true;
+            case R.id.home_page_icon:
+                intent = new Intent(this, StartActivity.class);
+                this.startActivity(intent);
+                // do your code
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
