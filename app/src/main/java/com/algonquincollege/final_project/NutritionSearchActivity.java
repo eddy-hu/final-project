@@ -226,6 +226,11 @@ public class NutritionSearchActivity extends AppCompatActivity {
                 this.startActivity(intent);
                 // do your code
                 return true;
+            case R.id.bus_bus_icon:
+                intent = new Intent(this, BusActivity.class);
+                this.startActivity(intent);
+                // do your code
+                return true;
             case R.id.bus_hockey_app:
                 intent = new Intent(this, Mordechai_mainActivity.class);
                 this.startActivity(intent);

@@ -99,6 +99,11 @@ public class BusRouteActivity extends AppCompatActivity {
                 this.startActivity(intent);
                 // do your code
                 return true;
+            case R.id.bus_bus_icon:
+                intent = new Intent(this, BusActivity.class);
+                this.startActivity(intent);
+                // do your code
+                return true;
             case R.id.bus_news_app:
                 intent = new Intent(this, Spencer_MainActivity.class);
                 this.startActivity(intent);
