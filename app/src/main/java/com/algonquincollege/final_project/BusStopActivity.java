@@ -7,8 +7,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -16,6 +19,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -24,7 +28,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class BusStopActivity extends Activity {
+/**
+ * Bus top detail activity to displays bus stop details information
+ */
+public class BusStopActivity extends AppCompatActivity {
 
     public static final String API_URL = "https://api.octranspo1.com/v1.2/GetRouteSummaryForStop?appID=223eb5c3&&apiKey=ab27db5b435b8c8819ffb8095328e775&stopNo=";
     protected static final String ACTIVITY_NAME = "BusStopActivity";
@@ -64,16 +71,18 @@ public class BusStopActivity extends Activity {
             stopNameView.setText("Stop: " + stopName);
         }
 
-        new OCQuery().execute("");
+        new Query().execute("");
 
 
         StopAdapter adapter = new StopAdapter(this);
         routeListView.setAdapter(adapter);
 
+        //add the back previous activity button
         backButton.setOnClickListener((e) ->{
             finish();
         });
 
+        //add the delete stop button action
         deleteStopButton.setOnClickListener((e) -> {
             Log.i(ACTIVITY_NAME, "Delete button clicked!");
             deleteStation = true;
@@ -81,7 +90,7 @@ public class BusStopActivity extends Activity {
             finish();
         });
 
-
+        //displays route list, when user clicks the item on the list will jump to the route detail activity
         routeListView.setOnItemClickListener((parent, view, position, id) -> {
             String s = routesInfo.get(position);
             Log.i(ACTIVITY_NAME, "Message: " + s);
@@ -181,9 +190,73 @@ public class BusStopActivity extends Activity {
         }
 
     }
+    /**
+     * add the options menu to this activity
+     * @param menu
+     * @return true
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.bus_options_menu, menu);
+        return true;
+    }
+    /**
+     * add the options menu to this activity
+     * @param item
+     * @return true
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
+        Toast.makeText(this, "Selected Item: " + item.getTitle(), Toast.LENGTH_SHORT).show();
+        switch (item.getItemId()) {
+            case R.id.bus_help:
+                AlertDialog alertDialog = new AlertDialog.Builder(BusStopActivity.this).create();
+                alertDialog.setTitle("Help dialog notification");
+                alertDialog.setMessage("Welcome to OCTranspo \nAuthor: Yongpan Hu");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
+                return true;
+            case R.id.bus_nutrition_app:
 
+                intent = new Intent(this, NutritionStartActivity.class);
+                this.startActivity(intent);
+                // do your code
+                return true;
+            case R.id.bus_movie_app:
+                intent = new Intent(this, MovieStartActivity.class);
+                this.startActivity(intent);
+                // do your code
+                return true;
+            case R.id.bus_news_app:
+                intent = new Intent(this, Spencer_MainActivity.class);
+                this.startActivity(intent);
+                // do your code
+                return true;
+            case R.id.bus_hockey_app:
+                intent = new Intent(this, Mordechai_mainActivity.class);
+                this.startActivity(intent);
+                // do your code
+                return true;
+            case R.id.home_page_icon:
+                intent = new Intent(this, StartActivity.class);
+                this.startActivity(intent);
+                // do your code
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
-    public class OCQuery extends AsyncTask<String, Integer, String> {
+    /**
+     * AsyncTask query inner class to handles connect to the api and parse the information
+     */
+    public class Query extends AsyncTask<String, Integer, String> {
         public String connStationNumber;
         public ArrayList<BusRouteBean> routesList = new ArrayList<BusRouteBean>();
         private String currentRouteno;

@@ -3,8 +3,13 @@ package com.algonquincollege.final_project;
 import android.app.ActionBar;
 import android.app.Activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.Window;
 import android.widget.Button;
 
@@ -15,7 +20,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class StartActivity extends Activity {
+public class StartActivity extends AppCompatActivity {
 
     protected static final String ACTIVITY_NAME = "StartActivity";
 
@@ -102,6 +107,59 @@ public class StartActivity extends Activity {
         if(responseCode == Activity.RESULT_OK) {
             String messagePassed = data.getStringExtra("Response");
             Toast.makeText(getApplicationContext(), "ListItemsActivity passed: "+messagePassed, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.bus_options_menu, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
+        Toast.makeText(this, "Selected Item: " +item.getTitle(), Toast.LENGTH_SHORT).show();
+        switch (item.getItemId()) {
+            case R.id.bus_help:
+                AlertDialog alertDialog = new AlertDialog.Builder(StartActivity.this).create();
+                alertDialog.setTitle("Help dialog notification");
+                alertDialog.setMessage("Welcome to Final Project \nAuthor: \nFeng Cheng \nMordechai Edery \nKmilla Sam \nSpencer Schening\nYongpan Hu");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
+                return true;
+            case R.id.bus_nutrition_app:
+
+                intent = new Intent(this, NutritionStartActivity.class);
+                this.startActivity(intent);
+                // do your code
+                return true;
+            case R.id.bus_movie_app:
+                intent = new Intent(this, MovieStartActivity.class);
+                this.startActivity(intent);
+                // do your code
+                return true;
+            case R.id.bus_news_app:
+                intent = new Intent(this, Spencer_MainActivity.class);
+                this.startActivity(intent);
+                // do your code
+                return true;
+            case R.id.bus_hockey_app:
+                intent = new Intent(this, Mordechai_mainActivity.class);
+                this.startActivity(intent);
+                // do your code
+                return true;
+            case R.id.home_page_icon:
+                intent = new Intent(this, StartActivity.class);
+                this.startActivity(intent);
+                // do your code
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 

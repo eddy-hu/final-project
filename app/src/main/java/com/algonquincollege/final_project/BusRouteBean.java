@@ -9,6 +9,9 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+/**
+ * Bus route java bean to store the route object which contains the route information
+ */
 public class BusRouteBean {
     private String stopNum;
     private String routeNum;
@@ -19,10 +22,14 @@ public class BusRouteBean {
     private String adjustedTime;
     private String direction;
     private boolean ready = false;
-
+    //API URL
     public final String getRouteInfo = "https://api.octranspo1.com/v1.2/GetNextTripsForStop?appID=223eb5c3&&apiKey=ab27db5b435b8c8819ffb8095328e775&stopNo=";
     public final String getRouteInfoTrailer = "&routeNo=";
 
+    /**
+     * default constructor
+     * initialize the variables with default values
+     */
     public BusRouteBean(){
         this.stopNum = "unkown";
         this.routeNum = "unkown";
@@ -35,6 +42,18 @@ public class BusRouteBean {
         this.ready = false;
     }
 
+    /**
+     * Initialize constructor
+     * initialize the variables with specified values
+     * @param stopNum
+     * @param routeNum
+     * @param destination
+     * @param coordinates
+     * @param speed
+     * @param startTime
+     * @param adjustedTime
+     * @param direction
+     */
     public BusRouteBean (String stopNum, String routeNum, String destination, String coordinates, String speed, String startTime, String adjustedTime, String direction) {
         this.stopNum = stopNum;
         this.routeNum = routeNum;
@@ -47,6 +66,14 @@ public class BusRouteBean {
         this.ready = true;
     }
 
+    /**
+     * Initialize constructor
+     * initialize the variables with specified values
+     * @param routeno
+     * @param destination
+     * @param direction
+     * @param stopNum
+     */
     public BusRouteBean(String routeno, String destination, String direction, String stopNum) {
         this.routeNum = routeno;
         this.destination = destination;
@@ -131,6 +158,9 @@ public class BusRouteBean {
         this.ready = ready;
     }
 
+    /**
+     * AsyncTask Query inner class to connect to Api and parse the information from xml
+     */
     public class Query extends AsyncTask<String, Integer, String> {
 
         @Override

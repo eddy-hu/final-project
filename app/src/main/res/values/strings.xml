@@ -17,7 +17,7 @@
     <string name="no">NO</string>
 
 
-    <string name="app_name">final-project</string>
+    <string name="app_name"> </string>
     <string name="search_btn">Search</string>
     <string name="add_btn">Add</string>
     <string name="del_btn">Delete</string>
@@ -40,21 +40,21 @@
 
 
     <!--  BUS APP STRINGS-->
-    <string name="bus_addButton">Add</string>
-    <string name="bus_deleteButton">Delete</string>
-    <string name="bus_helpButton">Help</string>
-    <string name="busBackButton">Back</string>
-    <string name="bus_badinput">Must be number</string>
-    <string name="bus_stop_w_number">Stop with number </string>
-    <string name="bus_stop_not_found"> was not found on the OC database.</string>
-    <string name="bus_route">Route </string>
-    <string name="bus_direction">Direction:</string>
-    <string name="bus_starttime">Start Time: </string>
-    <string name="bus_adjustedtime">Adjusted Time: </string>
-    <string name="bus_latlong">Latitude/Longitude:</string>
-    <string name="bus_gpsspeed">GPS Speed: </string>
-    <string name="bus_infounavailable">Unavailable</string>
-    <string name="bus_deletestationbutton">Delete</string>
+   <string name="bus_addButton">Add</string>
+   <string name="bus_deleteButton">Delete</string>
+   <string name="bus_helpButton">Help</string>
+   <string name="busBackButton">Back</string>
+   <string name="bus_badinput">Must be number</string>
+   <string name="bus_stop_w_number">Stop with number </string>
+   <string name="bus_stop_not_found"> was not found on the OC database.</string>
+   <string name="bus_route">Route </string>
+   <string name="bus_direction">Direction:</string>
+   <string name="bus_starttime">Start Time: </string>
+   <string name="bus_adjustedtime">Adjusted Time: </string>
+   <string name="bus_latlong">Latitude/Longitude:</string>
+   <string name="bus_gpsspeed">GPS Speed: </string>
+   <string name="bus_infounavailable">Unavailable</string>
+   <string name="bus_deletestationbutton">Delete</string>
 
 
 </resources>

@@ -31,7 +31,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 /**
- * Bus main activity class
+ * Bus start activity class which handles user landing and add stop number functions
  */
 public class BusActivity extends AppCompatActivity {
 
@@ -53,7 +53,7 @@ public class BusActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ctx = this;
-
+        //database helper
         BusDBHelper dbHelper = new BusDBHelper(ctx);
         database = dbHelper.getWritableDatabase();
 
@@ -88,6 +88,10 @@ public class BusActivity extends AppCompatActivity {
 
             cursor.moveToNext();
         }
+        /**
+         * add click listener action to help button
+         * when user clicks it, it will display the author information
+         */
         busHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,7 +107,11 @@ public class BusActivity extends AppCompatActivity {
                 alertDialog.show();
             }
         });
-
+        /**
+         * add click listener action to add button
+         * when user typed the stop number and clicks add button, it will add
+         * the stop information to list and database;
+         */
         addStopButton.setOnClickListener((e) -> {
             String stopInput = stopInputText.getText().toString();
             if (stopInput.matches("-?\\d+")) { //check the input if is an integer;
@@ -130,7 +138,10 @@ public class BusActivity extends AppCompatActivity {
 
         });
 
-
+        /**
+         * add click listener action to stop listView
+         * when user clicks the item, it will jump to the BusStopActivity;
+         */
         stopListView.setOnItemClickListener((parent, view, position, id) -> {
             String s = stopList.get(position);
             Log.i(ACTIVITY_NAME, "Stop: " + s);
@@ -143,6 +154,70 @@ public class BusActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    /**
+     * add the options menu to this activity
+     * @param menu
+     * @return true
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.bus_options_menu, menu);
+        return true;
+    }
+
+    /**
+     * add the options menu to this activity
+     * @param item
+     * @return true
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
+        Toast.makeText(this, "Selected Item: " +item.getTitle(), Toast.LENGTH_SHORT).show();
+        switch (item.getItemId()) {
+            case R.id.bus_help:
+                AlertDialog alertDialog = new AlertDialog.Builder(BusActivity.this).create();
+                alertDialog.setTitle("Help dialog notification");
+                alertDialog.setMessage("Welcome to OCTranspo \nAuthor: Yongpan Hu");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
+                return true;
+            case R.id.bus_nutrition_app:
+
+                intent = new Intent(this, NutritionStartActivity.class);
+                this.startActivity(intent);
+                // do your code
+                return true;
+            case R.id.bus_movie_app:
+                intent = new Intent(this, MovieStartActivity.class);
+                this.startActivity(intent);
+                // do your code
+                return true;
+            case R.id.bus_news_app:
+                intent = new Intent(this, Spencer_MainActivity.class);
+                this.startActivity(intent);
+                // do your code
+                return true;
+            case R.id.bus_hockey_app:
+                intent = new Intent(this, Mordechai_mainActivity.class);
+                this.startActivity(intent);
+                // do your code
+                return true;
+            case R.id.home_page_icon:
+                intent = new Intent(this, StartActivity.class);
+                this.startActivity(intent);
+                // do your code
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -199,6 +274,9 @@ public class BusActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    /**
+     * bus list adapter to handles bus stops list array list view;
+     */
     public class BusAdapter extends ArrayAdapter<String> {
         public BusAdapter(Context ctx) {
             super(ctx, 0);
@@ -232,51 +310,5 @@ public class BusActivity extends AppCompatActivity {
         }
 
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.bus_options_menu, menu);
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent;
-        Toast.makeText(this, "Selected Item: " +item.getTitle(), Toast.LENGTH_SHORT).show();
-        switch (item.getItemId()) {
-            case R.id.bus_help:
-                AlertDialog alertDialog = new AlertDialog.Builder(BusActivity.this).create();
-                alertDialog.setTitle("Help dialog notification");
-                alertDialog.setMessage("Welcome to OCTranspo \nAuthor: Yongpan Hu");
-                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-                alertDialog.show();
-                return true;
-            case R.id.bus_nutrition_app:
 
-                intent = new Intent(this, NutritionStartActivity.class);
-                this.startActivity(intent);
-                // do your code
-                return true;
-            case R.id.bus_movie_app:
-                intent = new Intent(this, MovieStartActivity.class);
-                this.startActivity(intent);
-                // do your code
-                return true;
-            case R.id.bus_news_app:
-                intent = new Intent(this, Spencer_MainActivity.class);
-                this.startActivity(intent);
-                // do your code
-                return true;
-            case R.id.bus_hockey_app:
-                intent = new Intent(this, Mordechai_mainActivity.class);
-                this.startActivity(intent);
-                // do your code
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 }
