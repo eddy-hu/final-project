@@ -40,6 +40,10 @@
    <string name="bus_gpsspeed">GPS速度: </string>
    <string name="bus_infounavailable">无数据</string>
    <string name="bus_deletestationbutton">删除</string>
+    <string name="nutritionTag">Tag</string>
+    <string name="tagEditTxt">Add a tag here</string>
+    <string name="foodTag">Tag</string>
+    <string name="tag_stat">Tag Stat</string>
 
 
 </resources>

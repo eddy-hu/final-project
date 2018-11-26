@@ -3,7 +3,7 @@ package com.algonquincollege.final_project;
 import android.app.Activity;
 import android.os.Bundle;
 
-public class ListItems extends Activity {
+public class NutritionListItems extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

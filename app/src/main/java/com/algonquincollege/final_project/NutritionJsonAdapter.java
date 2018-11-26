@@ -98,11 +98,6 @@ public class NutritionJsonAdapter extends BaseAdapter {
         fatData = data.get(position).fat;
         String cal = Double.toString(calData);
         String fatS = Double.toString(fatData);
-
-//        calData = Double.toString(data.get(position).calories);
-//        fatData = Double.toString(data.get(position).fat);
-//        viewHolder.fat.setText("Fat: " + Double.toString(data.get(position).fat));
-//        viewHolder.calories.setText("Calories: " + Double.toString(data.get(position).calories));
         viewHolder.fat.setText("Fat: " + fatS);
         viewHolder.calories.setText("Calories: " + cal);
 

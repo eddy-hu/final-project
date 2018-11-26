@@ -19,17 +19,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                android:textSize="20dp"
-                android:text="@string/calories" />
+                android:text="@string/calories"
+                android:textSize="20dp" />
 
             <TextView
                 android:id="@+id/calories_frag"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
-                android:textSize="20dp"/>
+                android:layout_marginRight="10dp"
+                android:textSize="20dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -43,16 +43,39 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:text="@string/fat"
-                android:textSize="20dp"/>
+                android:textSize="20dp" />
 
             <TextView
                 android:id="@+id/fat_frag"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
-                android:textSize="20dp"/>
+                android:layout_marginRight="10dp"
+                android:textSize="20dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/foodTag"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/food_tag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:textSize="20dp" />
         </LinearLayout>
 
         <View
@@ -60,16 +83,37 @@
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
-        <Button
-            android:id="@+id/detail_delete_button"
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="8dp"
+            android:layout_height="wrap_content">
 
-            android:textStyle="italic|bold"
-            android:text="@string/delete_btn" />
+            <Button
+                android:id="@+id/detail_delete_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/delete_btn"
+                android:textStyle="italic|bold" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/detail_delete_button"
+                android:id="@+id/statTag"
+                android:text="@string/tag_stat"/>
 
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/tagEditTxt"
+                android:text="@string/nutritionTag"
+                android:textStyle="italic|bold"
+                android:id="@+id/nutritionTag"/>
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:id="@+id/tagEditTxt"
+                android:hint="@string/tagEditTxt"/>
+        </RelativeLayout>
     </LinearLayout>
 
 </FrameLayout>

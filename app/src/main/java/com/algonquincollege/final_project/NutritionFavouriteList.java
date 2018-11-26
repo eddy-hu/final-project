@@ -9,7 +9,6 @@
  */
 package com.algonquincollege.final_project;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -39,7 +38,7 @@ public class NutritionFavouriteList extends AppCompatActivity {
     private ArrayList<String> listData;
     private Cursor cursor;
     private ArrayAdapter adapter;
-    private String selectedName;
+    public static String selectedName;
 
     /**
      * to create the activity
@@ -74,13 +73,14 @@ public class NutritionFavouriteList extends AppCompatActivity {
                 selectedName = adapterView.getItemAtPosition(position).toString(); //to retrieve the name of the food that has been entered.
                 foodDatabaseHelper = new NutritionDatabaseHelper(getApplicationContext());
                 sqLiteDatabase = foodDatabaseHelper.getReadableDatabase();
-                cursor = foodDatabaseHelper.getContact(selectedName, sqLiteDatabase);//to get the data from the database
+                cursor = foodDatabaseHelper.getSpecificFood(selectedName, sqLiteDatabase);//to get the data from the database
                 double cal = 0;
                 double fat = 0;
+
                 if (cursor.moveToFirst()) {
                     cal = cursor.getDouble(1); // to get the calories content based on the primary key which is the food that is shown on the fav list.
                     fat = cursor.getDouble(2); // to get the fat content based on the primary key which is the food that is shown on the fav list.
-                    Log.d(TAG, "FAT " + fat + "Cal " + cal);
+                    Log.d(TAG, "FAT " + fat + "Cal " + cal );
                 }
                 String calData = Double.toString(cal);
                 String fatData = Double.toString(fat);

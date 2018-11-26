@@ -21,10 +21,12 @@ import android.util.Log;
  */
 public class NutritionDatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "FoodNutrition.db";
-    public static final int VERSION_NUM = 3;
+    public static final int VERSION_NUM = 6;
     public static final String KEY_ID = "food";
     public static final String COL2 = "Calory";
     public static final String COL3 = "Fat";
+    public static final String COL4 = "Tag";
+
     public static final String TABLE_NAME = "Nutrition_Table";
     public static final String TAG = "NutritionDatabaseHelper";
     private SQLiteDatabase database;
@@ -49,8 +51,9 @@ public class NutritionDatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(" CREATE TABLE " + TABLE_NAME + " (" +
-                KEY_ID + " TEXT PRIMARY KEY, " + COL2 + " REAL," +
-                COL3 + " REAL);");
+                KEY_ID + " TEXT PRIMARY KEY, " + COL2 + " REAL," + COL3 + " REAL," +
+                COL4 + " TEXT);");
+
 
         Log.i(TAG, "Calling onCreate()");
     }
@@ -122,23 +125,35 @@ public class NutritionDatabaseHelper extends SQLiteOpenHelper {
      * @param sqLiteDatabase SQLiteDatabase
      * @return Cursor the specific the row
      */
-    public Cursor getContact(String id, SQLiteDatabase sqLiteDatabase) {
-        String[] projections = {KEY_ID, COL2, COL3};
+    public Cursor getSpecificFood(String id, SQLiteDatabase sqLiteDatabase) {
+        String[] projections = {KEY_ID, COL2, COL3, COL4};
         String selections = KEY_ID + " LIKE ?";
         String[] selection_args = {id};
         Cursor cursor = sqLiteDatabase.query(TABLE_NAME, projections, selections, selection_args, null, null, null);
         return cursor;
     }
 
-//    public void updateName(String newName, String id, String oldName){
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        String query = "UPDATE " + TABLE_NAME + " SET " + KEY_MESSAGE +  " '" + newName + "' WHERE " + KEY_ID +  " = '" + id + "'" +
-//                " AND " + KEY_MESSAGE + " = '" + oldName + "'";
-//
-//        Log.d(TAG, "updateName: query: " + query);
-//        Log.d(TAG, "updateName: Setting name to " + newName);
-//        db.execSQL(query);
-//    }
+    public Cursor getTag(String tag, SQLiteDatabase sqLiteDatabase) {
+        String[] projections = {KEY_ID, COL2, COL3, COL4};
+        String selections = COL4 + " LIKE ?";
+        String[] selection_args = {tag};
+        Cursor cursor = sqLiteDatabase.query(TABLE_NAME, projections, selections, selection_args, null, null, null);
+        return cursor;
+    }
+
+    public boolean updateName(String tagName, String id){
+        SQLiteDatabase db = this.getWritableDatabase();
+       // String query = "UPDATE " + TABLE_NAME + " SET " + COL4 +  " = " + tagName + "' WHERE " + KEY_ID +  " = '" + id ;
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL4, tagName);
+       long result =  db.update(TABLE_NAME, contentValues, "food = ?", new String[]{id});
+        if (result == -1) {
+            return false;
+        } else {
+            return true;
+        }
+
+    }
 
     public void deleteName(String id) {
         SQLiteDatabase db = this.getWritableDatabase();

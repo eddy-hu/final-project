@@ -28,9 +28,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * This is the activity for searching food.
@@ -52,6 +52,7 @@ public class NutritionSearchActivity extends AppCompatActivity {
     private NutritionDatabaseHelper foodDatabaseHelper = new NutritionDatabaseHelper(this);
     private NutritionNewBean newBean;
 
+
     /**
      * to create the search activity
      *
@@ -61,16 +62,13 @@ public class NutritionSearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.nutrition_activity_search);
-
         listView = (ListView) findViewById(R.id.searchResult);
         searchTxt = (EditText) findViewById(R.id.searchEditTxt);
         btnSearch = (Button) findViewById(R.id.btn_search);
         btnAdd = (Button) findViewById(R.id.btn_add);
         btnFavourite = (Button) findViewById(R.id.btn_favourite);
-
         Toolbar nutritionToolbar = (Toolbar) findViewById(R.id.nutrition_toolbar);
         setSupportActionBar(nutritionToolbar);
-
 
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,10 +87,15 @@ public class NutritionSearchActivity extends AppCompatActivity {
             public void onClick(View v) {
                 food = searchTxt.getText().toString();
 
+
                 if (food != null && !(food.isEmpty())) {
-                    double fat = adapter.fatData;
-                    double cal = adapter.calData;
-                    AddData(food, cal, fat);
+                    if (adapter != null) {
+                        double fat = adapter.fatData;
+                        double cal = adapter.calData;
+                        AddData(food, cal, fat);
+                    } else {
+                        toastMessage("No result found!");
+                    }
                 } else {
                     Snackbar.make(v, "Snackbar: Please enter the name of the food !", Snackbar.LENGTH_LONG).setAction(
                             "Action", null
@@ -193,15 +196,17 @@ public class NutritionSearchActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.bus_options_menu, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
-        Toast.makeText(this, "Selected Item: " +item.getTitle(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Selected Item: " + item.getTitle(), Toast.LENGTH_SHORT).show();
         switch (item.getItemId()) {
             case R.id.bus_help:
                 AlertDialog alertDialog = new AlertDialog.Builder(NutritionSearchActivity.this).create();
-                alertDialog.setTitle("Help dialog notification");
-                alertDialog.setMessage("Welcome to Final Project \nAuthor: Feng Cheng");
+                alertDialog.setTitle("Food Nutrition");
+                alertDialog.setMessage(getString(R.string.author) + "\n" +
+                        getString(R.string.version) + "\n" + getString(R.string.instruction));
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {

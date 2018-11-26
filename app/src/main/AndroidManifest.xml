@@ -44,7 +44,7 @@
         <activity android:name=".BusStopActivity" />
         <activity android:name=".MovieStartActivity" />
         <activity android:name=".Mordechai_mainActivity"></activity>
-        <activity android:name=".ListItems" />
+        <activity android:name=".NutritionListItems" />
 >>>>>>> master
     </application>
 

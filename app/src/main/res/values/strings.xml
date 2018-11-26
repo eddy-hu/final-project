@@ -1,12 +1,4 @@
-
 <resources>
-
-
-
-
-    <string name="nutrition_app_name">Food Nutrition Database</string>
-
-
     <string name="btn_search">Search</string>
     <string name="btn_add">Add</string>
     <string name="btn_favourite">Favourite</string>
@@ -66,6 +58,10 @@
    <string name="bus_gpsspeed">GPS Speed: </string>
    <string name="bus_infounavailable">Unavailable</string>
    <string name="bus_deletestationbutton">Delete</string>
+    <string name="nutritionTag">Add Tag</string>
+    <string name="tagEditTxt">Add a tag here</string>
+    <string name="foodTag">Tag: </string>
+    <string name="tag_stat">Tag Stat</string>
 
 
 </resources>

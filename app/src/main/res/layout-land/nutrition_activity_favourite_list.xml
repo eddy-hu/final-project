@@ -25,7 +25,7 @@
 
     <FrameLayout
         android:id="@+id/frameLayout"
-        android:layout_width="200dp"
+        android:layout_width="300dp"
         android:layout_height="match_parent"
         android:layout_alignRight="@+id/favList"
         android:layout_alignParentRight="true"
