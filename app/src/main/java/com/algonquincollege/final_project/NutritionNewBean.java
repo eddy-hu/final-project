@@ -10,7 +10,7 @@
 package com.algonquincollege.final_project;
 
 /**
- * @author Feng Cheng
+ * class to store the calories and fat,
  */
 public class NutritionNewBean {
     public double calories;
@@ -63,13 +63,8 @@ public class NutritionNewBean {
     public void setFat(double fat) {
         this.fat = fat;
     }
-//
-//    public String toString() {
-//        return "Calory: " + calories + " Fat: " + fat;
-//    }
-
     /**
-     * ]
+     *
      * the constructor
      */
     public NutritionNewBean() {

@@ -8,7 +8,7 @@
     android:background="@color/blue">
 
     <TextView
-        android:id="@+id/author"
+        android:id="@+id/cal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="30dp"
@@ -20,7 +20,7 @@
         android:id="@+id/fat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/author"
+        android:layout_below="@id/cal"
         android:textSize="30dp"
         android:text="@string/fat"
          />

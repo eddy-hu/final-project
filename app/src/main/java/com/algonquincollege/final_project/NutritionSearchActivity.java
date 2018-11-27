@@ -70,6 +70,7 @@ public class NutritionSearchActivity extends AppCompatActivity {
         Toolbar nutritionToolbar = (Toolbar) findViewById(R.id.nutrition_toolbar);
         setSupportActionBar(nutritionToolbar);
 
+        //search button
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,11 +83,11 @@ public class NutritionSearchActivity extends AppCompatActivity {
             }
         });
 
+        //to add the food to the favourite list.
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 food = searchTxt.getText().toString();
-
 
                 if (food != null && !(food.isEmpty())) {
                     if (adapter != null) {
@@ -105,6 +106,7 @@ public class NutritionSearchActivity extends AppCompatActivity {
             }
         });
 
+        //to go to favourite list.
         btnFavourite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,11 +114,10 @@ public class NutritionSearchActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 
     /**
-     * to add the data
+     * to add the data to database .
      *
      * @param food primary key in the database
      * @param cal  the detail that needs to be inserted in the calory column
@@ -132,7 +133,7 @@ public class NutritionSearchActivity extends AppCompatActivity {
     }
 
     /**
-     * inner class
+     * inner class to parse the API KEY
      */
     class MyAsyncTask extends AsyncTask<String, Void, List<NutritionNewBean>> {
         private String jsonUrl = " https://api.edamam.com/api/food-database/parser?ingr=" + food + "&app_id=" + app_id + "&app_key=" + app_key;
@@ -191,12 +192,22 @@ public class NutritionSearchActivity extends AppCompatActivity {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * toolbar menu items
+     * @param menu Menu
+     * @return boolean
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.bus_options_menu, menu);
         return true;
     }
 
+    /**
+     * multiple menu items for switching
+     * @param item Menuitem
+     * @return booolean
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
@@ -216,35 +227,28 @@ public class NutritionSearchActivity extends AppCompatActivity {
                 alertDialog.show();
                 return true;
             case R.id.bus_nutrition_app:
-
                 intent = new Intent(this, NutritionSearchActivity.class);
                 this.startActivity(intent);
-                // do your code
                 return true;
             case R.id.bus_movie_app:
                 intent = new Intent(this, MovieStartActivity.class);
                 this.startActivity(intent);
-                // do your code
                 return true;
             case R.id.bus_news_app:
                 intent = new Intent(this, Spencer_MainActivity.class);
                 this.startActivity(intent);
-                // do your code
                 return true;
             case R.id.bus_bus_icon:
                 intent = new Intent(this, BusActivity.class);
                 this.startActivity(intent);
-                // do your code
                 return true;
             case R.id.bus_hockey_app:
                 intent = new Intent(this, Mordechai_mainActivity.class);
                 this.startActivity(intent);
-                // do your code
                 return true;
             case R.id.home_page_icon:
                 intent = new Intent(this, StartActivity.class);
                 this.startActivity(intent);
-                // do your code
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

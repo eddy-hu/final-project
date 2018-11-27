@@ -19,12 +19,12 @@ import android.widget.TextView;
 import java.util.List;
 
 /**
- * @author Feng Cheng
+ * the adapter to set up the view.
  */
 public class NutritionJsonAdapter extends BaseAdapter {
 
     private List<NutritionNewBean> data;
-    LayoutInflater inflater;
+    private LayoutInflater inflater;
     public double calData;
     public double fatData;
 
@@ -89,7 +89,7 @@ public class NutritionJsonAdapter extends BaseAdapter {
             viewHolder.fat = (TextView) convertView
                     .findViewById(R.id.fat);
             viewHolder.calories = (TextView) convertView
-                    .findViewById(R.id.author);
+                    .findViewById(R.id.cal);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -100,8 +100,6 @@ public class NutritionJsonAdapter extends BaseAdapter {
         String fatS = Double.toString(fatData);
         viewHolder.fat.setText("Fat: " + fatS);
         viewHolder.calories.setText("Calories: " + cal);
-
-
         return convertView;
     }
 

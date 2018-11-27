@@ -41,7 +41,7 @@ public class NutritionFavouriteList extends AppCompatActivity {
     public static String selectedName;
 
     /**
-     * to create the activity
+     * to create the favourite list activity
      *
      * @param savedInstanceState Bundle
      */
@@ -66,6 +66,7 @@ public class NutritionFavouriteList extends AppCompatActivity {
         }
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData); // show the items on the list view
         fListView.setAdapter(adapter);
+
         //click on an food item of fav list, shows the details fragment.
         fListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -86,6 +87,8 @@ public class NutritionFavouriteList extends AppCompatActivity {
                 String fatData = Double.toString(fat);
 
                 Log.d(TAG, "onItemClick: You clicked on " + selectedName);
+
+                //listview on tablet
                 if (findViewById(R.id.frameLayout) != null) {
                     NutritionFragment nutritionFragment = new NutritionFragment();
                     Bundle bundle = new Bundle(); //save the data in the bundle for later retrieval.
@@ -98,7 +101,6 @@ public class NutritionFavouriteList extends AppCompatActivity {
                     ft.replace(R.id.frameLayout, nutritionFragment);
                     ft.addToBackStack("A string");
                     ft.commit();
-
                     Log.i(TAG, "Run on Tablet");
 
                 } else {
@@ -108,7 +110,6 @@ public class NutritionFavouriteList extends AppCompatActivity {
                     intent.putExtra("calories", calData);
                     intent.putExtra("fat", fatData);
                     startActivityForResult(intent, 1);
-
                     Log.i(TAG, "Run on phone");
                 }
 
@@ -117,7 +118,7 @@ public class NutritionFavouriteList extends AppCompatActivity {
     }//end of populate view
 
     /**
-     * to show the message
+     * to show the toast message
      *
      * @param message the message to show
      */
@@ -126,7 +127,7 @@ public class NutritionFavouriteList extends AppCompatActivity {
     }
 
     /**
-     * to retrieve data a specific entity from the database.
+     * to retrieve data of a specific entity from the database.
      */
     public void query() {
         listData.clear();
@@ -172,7 +173,7 @@ public class NutritionFavouriteList extends AppCompatActivity {
     }
 
     /**
-     * to refresh the activity when fodd is deleted.
+     * to refresh the activity when food is deleted.
      *
      * @param requestCode int
      * @param resultCode  int

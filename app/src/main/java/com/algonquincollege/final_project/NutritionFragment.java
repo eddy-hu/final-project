@@ -25,6 +25,9 @@ import java.util.Collections;
 import static java.lang.Math.round;
 import static java.util.Collections.max;
 
+/**
+ * to create the nutrition detail activity
+ */
 public class NutritionFragment extends Fragment {
 
     private View view;
@@ -52,6 +55,14 @@ public class NutritionFragment extends Fragment {
     public NutritionFragment() {
     }
 
+    /**
+     * to create fragment view of nutrition details
+     *
+     * @param inflater           Inflater
+     * @param container          ViewGroup
+     * @param savedInstanceState Bundle
+     * @return View
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -59,6 +70,11 @@ public class NutritionFragment extends Fragment {
         return view;
     }
 
+    /**
+     * to create the activity of detail fragment
+     *
+     * @param savedInstanceState
+     */
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -72,19 +88,16 @@ public class NutritionFragment extends Fragment {
         primaryFoodKey = NutritionFavouriteList.selectedName;
         foodDatabaseHelper = new NutritionDatabaseHelper(getActivity());
         sqLiteDatabase = foodDatabaseHelper.getReadableDatabase();
-        // Cursor cursor;
         cursor = foodDatabaseHelper.getSpecificFood(primaryFoodKey, sqLiteDatabase);//to get the data from the database
         if (cursor.moveToFirst()) {
             tag = cursor.getString(3);
             Log.d(TAG, " Tag " + tag);
             foodTagTextView.setText(tag);
         }
-
-
         calories.setText(getArguments().getString("calories"));
         fat.setText(getArguments().getString("fat"));
 
-
+        //to delete the food item
         delBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,7 +106,6 @@ public class NutritionFragment extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (getArguments().getBoolean("isTablet")) {
-                            foodDatabaseHelper = new NutritionDatabaseHelper((getActivity()));
                             sqLiteDatabase = foodDatabaseHelper.getWritableDatabase();
                             foodDatabaseHelper.delFood(getArguments().getString("id"), sqLiteDatabase);
                             ((NutritionFavouriteList) getActivity()).notifyChange();
@@ -120,59 +132,32 @@ public class NutritionFragment extends Fragment {
 
             }
         });
-
+        //to add a tag to a food
         nutritionTagBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 foodTag = tagEditTxt.getText().toString();
-//                primaryFoodKey = NutritionFavouriteList.selectedName;
-//                foodDatabaseHelper = new NutritionDatabaseHelper(getActivity());
-//                sqLiteDatabase = foodDatabaseHelper.getReadableDatabase();
-//                // Cursor cursor;
-//                cursor = foodDatabaseHelper.getSpecificFood(primaryFoodKey, sqLiteDatabase);//to get the data from the database
-//                if (cursor.moveToFirst()) {
-//                    tag = cursor.getString(3);
-//                    Log.d(TAG, " Tag " + tag);
-//                    foodTagTextView.setText(tag);
-//                }
                 if (tag == null) {
                     if (foodTag != null && !(foodTag.isEmpty())) {
                         UpdateData(foodTag, primaryFoodKey);
                         foodTagTextView.setText(foodTag);
                         tagEditTxt.setText("");
-                    }else{
+                    } else {
                         toastMessage("Please enter something!");
                     }
                 } else {
                     toastMessage("It has a tag already.");
                 }
-                //cursor = foodDatabaseHelper.getTag(tag, sqLiteDatabase);
-//                ArrayList<Double> listData = new ArrayList<>();
-//                listData.add(cursor.getDouble(2));
-//                for(int i = 0; i < listData.size(); i++){
-//                    Log.i("Feng", "calory " + listData.get(i));
-//                }
-//                if (cursor.moveToFirst()) {
-//                    do {
-//                        calStat.add(cursor.getDouble(1));
-//                        Log.i("Feng", "primary key " + cursor.getString(0));
-//                        Log.i("Feng", "tag " + cursor.getString(3));
-//                        Log.i("Feng", "Cal " + cursor.getDouble(1));
-//                    } while (cursor.moveToNext());
-//                }
-//                //double calMax = (double)Collections.max(calStat);
-//                Log.i("max ", "calmax = " + calMax);
 
             }
 
 
         });
 
+        //to get the statistics of total, average, min and max on a specific tag
         statBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                foodDatabaseHelper = new NutritionDatabaseHelper(getActivity());
-                sqLiteDatabase = foodDatabaseHelper.getReadableDatabase();
                 cursor = foodDatabaseHelper.getSpecificFood(primaryFoodKey, sqLiteDatabase);//to get the data from the database
                 if (cursor.moveToFirst()) {
                     tag = cursor.getString(3);
@@ -209,6 +194,7 @@ public class NutritionFragment extends Fragment {
 
     }
 
+    // to update the database if there's any food tag added.
     public void UpdateData(String food, String id) {
         foodDatabaseHelper = new NutritionDatabaseHelper(getActivity());
         boolean updateData = foodDatabaseHelper.updateName(food, id);
@@ -219,7 +205,7 @@ public class NutritionFragment extends Fragment {
         }
     }
 
-
+    //toast message
     private void toastMessage(String message) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }

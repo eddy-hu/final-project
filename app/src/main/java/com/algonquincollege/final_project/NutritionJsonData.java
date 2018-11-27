@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Feng Cheng
+ * to fetch the data from Json file.
  */
 public class NutritionJsonData {
     private List<NutritionNewBean> newBeanList = new ArrayList<>();

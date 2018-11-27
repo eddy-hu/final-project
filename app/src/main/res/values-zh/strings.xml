@@ -10,16 +10,9 @@
     在食物中添加标签，它可以自动计算在这个标签里所有食物的卡路里和脂肪总含量。</string>
     <string name="calories">卡路里：</string>
     <string name="fat">脂肪: </string>
-    <string name="delete">删除</string>
-    <string name="delConf">Do you really want to delete it ?</string>
-    <string name="yes">YES</string>
-    <string name="no">NO</string>
     <string name="your_favourite_list">最爱列表</string>
     <string name="delete_btn">删除</string>
-    <string name="author_item">作者</string>
-    <string name="instruction_item">使用指南</string>
-    <string name="version_number">版本号</string>
-    <string name="search_hint">Enter a food name</string>
+    <string name="search_hint">输入食物名字</string>
 
 
 
@@ -40,10 +33,10 @@
    <string name="bus_gpsspeed">GPS速度: </string>
    <string name="bus_infounavailable">无数据</string>
    <string name="bus_deletestationbutton">删除</string>
-    <string name="nutritionTag">Tag</string>
-    <string name="tagEditTxt">Add a tag here</string>
-    <string name="foodTag">Tag</string>
-    <string name="tag_stat">Tag Stat</string>
+    <string name="nutritionTag">标签</string>
+    <string name="tagEditTxt">在此处添加标签</string>
+    <string name="foodTag">标签</string>
+    <string name="tag_stat">标签数据</string>
 
 
 </resources>

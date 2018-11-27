@@ -14,14 +14,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 /**
- * @author Feng Cheng
+ * listview for searching result
  */
 public class NutritionListview_item extends AppCompatActivity {
-    private TextView cal;
-    private TextView fat;
-
     /**
-     * to create the activity
+     * to create the activity for searching result
      *
      * @param savedInstanceState Bundle
      */
@@ -29,7 +26,5 @@ public class NutritionListview_item extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.nutrition_activity_listview_item);
-
-
     }
 }
