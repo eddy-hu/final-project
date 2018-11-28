@@ -36,7 +36,7 @@ public class BusRouteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bus_route);
         dbHelper = new BusRouteBDHelper(this);
-        //bid the node from layout
+        //bind the node from layout
         averageAdjustedTime = (TextView) findViewById(R.id.averageAdjustedTime);
         routeDestination = (TextView) findViewById(R.id.routenoDestinationView);
         direction = (TextView) findViewById(R.id.directionView);
@@ -57,9 +57,9 @@ public class BusRouteActivity extends AppCompatActivity {
             finish();
         });
 
-        new Query().executeOnExecutor(((r) -> {
-            r.run();
-        }), "");
+        Query query = new Query();
+        query.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
         Log.i(ACTIVITY_NAME, "onCreate complete");
 
 
@@ -186,8 +186,8 @@ public class BusRouteActivity extends AppCompatActivity {
         Log.i(ACTIVITY_NAME, "start getAverageAdjustedTime  ");
 
         int count=1;
-        double total = 0;
-        double avgAdjustedTime=0;
+        int total = 0;
+        int avgAdjustedTime=0;
         Cursor cursor = dbHelper.getAverageAdjustedTime(route.getRouteNum());
         int colIndex = cursor.getColumnIndex(BusRouteBDHelper.ADJUSTED_TIME);
 
@@ -197,7 +197,7 @@ public class BusRouteActivity extends AppCompatActivity {
         while (!cursor.isAfterLast()) {
                Log.i(ACTIVITY_NAME, "after cursor is after last= " + cursor.getString(colIndex));
 
-                total += Double.parseDouble(cursor.getString(colIndex));
+                total += Integer.parseInt(cursor.getString(colIndex));
                 Log.i(ACTIVITY_NAME, "TOTAL = " + total);
 
                 cursor.moveToNext();

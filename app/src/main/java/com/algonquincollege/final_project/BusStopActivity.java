@@ -69,8 +69,8 @@ public class BusStopActivity extends AppCompatActivity {
             busStopNumber = Integer.parseInt(extras.getString("busStopNumber"));
             stopNameView.setText("Stop: " + stopName);
         }
-
-        new Query().execute("");
+        Query query = new Query();
+        query.execute("");
 
 
         StopAdapter adapter = new StopAdapter(this);
@@ -142,13 +142,14 @@ public class BusStopActivity extends AppCompatActivity {
         progressBar.setProgress(progress);
     }
 
-    private void stationNotFoundProcedure() {
+    private void stopNotFound() {
         AlertDialog alertDialog = new AlertDialog.Builder(BusStopActivity.this).create();
         alertDialog.setTitle("Stop not found");
-        alertDialog.setMessage("Stop not found, please try another one");
+        alertDialog.setMessage("Stop not found in database, please try it again");
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        finish();
                         dialog.dismiss();
                     }
                 });
@@ -360,7 +361,7 @@ public class BusStopActivity extends AppCompatActivity {
             updateProgressBar(100,100);
 
             if (stopName.equals(""))
-                stationNotFoundProcedure();
+                stopNotFound();
         }
     }
     public static void resetDeleteStation()

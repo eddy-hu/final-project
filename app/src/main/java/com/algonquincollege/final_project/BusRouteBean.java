@@ -21,9 +21,6 @@ public class BusRouteBean {
     private String startTime;
     private String adjustedTime;
     private String direction;
-    private double averageAdjustedTime;
-    private BusRouteBDHelper dbHelper;
-    private boolean ready = false;
     //API URL
     public final String getRouteInfo = "https://api.octranspo1.com/v1.2/GetNextTripsForStop?appID=223eb5c3&&apiKey=ab27db5b435b8c8819ffb8095328e775&stopNo=";
     public final String getRouteInfoTrailer = "&routeNo=";
@@ -41,7 +38,7 @@ public class BusRouteBean {
         this.startTime = "unkown";
         this.adjustedTime = "unkown";
         this.direction = "unkown";
-        this.ready = false;
+        //this.ready = false;
     }
 
     /**
@@ -65,7 +62,7 @@ public class BusRouteBean {
         this.startTime = startTime;
         this.adjustedTime = adjustedTime;
         this.direction = direction;
-        this.ready = true;
+       // this.ready = true;
     }
 
     /**
@@ -85,84 +82,8 @@ public class BusRouteBean {
     }
 
     public void updateData() {
-        new Query().execute("");
-    }
-
-
-    public boolean isReady () {
-        return ready;
-    }
-
-    public double getAverageAdjustedTime(){ return averageAdjustedTime;}
-
-    public void setAverageAdjustedTime(double averageAdjustedTime){ this.averageAdjustedTime = averageAdjustedTime;}
-
-    public String getStopNum() {
-        return stopNum;
-    }
-
-    public void setStopNum(String stopNum) {
-        this.stopNum = stopNum;
-    }
-
-    public String getRouteNum() {
-        return routeNum;
-    }
-
-    public void setRouteNum(String routeNum) {
-        this.routeNum = routeNum;
-    }
-
-    public String getDestination() {
-        return destination;
-    }
-
-    public void setDestination(String destination) {
-        this.destination = destination;
-    }
-
-    public String getCoordinates() {
-        return coordinates;
-    }
-
-    public void setCoordinates(String coordinates) {
-        this.coordinates = coordinates;
-    }
-
-    public String getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(String speed) {
-        this.speed = speed;
-    }
-
-    public String getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
-    }
-
-    public String getAdjustedTime() {
-        return adjustedTime;
-    }
-
-    public void setAdjustedTime(String adjustedTime) {
-        this.adjustedTime = adjustedTime;
-    }
-
-    public String getDirection() {
-        return direction;
-    }
-
-    public void setDirection(String direction) {
-        this.direction = direction;
-    }
-
-    public void setReady(boolean ready) {
-        this.ready = ready;
+        Query query= new Query();
+        query.execute("");
     }
 
     /**
@@ -188,8 +109,8 @@ public class BusRouteBean {
                 URL url = new URL(urlstring);
 
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setReadTimeout(10000 /* milliseconds */);
-                conn.setConnectTimeout(15000 /* milliseconds */);
+                conn.setReadTimeout(10000);
+                conn.setConnectTimeout(15000);
                 conn.setRequestMethod("GET");
                 conn.setDoInput(true);
                 conn.connect();
@@ -254,5 +175,30 @@ public class BusRouteBean {
             return null;
         }
 
+    }
+
+    public String getStopNum() {
+        return stopNum;
+    }
+    public String getRouteNum() {
+        return routeNum;
+    }
+    public String getDestination() {
+        return destination;
+    }
+    public String getCoordinates() {
+        return coordinates;
+    }
+    public String getSpeed() {
+        return speed;
+    }
+    public String getStartTime() {
+        return startTime;
+    }
+    public String getAdjustedTime() {
+        return adjustedTime;
+    }
+    public String getDirection() {
+        return direction;
     }
 }
