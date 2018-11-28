@@ -132,8 +132,8 @@ public class NutritionDatabaseHelper extends SQLiteOpenHelper {
 
 //    public void updateName(String newName, String id, String oldName){
 //        SQLiteDatabase db = this.getWritableDatabase();
-//        String query = "UPDATE " + TABLE_NAME + " SET " + KEY_MESSAGE +  " '" + newName + "' WHERE " + KEY_ID +  " = '" + id + "'" +
-//                " AND " + KEY_MESSAGE + " = '" + oldName + "'";
+//        String query = "UPDATE " + TABLE_NAME + " SET " + ADJUSTED_TIME +  " '" + newName + "' WHERE " + KEY_ID +  " = '" + id + "'" +
+//                " AND " + ADJUSTED_TIME + " = '" + oldName + "'";
 //
 //        Log.d(TAG, "updateName: query: " + query);
 //        Log.d(TAG, "updateName: Setting name to " + newName);

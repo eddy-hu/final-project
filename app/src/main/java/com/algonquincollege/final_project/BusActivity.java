@@ -1,9 +1,6 @@
 package com.algonquincollege.final_project;
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,7 +8,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,7 +16,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -229,7 +224,7 @@ public class BusActivity extends AppCompatActivity {
     protected void onResume() {
         Log.i(ACTIVITY_NAME, "In onResume()");
 
-        if (BusStopActivity.getDeleteStation() == true) {
+        if (BusStopActivity.getDeleteStop() == true) {
             Log.i(ACTIVITY_NAME, "Deleting stop " + currentStopIndex);
             String[] params = new String[1];
             params[0] = stopNumbers.get(currentStopIndex);

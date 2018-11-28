@@ -8,6 +8,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.List;
+
+/**
+ * BusDBHelper class handles SQLite database to implements CRUD functions
+ */
 public class BusDBHelper extends SQLiteOpenHelper {
 
     protected static final String ACTIVITY_NAME = "BusDBHelper";
@@ -51,6 +56,7 @@ public class BusDBHelper extends SQLiteOpenHelper {
     public Cursor getRecords() {
         return database.query(TABLE_NAME, null, null, null, null, null, null);
     }
+
 
     public void closeDatabase() {
         if(database != null && database.isOpen()){

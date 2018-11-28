@@ -1,6 +1,5 @@
 package com.algonquincollege.final_project;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -35,12 +34,12 @@ public class BusStopActivity extends AppCompatActivity {
 
     public static final String API_URL = "https://api.octranspo1.com/v1.2/GetRouteSummaryForStop?appID=223eb5c3&&apiKey=ab27db5b435b8c8819ffb8095328e775&stopNo=";
     protected static final String ACTIVITY_NAME = "BusStopActivity";
-    private static boolean deleteStation = false;
+    private static boolean deleteStop = false;
     private static String lastStation = "";
     private int busStopNumber;
     private String stopName = "";
     private Context ctx = this;
-    private ArrayList<BusRouteBean> allRoutes = new ArrayList<>();
+    private ArrayList<BusRouteBean> routeList = new ArrayList<>();
     private ArrayList<String> routesInfo = new ArrayList<>();
     private ListView routeListView;
     private ProgressBar progressBar;
@@ -84,8 +83,8 @@ public class BusStopActivity extends AppCompatActivity {
 
         //add the delete stop button action
         deleteStopButton.setOnClickListener((e) -> {
-            Log.i(ACTIVITY_NAME, "Delete button clicked!");
-            deleteStation = true;
+            Log.i(ACTIVITY_NAME, "Delete button clicked");
+            deleteStop = true;
             lastStation = Integer.toString(busStopNumber);
             finish();
         });
@@ -95,10 +94,10 @@ public class BusStopActivity extends AppCompatActivity {
             String s = routesInfo.get(position);
             Log.i(ACTIVITY_NAME, "Message: " + s);
             Intent i = new Intent(BusStopActivity.this, BusRouteActivity.class);
-            i.putExtra("routeno", allRoutes.get(position).getRouteNum());
-            i.putExtra("destination", allRoutes.get(position).getDestination());
-            i.putExtra("stationNum", allRoutes.get(position).getStopNum());
-            i.putExtra("direction", allRoutes.get(position).getDirection());
+            i.putExtra("routeno", routeList.get(position).getRouteNum());
+            i.putExtra("destination", routeList.get(position).getDestination());
+            i.putExtra("stationNum", routeList.get(position).getStopNum());
+            i.putExtra("direction", routeList.get(position).getDirection());
             startActivity(i);
         });
 
@@ -348,14 +347,14 @@ public class BusStopActivity extends AppCompatActivity {
 
             stopNameView.setText("Stop: " + stopName);
 
-            for (BusRouteBean r : routesList) {
+            for (BusRouteBean route : routesList) {
                 String newRoute = "";
-                newRoute = newRoute.concat(r.getRouteNum());
+                newRoute = newRoute.concat(route.getRouteNum());
                 newRoute = newRoute.concat(" ");
-                newRoute = newRoute.concat(r.getDestination());
+                newRoute = newRoute.concat(route.getDestination());
                 routesInfo.add(newRoute);
                 adapter.notifyDataSetChanged();
-                allRoutes.add(r);
+                routeList.add(route);
                 updateProgressBar(2,100);
             }
             updateProgressBar(100,100);
@@ -366,12 +365,12 @@ public class BusStopActivity extends AppCompatActivity {
     }
     public static void resetDeleteStation()
     {
-        deleteStation = false;
+        deleteStop = false;
     }
 
-    public static boolean getDeleteStation() {
+    public static boolean getDeleteStop() {
 
-        return deleteStation;
+        return deleteStop;
     }
 
     public static String getDeletedStationNo() {

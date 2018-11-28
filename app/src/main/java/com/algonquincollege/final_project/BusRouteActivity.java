@@ -1,8 +1,8 @@
 package com.algonquincollege.final_project;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -26,14 +26,18 @@ public class BusRouteActivity extends AppCompatActivity {
     private TextView adjustedTime;
     private TextView coordinates;
     private TextView speed;
+    private TextView averageAdjustedTime;
     private Button backButton;
+    private BusRouteBDHelper dbHelper;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bus_route);
+        dbHelper = new BusRouteBDHelper(this);
         //bid the node from layout
+        averageAdjustedTime = (TextView) findViewById(R.id.averageAdjustedTime);
         routeDestination = (TextView) findViewById(R.id.routenoDestinationView);
         direction = (TextView) findViewById(R.id.directionView);
         startTime = (TextView) findViewById(R.id.startTimeView);
@@ -42,22 +46,28 @@ public class BusRouteActivity extends AppCompatActivity {
         speed = (TextView) findViewById(R.id.speedView);
         backButton = (Button) findViewById(R.id.busBackButton);
 
+
         Bundle bundle = getIntent().getExtras();
         //instantiate a new Route java bean
-        route = new BusRouteBean (bundle.getString("routeno"), bundle.getString("destination"),
+        route = new BusRouteBean(bundle.getString("routeno"), bundle.getString("destination"),
                 bundle.getString("direction"), bundle.getString("stationNum")
         );
         //add the back previous activity button
-        backButton.setOnClickListener((e) ->{
+        backButton.setOnClickListener((e) -> {
             finish();
         });
 
-        new Query().executeOnExecutor( ((r) -> {r.run();}),"");
+        new Query().executeOnExecutor(((r) -> {
+            r.run();
+        }), "");
+        Log.i(ACTIVITY_NAME, "onCreate complete");
 
 
     }
+
     /**
      * add the options menu to this activity
+     *
      * @param menu
      * @return true
      */
@@ -66,8 +76,10 @@ public class BusRouteActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.bus_options_menu, menu);
         return true;
     }
+
     /**
      * add the options menu to this activity
+     *
      * @param item
      * @return true
      */
@@ -149,13 +161,76 @@ public class BusRouteActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    private void setDisplay() {
+    private void insertEntry() {
+        if (route == null) {
+            Log.i(ACTIVITY_NAME, "route object empty");
+        }
+        String routeNo = route.getRouteNum();
+        String adjustedTime = route.getAdjustedTime();
+        if (adjustedTime == null) {
+            adjustedTime = "0";
+
+        }
+        dbHelper.openDatabase();
+        dbHelper.insertEntry(routeNo, adjustedTime);
+        dbHelper.closeDatabase();
+    }
+
+    /**
+     * get the adjusted time from database then calculate the average
+     * @return average adjusted time
+     */
+
+    private String getAverageAdjustedTime() {
+        dbHelper.openDatabase();
+        Log.i(ACTIVITY_NAME, "start getAverageAdjustedTime  ");
+
+        int count=1;
+        double total = 0;
+        double avgAdjustedTime=0;
+        Cursor cursor = dbHelper.getAverageAdjustedTime(route.getRouteNum());
+        int colIndex = cursor.getColumnIndex(BusRouteBDHelper.ADJUSTED_TIME);
+
+        cursor.moveToFirst();
+        Log.i(ACTIVITY_NAME, "after move to first");
+
+        while (!cursor.isAfterLast()) {
+               Log.i(ACTIVITY_NAME, "after cursor is after last= " + cursor.getString(colIndex));
+
+                total += Double.parseDouble(cursor.getString(colIndex));
+                Log.i(ACTIVITY_NAME, "TOTAL = " + total);
+
+                cursor.moveToNext();
+
+            }
+            Log.i(ACTIVITY_NAME, "Cursor's column count = " + cursor.getColumnCount());
+
+
+        for (int i = 0; i < cursor.getColumnCount(); i++) {
+            Log.i(ACTIVITY_NAME, "The " + i + " row is " + cursor.getColumnName(i));
+        }
+        count = cursor.getCount();
+        dbHelper.closeDatabase();
+     if(total==0){
+         return"null";
+     }else{
+         avgAdjustedTime=total/count;
+     }
+
+      return avgAdjustedTime+"";
+    }
+
+
+
+    private void display() {
         routeDestination.setText(getString(R.string.bus_route) + route.getRouteNum() + " " + route.getDestination());
         direction.setText(getString(R.string.bus_direction) + route.getDirection());
         startTime.setText(getString(R.string.bus_starttime) + route.getStartTime());
         adjustedTime.setText(getString(R.string.bus_adjustedtime) + route.getAdjustedTime());
         coordinates.setText(getString(R.string.bus_latlong) + route.getCoordinates());
         speed.setText(getString(R.string.bus_gpsspeed) + route.getSpeed());
+        averageAdjustedTime.setText(getString(R.string.bus_avgadjustedtime) + getAverageAdjustedTime()); //get avg adjusted time
+
     }
 
     /**
@@ -173,7 +248,8 @@ public class BusRouteActivity extends AppCompatActivity {
                 }
                 route.updateData();
             }
-            setDisplay();
+            insertEntry();// call insertEntry() to insert the adjusted time to database;
+            display();
             return null;
         }
     }

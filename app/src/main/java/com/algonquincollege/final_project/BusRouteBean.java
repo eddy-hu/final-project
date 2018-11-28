@@ -21,6 +21,8 @@ public class BusRouteBean {
     private String startTime;
     private String adjustedTime;
     private String direction;
+    private double averageAdjustedTime;
+    private BusRouteBDHelper dbHelper;
     private boolean ready = false;
     //API URL
     public final String getRouteInfo = "https://api.octranspo1.com/v1.2/GetNextTripsForStop?appID=223eb5c3&&apiKey=ab27db5b435b8c8819ffb8095328e775&stopNo=";
@@ -79,6 +81,7 @@ public class BusRouteBean {
         this.destination = destination;
         this.direction = direction;
         this.stopNum = stopNum;
+
     }
 
     public void updateData() {
@@ -89,6 +92,10 @@ public class BusRouteBean {
     public boolean isReady () {
         return ready;
     }
+
+    public double getAverageAdjustedTime(){ return averageAdjustedTime;}
+
+    public void setAverageAdjustedTime(double averageAdjustedTime){ this.averageAdjustedTime = averageAdjustedTime;}
 
     public String getStopNum() {
         return stopNum;
@@ -170,7 +177,8 @@ public class BusRouteBean {
             boolean foundDirection = false;
             String fullCoordinates = "";
             int eventType;
-            Log.i("Bean constructor", "background activity begun..");
+
+            Log.i("Bean query", "background begun.");
 
 
             try {
@@ -186,7 +194,7 @@ public class BusRouteBean {
                 conn.setDoInput(true);
                 conn.connect();
 
-                Log.i("Bean constructor", "attempting parse");
+                Log.i("Bean query", "attempting parse");
 
                 XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
                 factory.setNamespaceAware(false);
@@ -237,10 +245,10 @@ public class BusRouteBean {
                         coordinates +" "+
                         speed);
                 conn.getInputStream().close();
-                Log.i("Bean constructor","closed input stream");
-                Log.i("Bean constructor", "parse complete");
+                Log.i("Bean query","closed input stream");
+                Log.i("Bean query", "parse complete");
             } catch (Exception e) {
-                Log.i("Bean constructor", "Exception: " + e.toString());
+                Log.i("Bean query", "Exception: " + e.toString());
                 return ("Exception: " + e.toString());
             }
             return null;
