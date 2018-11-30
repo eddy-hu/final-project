@@ -40,6 +40,8 @@
    <string name="bus_gpsspeed">GPS速度: </string>
    <string name="bus_infounavailable">无数据</string>
    <string name="bus_deletestationbutton">删除</string>
+    <string name="bus_avgadjustedtime">平均迟到时间: </string>
+
 
 
 </resources>
