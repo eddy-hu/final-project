@@ -1,3 +1,10 @@
+/**
+ * The activity for bus stop, when use clicked a bus stop number from
+ * BusActivity will invoke this activity
+ * @Author: Yongpan Hu
+ * @Version: 1.1
+ * @Since:1.0
+ */
 package com.algonquincollege.final_project;
 
 import android.app.AlertDialog;
@@ -19,10 +26,8 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
-
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -31,23 +36,66 @@ import java.util.ArrayList;
  * Bus top detail activity to displays bus stop details information
  */
 public class BusStopActivity extends AppCompatActivity {
-
+    /**
+     * The url of the bus stop API
+     */
     public static final String API_URL = "https://api.octranspo1.com/v1.2/GetRouteSummaryForStop?appID=223eb5c3&&apiKey=ab27db5b435b8c8819ffb8095328e775&stopNo=";
+    /**
+     * The name of this class
+     */
     protected static final String ACTIVITY_NAME = "BusStopActivity";
+    /**
+     * The boolean of delete action
+     */
     private static boolean deleteStop = false;
-    private static String lastStation = "";
+    /**
+     * The last station of route
+     */
+    private static String lastStop = "";
+    /**
+     * The number of bus stop
+     */
     private int busStopNumber;
+    /**
+     * The name of stop
+     */
     private String stopName = "";
+    /**
+     * The current context
+     */
     private Context ctx = this;
+    /**
+     * The list of routes
+     */
     private ArrayList<BusRouteBean> routeList = new ArrayList<>();
+    /**
+     * The list of routes info
+     */
     private ArrayList<String> routesInfo = new ArrayList<>();
+    /**
+     * The list view of routes
+     */
     private ListView routeListView;
+    /**
+     * The progress bar
+     */
     private ProgressBar progressBar;
+    /**
+     * The progress value
+     */
     private int progress;
+    /**
+     * The text view for stop name
+     */
     private TextView stopNameView;
+    /**
+     * The button of back to previous activity
+     */
     private Button backButton;
+    /**
+     * The button of delete item
+     */
     private Button deleteStopButton;
-
 
 
     @Override
@@ -85,7 +133,7 @@ public class BusStopActivity extends AppCompatActivity {
         deleteStopButton.setOnClickListener((e) -> {
             Log.i(ACTIVITY_NAME, "Delete button clicked");
             deleteStop = true;
-            lastStation = Integer.toString(busStopNumber);
+            lastStop = Integer.toString(busStopNumber);
             finish();
         });
 
@@ -135,13 +183,21 @@ public class BusStopActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    private void updateProgressBar(int u, int max) {
-        progress += u;
+    /**
+     * Updating the progress bar loading
+     * @param num
+     * @param max
+     */
+    private void updateProgressBar(int num, int max) {
+        progress += num;
         if (progress > max)
             progress = max;
         progressBar.setProgress(progress);
     }
 
+    /**
+     * To handles when the stop is not found from API
+     */
     private void stopNotFound() {
         AlertDialog alertDialog = new AlertDialog.Builder(BusStopActivity.this).create();
         alertDialog.setTitle("Stop not found");
@@ -156,6 +212,9 @@ public class BusStopActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
+    /**
+     * The array adapter ofr stop list view
+     */
     public class StopAdapter extends ArrayAdapter<String> {
         public StopAdapter(Context ctx) {
             super(ctx, 0);
@@ -364,16 +423,28 @@ public class BusStopActivity extends AppCompatActivity {
                 stopNotFound();
         }
     }
-    public static void resetDeleteStation()
+
+    /**
+     * Reset delete stop boolean
+     */
+    public static void resetDeleteStop()
     {
         deleteStop = false;
     }
 
+    /**
+     * Getter for if user click delete button
+     * @return true if user click delete button
+     */
     public static boolean getDeleteStop() {
 
         return deleteStop;
     }
 
-    public static String getDeletedStationNo() {
-        return lastStation; }
+    /**
+     * Getter for deleted stop number
+     * @return the last stop
+     */
+    public static String getDeletedStopNo() {
+        return lastStop; }
 }

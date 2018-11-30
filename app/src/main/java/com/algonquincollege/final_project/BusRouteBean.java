@@ -1,3 +1,9 @@
+/**
+ * The Java bean object class for bus route
+ * @Author: Yongpan Hu
+ * @Version: 1.1
+ * @Since:1.0
+ */
 package com.algonquincollege.final_project;
 
 import android.os.AsyncTask;
@@ -13,16 +19,45 @@ import java.net.URL;
  * Bus route java bean to store the route object which contains the route information
  */
 public class BusRouteBean {
+    /**
+     * The number of stop
+     */
     private String stopNum;
+    /**
+     * The number of route
+     */
     private String routeNum;
+    /**
+     * The destination of route
+     */
     private String destination;
+    /**
+     * The coordinates of route
+     */
     private String coordinates;
+    /**
+     * The speed of route
+     */
     private String speed;
+    /**
+     * The start time of route
+     */
     private String startTime;
+    /**
+     * The adjusted time of route
+     */
     private String adjustedTime;
+    /**
+     * The direction of route
+     */
     private String direction;
-    //API URL
+    /**
+     * The URL of get route info API
+     */
     public final String getRouteInfo = "https://api.octranspo1.com/v1.2/GetNextTripsForStop?appID=223eb5c3&&apiKey=ab27db5b435b8c8819ffb8095328e775&stopNo=";
+    /**
+     * The trailer of of get route info API
+     */
     public final String getRouteInfoTrailer = "&routeNo=";
 
     /**
@@ -62,7 +97,6 @@ public class BusRouteBean {
         this.startTime = startTime;
         this.adjustedTime = adjustedTime;
         this.direction = direction;
-       // this.ready = true;
     }
 
     /**
@@ -177,27 +211,66 @@ public class BusRouteBean {
 
     }
 
+    /**
+     * Getter for number of stop
+     * @return stopNum
+     */
     public String getStopNum() {
         return stopNum;
     }
+
+    /**
+     * Getter for number of route
+     * @return routeNum
+     */
     public String getRouteNum() {
         return routeNum;
     }
+
+    /**
+     * Getter for destination of route
+     * @return destination
+     */
     public String getDestination() {
         return destination;
     }
+
+    /**
+     * Getter for coordinates of route
+     * @return
+     */
     public String getCoordinates() {
         return coordinates;
     }
+
+    /**
+     * Getter for speed of route
+     * @return speed
+     */
     public String getSpeed() {
         return speed;
     }
+
+    /**
+     * Getter for  startTime of route
+     * @return startTime
+     */
     public String getStartTime() {
         return startTime;
     }
+
+    /**
+     * Getter for adjusted time of route
+     * @return  adjustedTime
+     */
     public String getAdjustedTime() {
         return adjustedTime;
     }
+
+    /**
+     * Getter for direction of route
+     * @return direction
+     */
     public String getDirection() {
         return direction;
     }

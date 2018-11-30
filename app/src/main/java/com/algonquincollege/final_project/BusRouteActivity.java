@@ -1,3 +1,10 @@
+/**
+ * The activity for bus route, when use clicked a bus route number from
+ * BusStopActivity will invoke this activity
+ * @Author: Yongpan Hu
+ * @Version: 1.1
+ * @Since:1.0
+ */
 package com.algonquincollege.final_project;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -17,17 +24,50 @@ import android.widget.Toast;
  * Bus route activity to displays the route detail information
  */
 public class BusRouteActivity extends AppCompatActivity {
+    /**
+     * The name of this class
+     */
     public static final String ACTIVITY_NAME = "BusRouteActivity";
 
+    /**
+     * BusRouteBean object
+     */
     private BusRouteBean route;
+    /**
+     * Destination of route
+     */
     private TextView routeDestination;
+    /**
+     * Direction of route
+     */
     private TextView direction;
+    /**
+     * Start time of route
+     */
     private TextView startTime;
+    /**
+     * Adjusted time of route
+     */
     private TextView adjustedTime;
+    /**
+     * Coordinates of route
+     */
     private TextView coordinates;
+    /**
+     * Speed of route
+     */
     private TextView speed;
+    /**
+     * Average adjusted time of route
+     */
     private TextView averageAdjustedTime;
+    /**
+     * The button of back to previous activity
+     */
     private Button backButton;
+    /**
+     * The SQLite database helper of route
+     */
     private BusRouteBDHelper dbHelper;
 
 
@@ -221,7 +261,9 @@ public class BusRouteActivity extends AppCompatActivity {
     }
 
 
-
+    /**
+     * Refresh the content of the layout
+     */
     private void display() {
         routeDestination.setText(getString(R.string.bus_route) + route.getRouteNum() + " " + route.getDestination());
         direction.setText(getString(R.string.bus_direction) + route.getDirection());
