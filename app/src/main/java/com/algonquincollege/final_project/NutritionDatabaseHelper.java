@@ -160,6 +160,26 @@ public class NutritionDatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
+     * to delete food tag
+     *
+     * @param id primary key
+     * @return boolean if the tag is deleted or not
+     */
+    public boolean deleteTag(String id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        String tag = null;
+        contentValues.put(COL4, tag);
+        long result = db.update(TABLE_NAME, contentValues, "food = ?", new String[]{id});
+        if (result == -1) {
+            return false;
+        } else {
+            return true;
+        }
+
+    }
+
+    /**
      * to delete a specific row from the database
      *
      * @param id             primary key

@@ -40,7 +40,7 @@
             />
 
         <item android:id="@+id/bus_help"
-            android:title="HELP" />
+            android:title="@string/help" />
     </menu>
 
 

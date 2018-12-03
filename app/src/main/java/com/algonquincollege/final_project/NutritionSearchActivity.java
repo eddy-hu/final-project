@@ -20,7 +20,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -38,20 +37,17 @@ import java.util.List;
 public class NutritionSearchActivity extends AppCompatActivity {
     private ProgressDialog loading = null;
     private NutritionJsonAdapter adapter;
-    private EditText searchTxt;
+    private EditText searchEditText;
     private Button btnAdd;
     private Button btnFavourite;
     private Button btnSearch;
     private ListView listView;
     protected static final String ACTIVITY_NAME = "NutritionSearchActivity";
-    private Context ctx = null;
     private String app_id = "40cb1f76", app_key = "9dd571cf4d9e83a7796c460130be79dd";
     private List<NutritionNewBean> newBeanList = new ArrayList<>();
-    public String food;
+    public static String food;
     private String jsonUrl = " https://api.edamam.com/api/food-database/parser?ingr=" + food + "&app_id=" + app_id + "&app_key=" + app_key;
     private NutritionDatabaseHelper foodDatabaseHelper = new NutritionDatabaseHelper(this);
-    private NutritionNewBean newBean;
-
 
     /**
      * to create the search activity
@@ -63,7 +59,7 @@ public class NutritionSearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.nutrition_activity_search);
         listView = (ListView) findViewById(R.id.searchResult);
-        searchTxt = (EditText) findViewById(R.id.searchEditTxt);
+        searchEditText = (EditText) findViewById(R.id.searchEditTxt);
         btnSearch = (Button) findViewById(R.id.btn_search);
         btnAdd = (Button) findViewById(R.id.btn_add);
         btnFavourite = (Button) findViewById(R.id.btn_favourite);
@@ -74,11 +70,11 @@ public class NutritionSearchActivity extends AppCompatActivity {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                food = searchTxt.getText().toString();
+                food = searchEditText.getText().toString();
                 if (food != null && !food.isEmpty()) {
                     new MyAsyncTask().execute(jsonUrl);
                 } else {
-                    toastMessage("ToastMessage: Please enter something.");
+                    toastMessage(getString(R.string.prompt_to_enter));
                 }
             }
         });
@@ -87,7 +83,7 @@ public class NutritionSearchActivity extends AppCompatActivity {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                food = searchTxt.getText().toString();
+                food = searchEditText.getText().toString();
 
                 if (food != null && !(food.isEmpty())) {
                     if (adapter != null) {
@@ -95,10 +91,10 @@ public class NutritionSearchActivity extends AppCompatActivity {
                         double cal = adapter.calData;
                         AddData(food, cal, fat);
                     } else {
-                        toastMessage("No result found!");
+                        toastMessage(getString(R.string.no_result_found));
                     }
                 } else {
-                    Snackbar.make(v, "Snackbar: Please enter the name of the food !", Snackbar.LENGTH_LONG).setAction(
+                    Snackbar.make(v, getString(R.string.prompt_to_enter), Snackbar.LENGTH_LONG).setAction(
                             "Action", null
                     ).show();
                 }
@@ -126,9 +122,9 @@ public class NutritionSearchActivity extends AppCompatActivity {
     public void AddData(String food, double cal, double fat) {
         boolean insertData = foodDatabaseHelper.addData(food, cal, fat);
         if (insertData) {
-            toastMessage("ToastMessage: Data successfully inserted");
+            toastMessage(getString(R.string.data_insert));
         } else {
-            toastMessage("ToastMessage: Something went wrong");
+            toastMessage(getString(R.string.error));
         }
     }
 
@@ -157,7 +153,7 @@ public class NutritionSearchActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             loading = new ProgressDialog(NutritionSearchActivity.this);
-            loading.setMessage("Please wait");
+            loading.setMessage(getString(R.string.waitmsg));
             loading.setCancelable(false);
             loading.show();
             ;
@@ -194,6 +190,7 @@ public class NutritionSearchActivity extends AppCompatActivity {
 
     /**
      * toolbar menu items
+     *
      * @param menu Menu
      * @return boolean
      */
@@ -205,6 +202,7 @@ public class NutritionSearchActivity extends AppCompatActivity {
 
     /**
      * multiple menu items for switching
+     *
      * @param item Menuitem
      * @return booolean
      */
@@ -215,10 +213,10 @@ public class NutritionSearchActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.bus_help:
                 AlertDialog alertDialog = new AlertDialog.Builder(NutritionSearchActivity.this).create();
-                alertDialog.setTitle("Food Nutrition");
+                alertDialog.setTitle(getString(R.string.dialogboxTitle));
                 alertDialog.setMessage(getString(R.string.author) + "\n" +
                         getString(R.string.version) + "\n" + getString(R.string.instruction));
-                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, getString(R.string.ok),
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();

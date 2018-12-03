@@ -13,8 +13,8 @@ package com.algonquincollege.final_project;
  * class to store the calories and fat,
  */
 public class NutritionNewBean {
-    public double calories;
-    public double fat;
+    private double calories;
+    private double fat;
 
     /**
      * constructor for instantiation
@@ -71,4 +71,25 @@ public class NutritionNewBean {
         super();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        NutritionNewBean that = (NutritionNewBean) o;
+
+        if (Double.compare(that.calories, calories) != 0) return false;
+        return Double.compare(that.fat, fat) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        temp = Double.doubleToLongBits(calories);
+        result = (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(fat);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
+    }
 }

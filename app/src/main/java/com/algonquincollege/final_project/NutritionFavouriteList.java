@@ -81,7 +81,7 @@ public class NutritionFavouriteList extends AppCompatActivity {
                 if (cursor.moveToFirst()) {
                     cal = cursor.getDouble(1); // to get the calories content based on the primary key which is the food that is shown on the fav list.
                     fat = cursor.getDouble(2); // to get the fat content based on the primary key which is the food that is shown on the fav list.
-                    Log.d(TAG, "FAT " + fat + "Cal " + cal );
+                    Log.d(TAG, "FAT " + fat + "Cal " + cal);
                 }
                 String calData = Double.toString(cal);
                 String fatData = Double.toString(fat);
@@ -105,7 +105,7 @@ public class NutritionFavouriteList extends AppCompatActivity {
 
                 } else {
                     //go to the new detailed activity if it is a phone.
-                    Intent intent = new Intent(NutritionFavouriteList.this, NutritionDetailFrag.class);
+                    Intent intent = new Intent(NutritionFavouriteList.this, NutritionDetailActivity.class);
                     intent.putExtra("id", selectedName);
                     intent.putExtra("calories", calData);
                     intent.putExtra("fat", fatData);

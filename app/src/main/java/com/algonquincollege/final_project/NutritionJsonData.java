@@ -58,7 +58,6 @@ public class NutritionJsonData {
             }
             Log.e("TAG", "" + sb.toString());
             JSONObject jsonObject = new JSONObject(sb.toString());
-
             JSONArray jsonArray = jsonObject.getJSONArray("hints");
             JSONObject textArray = jsonArray.getJSONObject(0);
             JSONObject foodObject = textArray.getJSONObject("food");
@@ -67,8 +66,8 @@ public class NutritionJsonData {
             double fat = (double) foodObject.getJSONObject("nutrients").get("FAT");
 
             NutritionNewBean newBean = new NutritionNewBean();
-            newBean.calories = calories;
-            newBean.fat = fat;
+            newBean.setCalories(calories);
+            newBean.setFat(fat);
             newBeanList.add(newBean);
 
         } catch (Exception e) {

@@ -6,9 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 /**
- * This class is the fragment for nutrition details.
+ * This class is the activity for nutrition details.
  */
-public class NutritionDetailFrag extends AppCompatActivity {
+public class NutritionDetailActivity extends AppCompatActivity {
     /**
      * to create the nutrition activity.
      *

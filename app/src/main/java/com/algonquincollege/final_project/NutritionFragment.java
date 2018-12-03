@@ -2,6 +2,7 @@ package com.algonquincollege.final_project;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -31,8 +32,8 @@ import static java.util.Collections.max;
 public class NutritionFragment extends Fragment {
 
     private View view;
-    private TextView calories;
-    private TextView fat;
+    private TextView caloriesTextView;
+    private TextView fatTextView;
     private Button delBtn;
     private NutritionDatabaseHelper foodDatabaseHelper;
     private SQLiteDatabase sqLiteDatabase;
@@ -50,6 +51,8 @@ public class NutritionFragment extends Fragment {
     private double calMax;
     private double calMin;
     private static final String TAG = "NutritionFragment";
+    private Button tagDelBtn;
+    private TextView foodNameTextView;
 
 
     public NutritionFragment() {
@@ -78,13 +81,16 @@ public class NutritionFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        calories = view.findViewById(R.id.calories_frag);
-        fat = view.findViewById(R.id.fat_frag);
+        caloriesTextView = view.findViewById(R.id.calories_frag);
+        fatTextView = view.findViewById(R.id.fat_frag);
         delBtn = view.findViewById(R.id.detail_delete_button);
         nutritionTagBtn = view.findViewById(R.id.nutritionTag);
         tagEditTxt = view.findViewById(R.id.tagEditTxt);
         foodTagTextView = view.findViewById(R.id.food_tag);
+        tagDelBtn = view.findViewById(R.id.tagDelBtn);
+        foodNameTextView = view.findViewById(R.id.foodName);
         statBtn = view.findViewById(R.id.statTag);
+
         primaryFoodKey = NutritionFavouriteList.selectedName;
         foodDatabaseHelper = new NutritionDatabaseHelper(getActivity());
         sqLiteDatabase = foodDatabaseHelper.getReadableDatabase();
@@ -94,15 +100,17 @@ public class NutritionFragment extends Fragment {
             Log.d(TAG, " Tag " + tag);
             foodTagTextView.setText(tag);
         }
-        calories.setText(getArguments().getString("calories"));
-        fat.setText(getArguments().getString("fat"));
+
+        caloriesTextView.setText(getArguments().getString("calories"));
+        fatTextView.setText(getArguments().getString("fat"));
+        foodNameTextView.setText(primaryFoodKey);
 
         //to delete the food item
         delBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(getActivity());
-                mBuilder.setMessage("Do you really want to delete it?").setCancelable(false).setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                mBuilder.setMessage(getString(R.string.delConfMsg) + primaryFoodKey + " ?").setCancelable(false).setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (getArguments().getBoolean("isTablet")) {
@@ -120,14 +128,14 @@ public class NutritionFragment extends Fragment {
                         }
 
                     }
-                }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                }).setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
                     }
                 });
                 AlertDialog alert = mBuilder.create();
-                alert.setTitle("Alert!!");
+                alert.setTitle(getString(R.string.alertTitle));
                 alert.show();
 
             }
@@ -143,10 +151,10 @@ public class NutritionFragment extends Fragment {
                         foodTagTextView.setText(foodTag);
                         tagEditTxt.setText("");
                     } else {
-                        toastMessage("Please enter something!");
+                        toastMessage(getString(R.string.prompt_to_enter));
                     }
                 } else {
-                    toastMessage("It has a tag already.");
+                    toastMessage(getString(R.string.tag_already));
                 }
 
             }
@@ -175,16 +183,17 @@ public class NutritionFragment extends Fragment {
                         }
                         calAve = round(calTotal / calStat.size());
 
+
                     } else {
-                        toastMessage("No tag found! ");
+                        toastMessage(getString(R.string.no_tag_found));
                     }
                 }
                 AlertDialog calStatDialog = new AlertDialog.Builder(getActivity())
-                        .setTitle("Tag: " + tag)
-                        .setMessage("Max Calories: " + Double.toString(calMax) + "\n"
-                                + "Min Calories: " + Double.toString(calMin) + "\n" +
-                                "Total Calories: " + calTotal + "\n" +
-                                "Average Calories: " + calAve)
+                        .setTitle(getString(R.string.tag_stat_title) + tag)
+                        .setMessage(getString(R.string.max_cal) + Double.toString(calMax) + " g" + "\n"
+                                + getString(R.string.min_cal) + Double.toString(calMin) + " g" + "\n" +
+                                getString(R.string.total_cal) + calTotal + " g" + "\n" +
+                                getString(R.string.ave_cal) + calAve + " g")
                         .setCancelable(true)
                         .create();
                 calStatDialog.show();
@@ -192,6 +201,39 @@ public class NutritionFragment extends Fragment {
             }
         });
 
+        /**
+         * to delete the food tag
+         */
+        tagDelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String foodTagString = foodTagTextView.getText().toString();
+                if (!(foodTagString.isEmpty())) {
+                    DeleteTag(primaryFoodKey);
+                } else {
+
+                    toastMessage(getString(R.string.no_tag_found));
+                }
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.detach(NutritionFragment.this).attach(NutritionFragment.this).commit();
+            }
+        });
+
+    }
+
+    /**
+     * to delete the tag
+     *
+     * @param id primary key
+     */
+    public void DeleteTag(String id) {
+        // foodDatabaseHelper = new NutritionDatabaseHelper(getActivity());
+        boolean deleteTag = foodDatabaseHelper.deleteTag(id);
+        if (deleteTag) {
+            toastMessage(getString(R.string.tag_delete));
+        } else {
+            toastMessage(getString(R.string.error));
+        }
     }
 
     // to update the database if there's any food tag added.
@@ -199,9 +241,9 @@ public class NutritionFragment extends Fragment {
         foodDatabaseHelper = new NutritionDatabaseHelper(getActivity());
         boolean updateData = foodDatabaseHelper.updateName(food, id);
         if (updateData) {
-            toastMessage("ToastMessage: Data successfully updated");
+            toastMessage(getString(R.string.tag_update));
         } else {
-            toastMessage("ToastMessage: Something went wrong");
+            toastMessage(getString(R.string.error));
         }
     }
 
