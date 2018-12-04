@@ -52,12 +52,15 @@
    <string name="bus_gpsspeed">GPS速度: </string>
    <string name="bus_infounavailable">无数据</string>
    <string name="bus_deletestationbutton">删除</string>
+    <string name="bus_avgadjustedtime">平均迟到时间: </string>
+
     <string name="nutritionTag">标签</string>
     <string name="tagEditTxt">在此处添加标签</string>
     <string name="foodTag">标签</string>
     <string name="tag_stat">标签数据</string>
     <string name="help">帮助</string>
     <string name="delete_tag">删除标签</string>
+
 
 
 </resources>

@@ -158,6 +158,11 @@ public class StartActivity extends AppCompatActivity {
                 this.startActivity(intent);
                 // do your code
                 return true;
+            case R.id.bus_bus_icon:
+                intent = new Intent(this, BusActivity.class);
+                this.startActivity(intent);
+                // do your code
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

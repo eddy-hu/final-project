@@ -1,9 +1,12 @@
+/**
+ * The start activity for bus application
+ * @Author: Yongpan Hu
+ * @Version: 1.1
+ * @Since:1.0
+ */
 package com.algonquincollege.final_project;
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,7 +14,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,7 +22,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,20 +35,50 @@ import java.util.ArrayList;
  * Bus start activity class which handles user landing and add stop number functions
  */
 public class BusActivity extends AppCompatActivity {
-
+    /**
+     * The name of this class
+     */
     protected static final String ACTIVITY_NAME = "BusActivity";
-    ArrayList<String> stopList = new ArrayList<String>();
-    ArrayList<String> stopNumbers = new ArrayList<String>();
-    ListView stopListView;
-    EditText stopInputText;
-    Button addStopButton;
+    /**
+     * The list of stops
+     */
+    private ArrayList<String> stopList = new ArrayList<String>();
+    /**
+     * The list of stop numbers
+     */
+    private ArrayList<String> stopNumbers = new ArrayList<String>();
+    /**
+     * The list view of stops
+     */
+    private ListView stopListView;
+    /**
+     * The edit text for stop input
+     */
+    private EditText stopInputText;
+    /**
+     * The button of add bus stop
+     */
+    private Button addStopButton;
+    /**
+     * Current context
+     */
     private Context ctx;
+    /**
+     * The SQLite database for bus stop
+     */
     private SQLiteDatabase database;
+    /**
+     * The SQLite cursor for database query results
+     */
     private Cursor cursor;
-
+    /**
+     * The index of current stop
+     */
     private int currentStopIndex = 0;
-
-    BusAdapter adapter;
+    /**
+     * The adapter for bus list view
+     */
+    private BusAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,13 +98,13 @@ public class BusActivity extends AppCompatActivity {
         Button busHelp  = (Button) findViewById(R.id.busHelpButton);
 
         Log.i(ACTIVITY_NAME, "Attempted query:    SELECT " +
-                BusDBHelper.STATION_NAME + ", " +
-                BusDBHelper.STATION_NO + " FROM " +
+                BusDBHelper.STOP_NAME + ", " +
+                BusDBHelper.STOP_NO + " FROM " +
                 BusDBHelper.TABLE_NAME);
 
         cursor = database.rawQuery("SELECT " +
-                BusDBHelper.STATION_NAME + ", " +
-                BusDBHelper.STATION_NO + " FROM " +
+                BusDBHelper.STOP_NAME + ", " +
+                BusDBHelper.STOP_NO + " FROM " +
                 BusDBHelper.TABLE_NAME, null, null);
         cursor.moveToFirst();
 
@@ -117,10 +148,10 @@ public class BusActivity extends AppCompatActivity {
             if (stopInput.matches("-?\\d+")) { //check the input if is an integer;
                 ContentValues newData = new ContentValues();
 
-                newData.put(BusDBHelper.STATION_NAME, "NAME_NOT_FOUND");
-                newData.put(BusDBHelper.STATION_NO, stopInput);
+                newData.put(BusDBHelper.STOP_NAME, "NAME_NOT_FOUND");
+                newData.put(BusDBHelper.STOP_NO, stopInput);
 
-                database.insert(BusDBHelper.TABLE_NAME, BusDBHelper.STATION_NAME, newData);
+                database.insert(BusDBHelper.TABLE_NAME, BusDBHelper.STOP_NAME, newData);
 
                 String newStop = "Stop number ";
                 newStop = newStop.concat(stopInput);
@@ -229,11 +260,11 @@ public class BusActivity extends AppCompatActivity {
     protected void onResume() {
         Log.i(ACTIVITY_NAME, "In onResume()");
 
-        if (BusStopActivity.getDeleteStation() == true) {
+        if (BusStopActivity.getDeleteStop() == true) {
             Log.i(ACTIVITY_NAME, "Deleting stop " + currentStopIndex);
             String[] params = new String[1];
             params[0] = stopNumbers.get(currentStopIndex);
-            database.delete(BusDBHelper.TABLE_NAME, BusDBHelper.STATION_NO + "=?", params);
+            database.delete(BusDBHelper.TABLE_NAME, BusDBHelper.STOP_NO + "=?", params);
 
             adapter = new BusAdapter(this);
             stopListView.setAdapter(adapter);
@@ -244,10 +275,10 @@ public class BusActivity extends AppCompatActivity {
 
 
             Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),
-                     BusStopActivity.getDeletedStationNo() + " has been deleted", Snackbar.LENGTH_SHORT);
+                     BusStopActivity.getDeletedStopNo() + " has been deleted", Snackbar.LENGTH_SHORT);
             snackbar.show();
 
-            BusStopActivity.resetDeleteStation();
+            BusStopActivity.resetDeleteStop();
         }
 
         super.onResume();

@@ -1,6 +1,12 @@
+/**
+ * The activity for bus stop, when use clicked a bus stop number from
+ * BusActivity will invoke this activity
+ * @Author: Yongpan Hu
+ * @Version: 1.1
+ * @Since:1.0
+ */
 package com.algonquincollege.final_project;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -20,10 +26,8 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
-
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -32,23 +36,62 @@ import java.util.ArrayList;
  * Bus top detail activity to displays bus stop details information
  */
 public class BusStopActivity extends AppCompatActivity {
-
+    /**
+     * The url of the bus stop API
+     */
     public static final String API_URL = "https://api.octranspo1.com/v1.2/GetRouteSummaryForStop?appID=223eb5c3&&apiKey=ab27db5b435b8c8819ffb8095328e775&stopNo=";
+    /**
+     * The name of this class
+     */
     protected static final String ACTIVITY_NAME = "BusStopActivity";
-    private static boolean deleteStation = false;
-    private static String lastStation = "";
+    /**
+     * The boolean of delete action
+     */
+    private static boolean deleteStop = false;
+    /**
+     * The last station of route
+     */
+    private static String lastStop = "";
+    /**
+     * The number of bus stop
+     */
     private int busStopNumber;
+    /**
+     * The name of stop
+     */
     private String stopName = "";
+    /**
+     * The current context
+     */
     private Context ctx = this;
-    private ArrayList<BusRouteBean> allRoutes = new ArrayList<>();
+    /**
+     * The list of routes
+     */
+    private ArrayList<BusRouteBean> routeList = new ArrayList<>();
+    /**
+     * The list of routes info
+     */
     private ArrayList<String> routesInfo = new ArrayList<>();
+    /**
+     * The list view of routes
+     */
     private ListView routeListView;
+    /**
+     * The progress bar
+     */
     private ProgressBar progressBar;
-    private int progress;
+    /**
+     * The text view for stop name
+     */
     private TextView stopNameView;
+    /**
+     * The button of back to previous activity
+     */
     private Button backButton;
+    /**
+     * The button of delete item
+     */
     private Button deleteStopButton;
-
 
 
     @Override
@@ -59,7 +102,6 @@ public class BusStopActivity extends AppCompatActivity {
         routeListView = (ListView) findViewById(R.id.routesView);
         backButton = (Button) findViewById(R.id.busStopBackButton);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        progress = 0;
         stopNameView = (TextView) findViewById(R.id.stationName);
         deleteStopButton = (Button) findViewById(R.id.deleteStationButton);
 
@@ -70,8 +112,8 @@ public class BusStopActivity extends AppCompatActivity {
             busStopNumber = Integer.parseInt(extras.getString("busStopNumber"));
             stopNameView.setText("Stop: " + stopName);
         }
-
-        new Query().execute("");
+        Query query = new Query();
+        query.execute("");
 
 
         StopAdapter adapter = new StopAdapter(this);
@@ -84,9 +126,9 @@ public class BusStopActivity extends AppCompatActivity {
 
         //add the delete stop button action
         deleteStopButton.setOnClickListener((e) -> {
-            Log.i(ACTIVITY_NAME, "Delete button clicked!");
-            deleteStation = true;
-            lastStation = Integer.toString(busStopNumber);
+            Log.i(ACTIVITY_NAME, "Delete button clicked");
+            deleteStop = true;
+            lastStop = Integer.toString(busStopNumber);
             finish();
         });
 
@@ -95,10 +137,10 @@ public class BusStopActivity extends AppCompatActivity {
             String s = routesInfo.get(position);
             Log.i(ACTIVITY_NAME, "Message: " + s);
             Intent i = new Intent(BusStopActivity.this, BusRouteActivity.class);
-            i.putExtra("routeno", allRoutes.get(position).getRouteNum());
-            i.putExtra("destination", allRoutes.get(position).getDestination());
-            i.putExtra("stationNum", allRoutes.get(position).getStopNum());
-            i.putExtra("direction", allRoutes.get(position).getDirection());
+            i.putExtra("routeno", routeList.get(position).getRouteNum());
+            i.putExtra("destination", routeList.get(position).getDestination());
+            i.putExtra("stationNum", routeList.get(position).getStopNum());
+            i.putExtra("direction", routeList.get(position).getDirection());
             startActivity(i);
         });
 
@@ -136,26 +178,39 @@ public class BusStopActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    private void updateProgressBar(int u, int max) {
-        progress += u;
-        if (progress > max)
-            progress = max;
-        progressBar.setProgress(progress);
+    /**
+     * Updating the progress bar loading
+     * @param num
+     * @param max
+     */
+    private void updateProgressBar(int num, int max) {
+        if (num > max) {
+            progressBar.setProgress(max);
+        }else {
+            progressBar.setProgress(num);
+        }
     }
 
-    private void stationNotFoundProcedure() {
+    /**
+     * To handles when the stop is not found from API
+     */
+    private void stopNotFound() {
         AlertDialog alertDialog = new AlertDialog.Builder(BusStopActivity.this).create();
         alertDialog.setTitle("Stop not found");
-        alertDialog.setMessage("Stop not found, please try another one");
+        alertDialog.setMessage("Stop not found in database, please try it again");
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        finish();
                         dialog.dismiss();
                     }
                 });
         alertDialog.show();
     }
 
+    /**
+     * The array adapter ofr stop list view
+     */
     public class StopAdapter extends ArrayAdapter<String> {
         public StopAdapter(Context ctx) {
             super(ctx, 0);
@@ -348,32 +403,45 @@ public class BusStopActivity extends AppCompatActivity {
 
             stopNameView.setText("Stop: " + stopName);
 
-            for (BusRouteBean r : routesList) {
+            for (BusRouteBean route : routesList) {
                 String newRoute = "";
-                newRoute = newRoute.concat(r.getRouteNum());
+                newRoute = newRoute.concat(route.getRouteNum());
                 newRoute = newRoute.concat(" ");
-                newRoute = newRoute.concat(r.getDestination());
+                newRoute = newRoute.concat(route.getDestination());
                 routesInfo.add(newRoute);
                 adapter.notifyDataSetChanged();
-                allRoutes.add(r);
+                routeList.add(route);
                 updateProgressBar(2,100);
             }
             updateProgressBar(100,100);
 
             if (stopName.equals(""))
-                stationNotFoundProcedure();
+                stopNotFound();
         }
     }
-    public static void resetDeleteStation()
+
+    /**
+     * Reset delete stop boolean
+     */
+    public static void resetDeleteStop()
     {
-        deleteStation = false;
+
+        deleteStop = false;
     }
 
-    public static boolean getDeleteStation() {
+    /**
+     * Getter for if user click delete button
+     * @return true if user click delete button
+     */
+    public static boolean getDeleteStop() {
 
-        return deleteStation;
+        return deleteStop;
     }
 
-    public static String getDeletedStationNo() {
-        return lastStation; }
+    /**
+     * Getter for deleted stop number
+     * @return the last stop
+     */
+    public static String getDeletedStopNo() {
+        return lastStop; }
 }
