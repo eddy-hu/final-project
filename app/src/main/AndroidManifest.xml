@@ -30,13 +30,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".NutritionListview_item" />
         <activity android:name=".NutritionFavouriteList" />
-        <activity
-            android:name=".NutritionHelp"
-            android:label="Version"
-            android:parentActivityName=".NutritionSearchActivity" />
-        <activity android:name=".NutritionDetailFrag" />
+        <activity android:name=".NutritionDetailActivity" />
 
         <activity android:name=".MoviesActivity" />
         <activity android:name=".BusActivity" />

@@ -19,12 +19,12 @@ import android.widget.TextView;
 import java.util.List;
 
 /**
- * @author Feng Cheng
+ * the adapter to set up the view.
  */
 public class NutritionJsonAdapter extends BaseAdapter {
 
     private List<NutritionNewBean> data;
-    LayoutInflater inflater;
+    private LayoutInflater inflater;
     public double calData;
     public double fatData;
 
@@ -86,27 +86,22 @@ public class NutritionJsonAdapter extends BaseAdapter {
         if (convertView == null) {
             viewHolder = new ViewHolder();
             convertView = inflater.inflate(R.layout.nutrition_activity_listview_item, null);
+            viewHolder.searchedFood = (TextView) convertView.findViewById(R.id.searchedFood);
             viewHolder.fat = (TextView) convertView
                     .findViewById(R.id.fat);
             viewHolder.calories = (TextView) convertView
-                    .findViewById(R.id.author);
+                    .findViewById(R.id.cal);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        calData = data.get(position).calories;
-        fatData = data.get(position).fat;
-        String cal = Double.toString(calData);
-        String fatS = Double.toString(fatData);
-
-//        calData = Double.toString(data.get(position).calories);
-//        fatData = Double.toString(data.get(position).fat);
-//        viewHolder.fat.setText("Fat: " + Double.toString(data.get(position).fat));
-//        viewHolder.calories.setText("Calories: " + Double.toString(data.get(position).calories));
-        viewHolder.fat.setText("Fat: " + fatS);
-        viewHolder.calories.setText("Calories: " + cal);
-
-
+        calData = data.get(position).getCalories();
+        fatData = data.get(position).getFat();
+        String calString = Double.toString(calData);
+        String fatString = Double.toString(fatData);
+        viewHolder.searchedFood.setText("Food: " + NutritionSearchActivity.food);
+        viewHolder.fat.setText("Fat: " + fatString + " g ");
+        viewHolder.calories.setText("Calories: " + calString + " g ");
         return convertView;
     }
 
@@ -114,7 +109,7 @@ public class NutritionJsonAdapter extends BaseAdapter {
      * inner class to hold the view of detailed searched result
      */
     class ViewHolder {
-        public TextView fat, calories;
+        public TextView searchedFood, fat, calories;
 
     }
 }

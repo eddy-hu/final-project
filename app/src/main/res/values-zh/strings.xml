@@ -1,25 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">食物营养数据库</string>
+    <string name="app_name"></string>
     <string name="btn_search">搜索</string>
     <string name="btn_add">添加</string>
     <string name="btn_favourite">最喜爱</string>
     <string name="author">作者：程峰</string>
-    <string name="version">页面版本号: CST2335 2018 Fall</string>
+    <string name="version">页面版本号: Version 1.0 </string>
     <string name="instruction">使用指南： 你可以搜索一种食物的卡路里和脂肪含量， 你可以添加这个食物到你的最喜欢列表上，你也可以删除食物。 你还可以
     在食物中添加标签，它可以自动计算在这个标签里所有食物的卡路里和脂肪总含量。</string>
     <string name="calories">卡路里：</string>
     <string name="fat">脂肪: </string>
-    <string name="delete">删除</string>
-    <string name="delConf">Do you really want to delete it ?</string>
-    <string name="yes">YES</string>
-    <string name="no">NO</string>
     <string name="your_favourite_list">最爱列表</string>
     <string name="delete_btn">删除</string>
-    <string name="author_item">作者</string>
-    <string name="instruction_item">使用指南</string>
-    <string name="version_number">版本号</string>
-    <string name="search_hint">Enter a food name</string>
+    <string name="search_hint">输入食物名字</string>
+    <string name="dialogboxTitle">食物营养数据库</string>
+    <string name="ok">确认</string>
+    <string name="prompt_to_enter">请输入</string>
+    <string name="tag_already">已经标签过了</string>
+    <string name="data_insert">数据成功添加</string>
+    <string name="error">出错了</string>
+    <string name="no_result_found">无搜索内容</string>
+    <string name="waitmsg">请稍等</string>
+    <string name="delConfMsg">您确定要删除</string>
+    <string name="no">取消</string>
+    <string name="alertTitle">注意</string>
+    <string name="no_tag_found">没有发现标签</string>
+    <string name="tag_delete">标签已删除</string>
+    <string name="tag_update">标签已更新</string>
+    <string name="tag_stat_title">标签: </string>
+    <string name="max_cal">最大卡路里值: </string>
+    <string name="min_cal">最小卡路里值: </string>
+    <string name="total_cal">总的卡路里值: </string>
+    <string name="ave_cal">平均卡路里值: </string>
 
 
 
@@ -41,6 +53,13 @@
    <string name="bus_infounavailable">无数据</string>
    <string name="bus_deletestationbutton">删除</string>
     <string name="bus_avgadjustedtime">平均迟到时间: </string>
+
+    <string name="nutritionTag">标签</string>
+    <string name="tagEditTxt">在此处添加标签</string>
+    <string name="foodTag">标签</string>
+    <string name="tag_stat">标签数据</string>
+    <string name="help">帮助</string>
+    <string name="delete_tag">删除标签</string>
 
 
 
