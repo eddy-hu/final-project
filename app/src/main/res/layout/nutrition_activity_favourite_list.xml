@@ -12,6 +12,7 @@
         android:text = "@string/your_favourite_list"
         android:textStyle="italic|bold"
         android:id="@+id/favList"
+        android:layout_marginLeft="40dp"
         android:textSize="40dp"/>
     <ListView
         android:layout_width="match_parent"

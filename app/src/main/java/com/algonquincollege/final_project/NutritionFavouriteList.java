@@ -9,7 +9,6 @@
  */
 package com.algonquincollege.final_project;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -39,10 +38,10 @@ public class NutritionFavouriteList extends AppCompatActivity {
     private ArrayList<String> listData;
     private Cursor cursor;
     private ArrayAdapter adapter;
-    private String selectedName;
+    public static String selectedName;
 
     /**
-     * to create the activity
+     * to create the favourite list activity
      *
      * @param savedInstanceState Bundle
      */
@@ -67,6 +66,7 @@ public class NutritionFavouriteList extends AppCompatActivity {
         }
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData); // show the items on the list view
         fListView.setAdapter(adapter);
+
         //click on an food item of fav list, shows the details fragment.
         fListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -74,9 +74,10 @@ public class NutritionFavouriteList extends AppCompatActivity {
                 selectedName = adapterView.getItemAtPosition(position).toString(); //to retrieve the name of the food that has been entered.
                 foodDatabaseHelper = new NutritionDatabaseHelper(getApplicationContext());
                 sqLiteDatabase = foodDatabaseHelper.getReadableDatabase();
-                cursor = foodDatabaseHelper.getContact(selectedName, sqLiteDatabase);//to get the data from the database
+                cursor = foodDatabaseHelper.getSpecificFood(selectedName, sqLiteDatabase);//to get the data from the database
                 double cal = 0;
                 double fat = 0;
+
                 if (cursor.moveToFirst()) {
                     cal = cursor.getDouble(1); // to get the calories content based on the primary key which is the food that is shown on the fav list.
                     fat = cursor.getDouble(2); // to get the fat content based on the primary key which is the food that is shown on the fav list.
@@ -86,6 +87,8 @@ public class NutritionFavouriteList extends AppCompatActivity {
                 String fatData = Double.toString(fat);
 
                 Log.d(TAG, "onItemClick: You clicked on " + selectedName);
+
+                //listview on tablet
                 if (findViewById(R.id.frameLayout) != null) {
                     NutritionFragment nutritionFragment = new NutritionFragment();
                     Bundle bundle = new Bundle(); //save the data in the bundle for later retrieval.
@@ -98,17 +101,15 @@ public class NutritionFavouriteList extends AppCompatActivity {
                     ft.replace(R.id.frameLayout, nutritionFragment);
                     ft.addToBackStack("A string");
                     ft.commit();
-
                     Log.i(TAG, "Run on Tablet");
 
                 } else {
                     //go to the new detailed activity if it is a phone.
-                    Intent intent = new Intent(NutritionFavouriteList.this, NutritionDetailFrag.class);
+                    Intent intent = new Intent(NutritionFavouriteList.this, NutritionDetailActivity.class);
                     intent.putExtra("id", selectedName);
                     intent.putExtra("calories", calData);
                     intent.putExtra("fat", fatData);
                     startActivityForResult(intent, 1);
-
                     Log.i(TAG, "Run on phone");
                 }
 
@@ -117,7 +118,7 @@ public class NutritionFavouriteList extends AppCompatActivity {
     }//end of populate view
 
     /**
-     * to show the message
+     * to show the toast message
      *
      * @param message the message to show
      */
@@ -126,7 +127,7 @@ public class NutritionFavouriteList extends AppCompatActivity {
     }
 
     /**
-     * to retrieve data a specific entity from the database.
+     * to retrieve data of a specific entity from the database.
      */
     public void query() {
         listData.clear();
@@ -172,7 +173,7 @@ public class NutritionFavouriteList extends AppCompatActivity {
     }
 
     /**
-     * to refresh the activity when fodd is deleted.
+     * to refresh the activity when food is deleted.
      *
      * @param requestCode int
      * @param resultCode  int

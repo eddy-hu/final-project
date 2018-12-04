@@ -9,8 +9,9 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/nutrition_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         />
+
 
     <Button
         android:id="@+id/btn_add"
@@ -21,7 +22,6 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="60dp"
         android:textStyle="italic|bold"
-        android:background="@drawable/buttonshapecolor"
         android:text="@string/btn_add" />
 
     <Button
@@ -31,7 +31,6 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:background="@drawable/buttonshapecolor"
         android:textStyle="italic|bold"
         android:layout_marginTop="60dp"
         android:text="@string/btn_favourite" />
@@ -55,10 +54,10 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:textStyle="italic|bold"
-        android:background="@drawable/buttonshapecolor"
         android:text="@string/btn_search" />
 
     <ListView
+
         android:id="@+id/searchResult"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
