@@ -176,27 +176,27 @@ public class NutritionFragment extends Fragment {
                                 calStat.add(cursor.getDouble(1));
                             } while (cursor.moveToNext());
                         }
-                        calMax = Collections.max(calStat);
-                        calMin = Collections.min(calStat);
-                        for (int i = 0; i < calStat.size(); i++) {
-                            calTotal += calStat.get(i);
-                        }
-                        calAve = round(calTotal / calStat.size());
+                        calMax = Collections.max(calStat); //get max of calories
+                        calMin = Collections.min(calStat); //get min of calories
+                        calTotal = foodDatabaseHelper.getSum(tag); //get total calories
+                        calAve = round(calTotal / calStat.size()); //get average calories
+
+                        //alertdialog box to show the stattics of max, min, total and average of calories under the same tag name
+                        AlertDialog calStatDialog = new AlertDialog.Builder(getActivity())
+                                .setTitle(getString(R.string.tag_stat_title) + tag)
+                                .setMessage(getString(R.string.max_cal) + Double.toString(calMax) + " g" + "\n"
+                                        + getString(R.string.min_cal) + Double.toString(calMin) + " g" + "\n" +
+                                        getString(R.string.total_cal) + calTotal + " g" + "\n" +
+                                        getString(R.string.ave_cal) + calAve + " g")
+                                .setCancelable(true)
+                                .create();
+                        calStatDialog.show();
 
 
                     } else {
                         toastMessage(getString(R.string.no_tag_found));
                     }
                 }
-                AlertDialog calStatDialog = new AlertDialog.Builder(getActivity())
-                        .setTitle(getString(R.string.tag_stat_title) + tag)
-                        .setMessage(getString(R.string.max_cal) + Double.toString(calMax) + " g" + "\n"
-                                + getString(R.string.min_cal) + Double.toString(calMin) + " g" + "\n" +
-                                getString(R.string.total_cal) + calTotal + " g" + "\n" +
-                                getString(R.string.ave_cal) + calAve + " g")
-                        .setCancelable(true)
-                        .create();
-                calStatDialog.show();
 
             }
         });
@@ -236,7 +236,11 @@ public class NutritionFragment extends Fragment {
         }
     }
 
-    // to update the database if there's any food tag added.
+    /**
+     * to update the database
+     * @param food
+     * @param id
+     */
     public void UpdateData(String food, String id) {
         foodDatabaseHelper = new NutritionDatabaseHelper(getActivity());
         boolean updateData = foodDatabaseHelper.updateName(food, id);

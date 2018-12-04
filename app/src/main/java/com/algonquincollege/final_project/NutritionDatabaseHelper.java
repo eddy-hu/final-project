@@ -193,6 +193,21 @@ public class NutritionDatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
+     * to get the total calories of the same tag.
+     *
+     * @param tag tag name
+     * @return double calories
+     */
+    public double getSum(String tag) {
+        String sql = "SELECT SUM(" + COL2 + ") FROM " + TABLE_NAME + " WHERE " + COL4 + " = " + "'" + tag + "'";
+        database = this.getReadableDatabase();
+        Cursor cursor = database.rawQuery(sql, null);
+        cursor.moveToFirst();
+        double sumCal = cursor.getDouble(0);
+        return sumCal;
+    }
+
+    /**
      * to open the writable database
      */
     public void openDatabase() {
