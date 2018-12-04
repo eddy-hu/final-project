@@ -81,10 +81,6 @@ public class BusStopActivity extends AppCompatActivity {
      */
     private ProgressBar progressBar;
     /**
-     * The progress value
-     */
-    private int progress;
-    /**
      * The text view for stop name
      */
     private TextView stopNameView;
@@ -106,7 +102,6 @@ public class BusStopActivity extends AppCompatActivity {
         routeListView = (ListView) findViewById(R.id.routesView);
         backButton = (Button) findViewById(R.id.busStopBackButton);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        progress = 0;
         stopNameView = (TextView) findViewById(R.id.stationName);
         deleteStopButton = (Button) findViewById(R.id.deleteStationButton);
 
@@ -189,10 +184,11 @@ public class BusStopActivity extends AppCompatActivity {
      * @param max
      */
     private void updateProgressBar(int num, int max) {
-        progress += num;
-        if (progress > max)
-            progress = max;
-        progressBar.setProgress(progress);
+        if (num > max) {
+            progressBar.setProgress(max);
+        }else {
+            progressBar.setProgress(num);
+        }
     }
 
     /**
@@ -429,6 +425,7 @@ public class BusStopActivity extends AppCompatActivity {
      */
     public static void resetDeleteStop()
     {
+
         deleteStop = false;
     }
 

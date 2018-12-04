@@ -224,9 +224,17 @@ public class BusRouteActivity extends AppCompatActivity {
     private String getAverageAdjustedTime() {
         dbHelper.openDatabase();
         Log.i(ACTIVITY_NAME, "start getAverageAdjustedTime  ");
-
+        /**
+         * Counts how many rows of database
+         */
         int count=1;
+        /**
+         * The total of adjusted time
+         */
         int total = 0;
+        /**
+         * The result of calculated average of adjusted time
+         */
         int avgAdjustedTime=0;
         Cursor cursor = dbHelper.getAverageAdjustedTime(route.getRouteNum());
         int colIndex = cursor.getColumnIndex(BusRouteBDHelper.ADJUSTED_TIME);
