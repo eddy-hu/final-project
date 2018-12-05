@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">final-project</string>
+    <string name="title_activity_spencer__favourites">Spencer_Favourites</string>
+    <string name="save">Save</string>
+    <string name="type">Type here!</string>
+    <string name="search">Search</string>
+    <string name="refresh">Refresh</string>
+    <string name="favourites">Favourites</string>
+    <string name="help">Help Menu</string>
+    <string name="bus">OCTranspo App</string>
+    <string name="movie">Movie App</string>
+    <string name="news">CBC News</string>
+    <string name="hockey">NHL App</string>
+    <string name="nutrition">Food/Nutrition App</string>
+    <string name="home">Main Menu!</string>
+
 </resources>

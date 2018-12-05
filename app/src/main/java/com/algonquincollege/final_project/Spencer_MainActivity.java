@@ -13,11 +13,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Layout;
 import android.util.Log;
 import android.util.Xml;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -27,6 +31,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -51,7 +56,63 @@ import static com.algonquincollege.final_project.DatabaseHelper.title;
 
 public class Spencer_MainActivity extends AppCompatActivity {
 
+    /**
+     * toolbar menu items
+     *
+     * @param menu Menu
+     * @return boolean
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.s_menu, menu);
+        return true;
+    }
 
+    /**
+     * multiple menu items for switching
+     *
+     * @param item Menuitem
+     * @return booolean
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
+        Fragment selected = null;
+        Toast.makeText(this, "Selected Item: " + item.getTitle(), Toast.LENGTH_SHORT).show();
+        switch (item.getItemId()) {
+            case R.id.bus_help:
+                selected = new Spencer_frag();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment, selected).commit();
+                //intent = new Intent(this, Spencer_frag.class);
+                //this.startActivity(intent);
+//            case R.id.bus_nutrition_app:
+//                intent = new Intent(this, NutritionSearchActivity.class);
+//                this.startActivity(intent);
+//                return true;
+//            case R.id.bus_movie_app:
+//                intent = new Intent(this, MovieStartActivity.class);
+//                this.startActivity(intent);
+//                return true;
+//            case R.id.bus_news_app:
+//                intent = new Intent(this, Spencer_MainActivity.class);
+//                this.startActivity(intent);
+//                return true;
+//            case R.id.bus_bus_icon:
+//                intent = new Intent(this, BusActivity.class);
+//                this.startActivity(intent);
+//                return true;
+//            case R.id.bus_hockey_app:
+//                intent = new Intent(this, Mordechai_mainActivity.class);
+//                this.startActivity(intent);
+//                return true;
+//            case R.id.home_page_icon:
+//                intent = new Intent(this, StartActivity.class);
+//                this.startActivity(intent);
+//                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
 
 
@@ -73,7 +134,7 @@ private ProgressBar s_progress;
 
 private DatabaseHelper dhHelper;
 
-private SQLiteDatabase db;
+protected SQLiteDatabase db;
 
 private ArrayList<String> list;
 
@@ -87,6 +148,8 @@ private TextView message;
 
 private ListView listView;
 
+private Toolbar s_toolbar;
+
 private String tag = "";
 private String text = "";
 
@@ -95,6 +158,9 @@ private String text = "";
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.spencer_activity_main);
+
+       // s_toolbar = (Toolbar)findViewById(R.id.tool);
+       // setSupportActionBar(s_toolbar);
 
         s_search = (Button)findViewById(R.id.s_search);
         s_open =  (Button)findViewById(R.id.s_open);
@@ -134,10 +200,14 @@ private String text = "";
         s_open.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CharSequence text = "This will open up saved articles.";
+                CharSequence text = "Opening Saved Articles.";
                 int duration = Snackbar.LENGTH_SHORT;
                 Snackbar snackbar = Snackbar.make(s_button2, text, duration);
                 snackbar.show();
+
+                Intent i = new Intent(Spencer_MainActivity.this, Spencer_Favourites.class);
+                startActivity(i);
+
             }
         });
 
@@ -181,6 +251,7 @@ private String text = "";
             Log.i(ACTIVITY_NAME, "In doInbackground");
             try {
                 URL url = new URL(strings[0]);
+                Log.d("doInBackground", "Connect??");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setReadTimeout(10000);
                 conn.setConnectTimeout(15000);
@@ -235,8 +306,11 @@ private String text = "";
                             publishProgress(90);
 
                             parser.nextTag();
+                            String str = parser.nextText();
+                            // String image = str.substring(str.indexOf("='") + 2, str.indexOf("'") );
+                            String result = str.substring(str.indexOf("<p>") + 3, str.indexOf("</p>"));
                             // } else if (parser.getName().equals("description")) {
-                            content.put(description, parser.nextText());
+                            content.put(description, result);
                             publishProgress(100);
                             db.insert(TABLE_NAME, null, content);
 
@@ -262,6 +336,7 @@ private String text = "";
 
         @Override
         protected void onPostExecute(String result) {
+            Log.i("TAG", "Post Execute, before cursor.");
             Cursor cursor = dhHelper.getData();
             list = new ArrayList<>();
             cursor.moveToFirst();
@@ -330,6 +405,8 @@ private String text = "";
             Log.i(ACTIVITY_NAME, "In onPostExecute.");
         }
     }
+
+
     private class DbAdapter extends ArrayAdapter<String> {
         public DbAdapter(Context ctx){
             super(ctx, 0);

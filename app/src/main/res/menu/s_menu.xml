@@ -1,40 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/tool"
+    >
 
 
 
     <item
-        android:id="@+id/octranspo"
-        android:title="Octranspo"
+        android:id="@+id/bus_bus_icon"
+        android:title="@string/bus"
         android:orderInCategory="101"
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/movies"
-        android:title="Movies"
+        android:id="@+id/bus_movie_app"
+        android:title="@string/movie"
         android:orderInCategory="102"
         app:showAsAction="always" />
     <item
-        android:id="@+id/news"
-        android:title="CBC News"
+        android:id="@+id/bus_news_app"
+        android:title="@string/news"
         android:orderInCategory="103"
         app:showAsAction="always" />
     <item
-        android:id="@+id/nhl"
-        android:title="NHL"
+        android:id="@+id/bus_hockey_app"
+        android:title="@string/hockey"
         android:orderInCategory="103"
         app:showAsAction="never" />
     <item
-        android:id="@+id/nutrition"
-        android:title="Nutrition"
+        android:id="@+id/bus_nutrition_app"
+        android:title="@string/nutrition"
         android:orderInCategory="103"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/home_page_icon"
+        android:title="@string/home"
+        android:orderInCategory="103"
+        app:showAsAction="never"/>
 
     <item
-        android:id="@+id/help"
+        android:id="@+id/bus_help"
         android:orderInCategory="103"
-        android:title="Help"
+        android:title="@string/help"
         app:showAsAction="never" />
 </menu>

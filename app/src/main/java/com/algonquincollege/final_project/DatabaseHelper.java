@@ -9,7 +9,7 @@ import android.util.Log;
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static String DATABASE_NAME = "News.db";
     public static boolean S_UPGRADE = false;
-    public static int VERSION_NUM = 4;
+    public static int VERSION_NUM = 3;
     public static String TABLE_NAME = "news";
     public static String id = "ID";
     public static String title = "TITLE";
@@ -23,6 +23,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             title + " text not null, " +
             link + " text not null, " + guid + " DOUBLE not null, "+ pubDate + " text not null, "+ author +" text not null, " +
             category + " text not null, "+ description + " text not null );";
+    public static String DATABASE_CREATE = "Create Table IF NOT EXISTS SAVE ( " + id + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            title + " text not null, " +
+            link + " text not null, " + guid + " DOUBLE not null, "+ pubDate + " text not null, "+ author +" text not null, " +
+            category + " text not null, "+ description + " text not null );";
     public DatabaseHelper(Context ctx){
         super(ctx, DATABASE_NAME, null, VERSION_NUM);
     }
@@ -30,7 +34,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(DATABASE_CREATOR);
+        db.execSQL(DATABASE_CREATE);
         Log.i("DatabaseHelper", "Calling onCreate");
+
 
     }
     @Override
@@ -58,6 +64,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor getData(String string, SQLiteDatabase db) {
 
         String data = "SELECT * FROM " + TABLE_NAME + " WHERE DESCRIPTION LIKE " + "\"" + string + "\"";
+        Cursor cursor = db.rawQuery(data, null);
+        return cursor;
+    }
+
+    public Cursor getData(String string) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String data = "SELECT * FROM " + string;
         Cursor cursor = db.rawQuery(data, null);
         return cursor;
     }

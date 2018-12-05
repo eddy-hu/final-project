@@ -12,36 +12,32 @@
         android:id="@+id/S_textTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:text="TextView" />
+        android:textSize="20dp" />
     <TextView
         android:id="@+id/S_textLink"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/S_textTitle"
-        android:textSize="15dp"
-        android:text="Text" />
+        android:textSize="15dp"/>
     <TextView
         android:id="@+id/S_textAuthor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/S_textLink"
-        android:textSize="15dp"
-        android:text="Text" />
+        android:textSize="15dp"/>
     <TextView
         android:id="@+id/S_textBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/S_textAuthor"
-        android:layout_above="@id/s_save"
-        android:text="Text" />
+        android:layout_above="@id/s_save"/>
 
     <Button
         android:id="@+id/s_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="Save" />
+        android:text="@string/save" />
 
 
 

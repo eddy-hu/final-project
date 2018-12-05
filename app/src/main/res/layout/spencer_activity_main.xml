@@ -8,6 +8,18 @@
     android:background="@android:color/darker_gray"
     tools:context=".Spencer_MainActivity">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fragment"
+        >
+    </FrameLayout>
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/s_out"
+        ></android.support.v7.widget.Toolbar>
     <ProgressBar
         android:id="@+id/s_progress"
         android:layout_width="match_parent"
@@ -32,7 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Button"
+            android:text="@string/favourites"
             android:layout_weight="1"
             />
         <Button
@@ -41,7 +53,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_weight="1"
-            android:text="Button" />
+            android:text="@string/refresh" />
     </LinearLayout>
 
     <Button
@@ -51,7 +63,7 @@
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@id/s_edit"
         android:layout_below="@id/s_progress"
-        android:text="Search"
+        android:text="@string/search"
         />
 
     <EditText
@@ -62,7 +74,7 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/s_progress"
         android:ems="13"
-        android:hint="Type Here"/>
+        android:hint="@string/type"/>
 
 
 
