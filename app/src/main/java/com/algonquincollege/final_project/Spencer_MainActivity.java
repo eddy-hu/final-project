@@ -30,6 +30,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 
@@ -153,7 +154,6 @@ private Toolbar s_toolbar;
 private String tag = "";
 private String text = "";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -165,6 +165,7 @@ private String text = "";
         s_search = (Button)findViewById(R.id.s_search);
         s_open =  (Button)findViewById(R.id.s_open);
         s_button2 = (Button)findViewById(R.id.s_button2);
+
         s_progress = (ProgressBar)findViewById(R.id.s_progress);
         listView = (ListView)findViewById(R.id.spencer_list);
 
@@ -178,8 +179,7 @@ private String text = "";
         CBCQuery query = new CBCQuery();
         query.execute(urlString);
 
-
-
+        s_progress = (ProgressBar) findViewById(R.id.s_progress);
 
 
         /**
@@ -190,6 +190,7 @@ private String text = "";
             public void onClick(View v) {
                 CharSequence text = "This will search for keywords.";
                 int duration = Toast.LENGTH_SHORT;
+                s_progress.setVisibility(View.VISIBLE);
                 Toast toast = Toast.makeText(getApplicationContext(), text, duration);
                 toast.show();
             }
@@ -230,12 +231,7 @@ private String text = "";
                                 query.execute(urlString);
                             }
                         })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
+
                         .show();
             }
         });
