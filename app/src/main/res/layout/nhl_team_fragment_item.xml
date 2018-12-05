@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="3dp"
+    android:id="@+id/teamitem_relativelayout">
+
+    <ImageView
+        android:id="@+id/logo_img"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src ="@drawable/id_11_boston_bruins"
+        />
+
+    <TextView
+        android:id="@+id/city"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/logo_img"
+        android:textSize="17dp"
+        android:text="Boston"
+
+        android:textStyle="bold"
+        android:textColor="#000"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="30dp"/>
+
+    <TextView
+        android:id="@+id/team_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/city"
+        android:layout_toRightOf="@id/city"
+        android:textSize="17dp"
+        android:textStyle="bold"
+        android:text="Bruins"
+        android:textColor="#000"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"/>
+
+    <ImageView
+        android:id="@+id/favorite_img"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/bn_calendar_24"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:tint="@android:color/darker_gray"
+        />
+
+</RelativeLayout>

@@ -6,10 +6,8 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 public class StartActivity extends Activity {
@@ -47,7 +45,7 @@ public class StartActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Log.i(ACTIVITY_NAME, "User clicked hockey ");
-                Intent intent = new Intent(StartActivity.this, Mordechai_mainActivity.class);
+                Intent intent = new Intent(StartActivity.this, NHL_main.class);
                 startActivity(intent);
 
             }

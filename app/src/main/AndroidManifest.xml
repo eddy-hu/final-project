@@ -38,12 +38,8 @@
         <activity android:name=".BusStationActivity" />
         <activity android:name=".MovieStartActivity" />
         <activity android:name=".NutritionStartActivity"></activity>
-
-        <activity android:name=".Mordechai_mainActivity">
-
-        </activity>
-
         <activity android:name=".ListItems"></activity>
+        <activity android:name=".NHL_main"/>
     </application>
 
 </manifest>
