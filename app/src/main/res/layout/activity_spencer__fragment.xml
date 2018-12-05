@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/S_fragment"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Spencer_Fragment">
+
+
+    <TextView
+        android:id="@+id/S_textTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:text="TextView" />
+    <TextView
+        android:id="@+id/S_textLink"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/S_textTitle"
+        android:textSize="15dp"
+        android:text="Text" />
+    <TextView
+        android:id="@+id/S_textAuthor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/S_textLink"
+        android:textSize="15dp"
+        android:text="Text" />
+    <TextView
+        android:id="@+id/S_textBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/S_textAuthor"
+        android:layout_above="@id/s_save"
+        android:text="Text" />
+
+    <Button
+        android:id="@+id/s_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="Save" />
+
+
+
+
+</RelativeLayout>
