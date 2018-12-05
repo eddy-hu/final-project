@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Movies_Info">
+
+    <ImageView
+        android:layout_width="180dp"
+        android:layout_height="280dp"
+        android:id="@+id/moviePoster"/>
+    <TextView
+        android:id="@+id/movieName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/moviePoster"
+        android:layout_marginLeft="5dp" />
+
+    <RatingBar
+        android:id="@+id/ratingStars"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/movieName"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@+id/moviePoster"
+        android:stepSize="0.1" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ratingStars"
+        android:layout_toRightOf="@id/moviePoster"
+        android:id="@+id/blank"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/movieYear"
+        android:layout_below="@id/blank"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/moviePoster"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/runtime"
+        android:layout_below="@id/movieYear"
+        android:layout_toRightOf="@id/moviePoster"
+        android:layout_marginLeft="5dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/genre"
+        android:layout_below="@id/runtime"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/moviePoster"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/director"
+        android:layout_below="@id/genre"
+        android:layout_toRightOf="@id/moviePoster"
+        android:layout_marginLeft="5dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/actors"
+        android:layout_below="@id/director"
+        android:layout_toRightOf="@id/moviePoster"
+        android:layout_marginLeft="5dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/actors"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/moviePoster"
+        android:hint=""
+        android:id="@+id/idmp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/idmp"
+        android:layout_marginLeft="5dp"
+        android:id="@+id/blank2"/>
+
+    <TextView
+        android:id="@+id/plot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/moviePoster"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fragmentWithText"></FrameLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/fragmentTester"
+        android:text="Test Fragment"
+        android:layout_above="@+id/databaseButton"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:gravity="bottom"
+        android:text="Add to favorites"
+        android:textAlignment="center"
+        android:id="@+id/addToFavorites"/>
+    <Button
+        android:id="@+id/databaseButton"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+        android:text="Open saved movies"
+        android:layout_above="@id/addToFavorites"/>
+
+
+</RelativeLayout>

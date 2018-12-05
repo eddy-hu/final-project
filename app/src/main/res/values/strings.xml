@@ -5,6 +5,13 @@
     <string name="login_button">Login!</string>
     <string name="searchButton">Search</string>
     <string name="movieName">Enter a movie name</string>
+    <string name="addToFav">Add to favorites</string>
+    <string name="open">Open</string>
+    <string name="example">Example</string>
+    <string name="title">Title</string>
+    <string name="author">Kamilla</string>
+    <string name="version">Version: 1</string>
+    <string name="ok">OK</string>
 
 
 </resources>
