@@ -85,8 +85,6 @@ public class BusRouteActivity extends AppCompatActivity {
         coordinates = (TextView) findViewById(R.id.coordinatesView);
         speed = (TextView) findViewById(R.id.speedView);
         backButton = (Button) findViewById(R.id.busBackButton);
-
-
         Bundle bundle = getIntent().getExtras();
         //instantiate a new Route java bean
         route = new BusRouteBean(bundle.getString("routeno"), bundle.getString("destination"),
@@ -131,7 +129,8 @@ public class BusRouteActivity extends AppCompatActivity {
             case R.id.bus_help:
                 AlertDialog alertDialog = new AlertDialog.Builder(BusRouteActivity.this).create();
                 alertDialog.setTitle("Help dialog notification");
-                alertDialog.setMessage("Welcome to OCTranspo \nAuthor: Yongpan Hu");
+                alertDialog.setMessage("Welcome to OCTranspo \nAuthor: Yongpan Hu \n Verssion:1.0 \n 1.Add stop number" +
+                        "\n 2.Click route number\n 3.See the detail of route");
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
@@ -243,10 +242,10 @@ public class BusRouteActivity extends AppCompatActivity {
         Log.i(ACTIVITY_NAME, "after move to first");
 
         while (!cursor.isAfterLast()) {
-               Log.i(ACTIVITY_NAME, "after cursor is after last= " + cursor.getString(colIndex));
+               Log.i(ACTIVITY_NAME, "after cursor= " + cursor.getString(colIndex));
 
                 total += Integer.parseInt(cursor.getString(colIndex));
-                Log.i(ACTIVITY_NAME, "TOTAL = " + total);
+                Log.i(ACTIVITY_NAME, "total = " + total);
 
                 cursor.moveToNext();
 
@@ -279,7 +278,7 @@ public class BusRouteActivity extends AppCompatActivity {
         adjustedTime.setText(getString(R.string.bus_adjustedtime) + route.getAdjustedTime());
         coordinates.setText(getString(R.string.bus_latlong) + route.getCoordinates());
         speed.setText(getString(R.string.bus_gpsspeed) + route.getSpeed());
-        averageAdjustedTime.setText(getString(R.string.bus_avgadjustedtime) + getAverageAdjustedTime()); //get avg adjusted time
+        averageAdjustedTime.setText(getString(R.string.bus_avgadjustedtime) + getAverageAdjustedTime());
 
     }
 
@@ -290,11 +289,11 @@ public class BusRouteActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... strings) {
             route.updateData();
-            if (route.getStartTime() == null || route.getSpeed() == null || route.getCoordinates() == null || route.getAdjustedTime() == null) {
+            if (route.isNull()) {
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(500);
                 } catch (Exception e) {
-                    Log.i(ACTIVITY_NAME, e.toString());
+                    Log.i(ACTIVITY_NAME, "occurs "+e.toString());
                 }
                 route.updateData();
             }

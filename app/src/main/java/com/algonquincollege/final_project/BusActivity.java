@@ -68,7 +68,7 @@ public class BusActivity extends AppCompatActivity {
      */
     private SQLiteDatabase database;
     /**
-     * The SQLite cursor for database query results
+     * The SQLite cursor for database queryStop results
      */
     private Cursor cursor;
     /**
@@ -84,7 +84,6 @@ public class BusActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ctx = this;
-        //database helper
         BusDBHelper dbHelper = new BusDBHelper(ctx);
         database = dbHelper.getWritableDatabase();
 
@@ -96,27 +95,13 @@ public class BusActivity extends AppCompatActivity {
         adapter = new BusAdapter(this);
         stopListView.setAdapter(adapter);
         Button busHelp  = (Button) findViewById(R.id.busHelpButton);
-
-        Log.i(ACTIVITY_NAME, "Attempted query:    SELECT " +
-                BusDBHelper.STOP_NAME + ", " +
-                BusDBHelper.STOP_NO + " FROM " +
-                BusDBHelper.TABLE_NAME);
-
-        cursor = database.rawQuery("SELECT " +
-                BusDBHelper.STOP_NAME + ", " +
-                BusDBHelper.STOP_NO + " FROM " +
-                BusDBHelper.TABLE_NAME, null, null);
+        cursor = queryStop(database);
         cursor.moveToFirst();
 
         while (!cursor.isAfterLast()) {
             Log.i(ACTIVITY_NAME, "Current cursor position: " + cursor.getPosition());
-            String newStation = "Stop number ";
-            newStation = newStation.concat(cursor.getString(1));
-
-            stopList.add(newStation);
+            stopList.add("Stop number".concat(cursor.getString(1)));
             stopNumbers.add(cursor.getString(1));
-
-
             cursor.moveToNext();
         }
         /**
@@ -128,7 +113,8 @@ public class BusActivity extends AppCompatActivity {
             public void onClick(View v) {
                 AlertDialog alertDialog = new AlertDialog.Builder(BusActivity.this).create();
                 alertDialog.setTitle("Help dialog notification");
-                alertDialog.setMessage("Welcome to OCTranspo \nAuthor: Yongpan Hu");
+                alertDialog.setMessage("Welcome to OCTranspo \nAuthor: Yongpan Hu \n Verssion:1.0 \n 1.Add stop number" +
+                        "\n 2.Click route number\n 3.See the detail of route");
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
@@ -211,7 +197,8 @@ public class BusActivity extends AppCompatActivity {
             case R.id.bus_help:
                 AlertDialog alertDialog = new AlertDialog.Builder(BusActivity.this).create();
                 alertDialog.setTitle("Help dialog notification");
-                alertDialog.setMessage("Welcome to OCTranspo \nAuthor: Yongpan Hu");
+                alertDialog.setMessage("Welcome to OCTranspo \nAuthor: Yongpan Hu \n Verssion:1.0 \n 1.Add stop number" +
+                        "\n 2.Click route number\n 3.See the detail of route");
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
@@ -256,28 +243,37 @@ public class BusActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Query the stop from database
+     * @param database
+     * @return cursor
+     */
+    private Cursor queryStop(SQLiteDatabase database){
+
+        Cursor cursor= database.rawQuery("SELECT " +
+                BusDBHelper.STOP_NAME + ", " +
+                BusDBHelper.STOP_NO + " FROM " +
+                BusDBHelper.TABLE_NAME, null, null);
+        return cursor;
+    }
+
     @Override
     protected void onResume() {
         Log.i(ACTIVITY_NAME, "In onResume()");
 
-        if (BusStopActivity.getDeleteStop() == true) {
+        if (BusStopActivity.getDeleteStop()) {
             Log.i(ACTIVITY_NAME, "Deleting stop " + currentStopIndex);
             String[] params = new String[1];
             params[0] = stopNumbers.get(currentStopIndex);
             database.delete(BusDBHelper.TABLE_NAME, BusDBHelper.STOP_NO + "=?", params);
-
             adapter = new BusAdapter(this);
             stopListView.setAdapter(adapter);
-
             stopList.remove(currentStopIndex);
             stopNumbers.remove(currentStopIndex);
             adapter.notifyDataSetChanged();
-
-
             Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),
                      BusStopActivity.getDeletedStopNo() + " has been deleted", Snackbar.LENGTH_SHORT);
             snackbar.show();
-
             BusStopActivity.resetDeleteStop();
         }
 

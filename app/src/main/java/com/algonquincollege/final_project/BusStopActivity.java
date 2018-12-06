@@ -92,13 +92,21 @@ public class BusStopActivity extends AppCompatActivity {
      * The button of delete item
      */
     private Button deleteStopButton;
+    /**
+     *The array adapter ofr stop list view
+     */
+    private StopAdapter adapter;
+    /**
+     *The list view ofr stops
+     */
+    private  ListView routesView;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bus_stop);
-
+        //bind the layout
         routeListView = (ListView) findViewById(R.id.routesView);
         backButton = (Button) findViewById(R.id.busStopBackButton);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -116,7 +124,7 @@ public class BusStopActivity extends AppCompatActivity {
         query.execute("");
 
 
-        StopAdapter adapter = new StopAdapter(this);
+        adapter = new StopAdapter(this);
         routeListView.setAdapter(adapter);
 
         //add the back previous activity button
@@ -268,7 +276,8 @@ public class BusStopActivity extends AppCompatActivity {
             case R.id.bus_help:
                 AlertDialog alertDialog = new AlertDialog.Builder(BusStopActivity.this).create();
                 alertDialog.setTitle("Help dialog notification");
-                alertDialog.setMessage("Welcome to OCTranspo \nAuthor: Yongpan Hu");
+                alertDialog.setMessage("Welcome to OCTranspo \nAuthor: Yongpan Hu \n Verssion:1.0 \n 1.Add stop number" +
+                        "\n 2.Click route number\n 3.See the detail of route");
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
@@ -317,11 +326,10 @@ public class BusStopActivity extends AppCompatActivity {
      * AsyncTask query inner class to handles connect to the api and parse the information
      */
     public class Query extends AsyncTask<String, Integer, String> {
-        public String connStationNumber;
-        public ArrayList<BusRouteBean> routesList = new ArrayList<BusRouteBean>();
-        private String currentRouteno;
-        private String currentRouteDirection;
-        private String currentRouteDestination;
+        private ArrayList<BusRouteBean> routesList = new ArrayList<BusRouteBean>();
+        private String routeNumber;
+        private String direction;
+        private String destination;
 
         @Override
         protected String doInBackground(String... array) {
@@ -329,13 +337,13 @@ public class BusStopActivity extends AppCompatActivity {
             String lastTag = "";
             try {
                 URL url = new URL(API_URL.concat(Integer.toString(busStopNumber)));
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setReadTimeout(10000);
-                conn.setConnectTimeout(15000);
-                conn.setRequestMethod("GET");
-                conn.setDoInput(true);
-                conn.connect();
-                updateProgressBar(10, 10);
+                HttpURLConnection httpURLconn = (HttpURLConnection) url.openConnection();
+                httpURLconn.setReadTimeout(10000);
+                httpURLconn.setConnectTimeout(12000);
+                httpURLconn.setRequestMethod("GET");
+                httpURLconn.setDoInput(true);
+                httpURLconn.connect();
+                updateProgressBar(10, 20);
 
                 Log.i(ACTIVITY_NAME, "Attempting parse.");
 
@@ -343,11 +351,11 @@ public class BusStopActivity extends AppCompatActivity {
                 factory.setNamespaceAware(false);
 
                 XmlPullParser xpp = factory.newPullParser();
-                xpp.setInput(conn.getInputStream(), "UTF-8");
+                xpp.setInput(httpURLconn.getInputStream(), "UTF-8");
 
 
                 int eventType = xpp.getEventType();
-                updateProgressBar(10,20);
+                updateProgressBar(10,30);
 
                 Log.i(ACTIVITY_NAME, "Attempting parse: ");
                 while (eventType != XmlPullParser.END_DOCUMENT) {
@@ -362,17 +370,17 @@ public class BusStopActivity extends AppCompatActivity {
                             if (lastTag.equals("StopDescription")) {
                                 Log.i(ACTIVITY_NAME, "Stop name found: ");
                                 stopName = xpp.getText();
-                                updateProgressBar(12,80);
+                                updateProgressBar(12,100);
                             } else if (lastTag.equals("RouteNo")) {
-                                currentRouteno = xpp.getText();
-                                updateProgressBar(12,80);
+                                routeNumber = xpp.getText();
+                                updateProgressBar(12,100);
                             } else if (lastTag.equals("Direction")) {
-                                currentRouteDirection = xpp.getText();
-                                updateProgressBar(10,80);
+                                direction = xpp.getText();
+                                updateProgressBar(10,100);
                             } else if (lastTag.equals("RouteHeading")) {
-                                currentRouteDestination = xpp.getText();
-                                updateProgressBar(10,80);
-                                routesList.add(new BusRouteBean(currentRouteno, currentRouteDestination, currentRouteDirection, Integer.toString(busStopNumber)));
+                                destination = xpp.getText();
+                                updateProgressBar(10,100);
+                                routesList.add(new BusRouteBean(routeNumber, destination, direction, Integer.toString(busStopNumber)));
                             }
                             break;
                         default:
@@ -381,7 +389,7 @@ public class BusStopActivity extends AppCompatActivity {
                     xpp.next();
                     eventType = xpp.getEventType();
                 }
-                conn.getInputStream().close();
+                httpURLconn.getInputStream().close();
                 Log.i(ACTIVITY_NAME, "closed input stream");
                 updateProgressBar(100,90);
                 Log.i(ACTIVITY_NAME, "parse complete");
@@ -397,10 +405,9 @@ public class BusStopActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
 
-            StopAdapter adapter = new StopAdapter(ctx);
-            ListView routesView = (ListView)findViewById(R.id.routesView);
+            adapter = new StopAdapter(ctx);
+            routesView = (ListView)findViewById(R.id.routesView);
             routesView.setAdapter(adapter);
-
             stopNameView.setText("Stop: " + stopName);
 
             for (BusRouteBean route : routesList) {
@@ -411,7 +418,7 @@ public class BusStopActivity extends AppCompatActivity {
                 routesInfo.add(newRoute);
                 adapter.notifyDataSetChanged();
                 routeList.add(route);
-                updateProgressBar(2,100);
+                updateProgressBar(5,100);
             }
             updateProgressBar(100,100);
 

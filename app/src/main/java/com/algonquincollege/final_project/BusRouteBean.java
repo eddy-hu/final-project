@@ -20,6 +20,10 @@ import java.net.URL;
  */
 public class BusRouteBean {
     /**
+     * The name of this class
+     */
+    public static final String ACTIVITY_NAME = "BusRouteBean";
+    /**
      * The number of stop
      */
     private String stopNum;
@@ -73,7 +77,6 @@ public class BusRouteBean {
         this.startTime = "unkown";
         this.adjustedTime = "unkown";
         this.direction = "unkown";
-        //this.ready = false;
     }
 
     /**
@@ -125,90 +128,97 @@ public class BusRouteBean {
      */
     public class Query extends AsyncTask<String, Integer, String> {
 
+        String urlstring = "";
+        String endTag = "";
+        String fullCoordinates = "";
+        int type;
+        boolean foundDirection = false;
+        boolean isConnected = true;
+
         @Override
         protected String doInBackground(String... array) {
-            String lastTag = "";
-            boolean cont = true;
-            boolean foundDirection = false;
-            String fullCoordinates = "";
-            int eventType;
 
             Log.i("Bean query", "background begun.");
 
-
             try {
-                String urlstring = getRouteInfo.concat(stopNum);
-                urlstring = urlstring.concat(getRouteInfoTrailer);
-                urlstring = urlstring.concat(routeNum);
-                URL url = new URL(urlstring);
+                URL url = new URL(getRouteInfo.concat(stopNum).concat(getRouteInfoTrailer).concat(routeNum));
+                HttpURLConnection httpURLconn = (HttpURLConnection) url.openConnection();
+                httpURLconn.setReadTimeout(10000);
+                httpURLconn.setConnectTimeout(12000);
+                httpURLconn.setRequestMethod("GET");
+                httpURLconn.setDoInput(true);
+                httpURLconn.connect();
 
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setReadTimeout(10000);
-                conn.setConnectTimeout(15000);
-                conn.setRequestMethod("GET");
-                conn.setDoInput(true);
-                conn.connect();
-
-                Log.i("Bean query", "attempting parse");
+                Log.i(ACTIVITY_NAME+"query", "start parsing");
 
                 XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
                 factory.setNamespaceAware(false);
                 XmlPullParser xpp = factory.newPullParser();
-                xpp.setInput(conn.getInputStream(), "UTF-8");
-                eventType = xpp.getEventType();
-                while ((eventType != XmlPullParser.END_DOCUMENT) && cont) {
+                xpp.setInput(httpURLconn.getInputStream(), "UTF-8");
+                type = xpp.getEventType();
+                Log.i(ACTIVITY_NAME+"query", "get event type"+type);
+                while ((type != XmlPullParser.END_DOCUMENT) && isConnected) {
 
-                    switch (eventType) {
+                    switch (type) {
                         case XmlPullParser.START_TAG:
-                            lastTag = xpp.getName();
+                            endTag = xpp.getName();
                             break;
                         case XmlPullParser.TEXT:
-                            if (lastTag.equals("Direction") && xpp.getText().equals(direction)) {
+                            if (endTag.equals("Direction") && xpp.getText().equals(direction)) {
                                 foundDirection = true;
                             } else if (foundDirection) {
                                 Log.i("TagValue", xpp.getText());
-                                if (lastTag.equals("TripDestination"))
+                                if (endTag.equals("TripDestination"))
                                     destination = xpp.getText();
-                                else if (lastTag.equals("TripStartTime"))
+                                else if (endTag.equals("TripStartTime"))
                                     startTime = xpp.getText();
-                                else if (lastTag.equals("AdjustedScheduleTime"))
+                                else if (endTag.equals("AdjustedScheduleTime"))
                                     adjustedTime = xpp.getText();
-                                else if (lastTag.equals("Latitude"))
+                                else if (endTag.equals("Latitude"))
                                     fullCoordinates = (xpp.getText().concat("/"));
-                                else if (lastTag.equals("Longitude"))
+                                else if (endTag.equals("Longitude"))
                                     coordinates = fullCoordinates.concat(xpp.getText());
-                                else if (lastTag.equals("GPSSpeed")) {
+                                else if (endTag.equals("GPSSpeed")) {
                                     speed = xpp.getText();
                                 }
                             }
                             break;
                         case XmlPullParser.END_TAG:
                             if (xpp.getName().equals("Trip") && foundDirection) {
-                                cont = false;
-                                Log.i("Route", "end parse");
+                                isConnected = false;
+                                Log.i(ACTIVITY_NAME+"  query", "end parse");
                             }
                             break;
                         default:
+                            Log.i(ACTIVITY_NAME+" query", "parse switch default");
                             break;
                     }
                     xpp.next();
-                    eventType = xpp.getEventType();
+                    type = xpp.getEventType();
                 }
                 Log.i("FinalValues", destination +" "+
                         startTime +" "+
                         adjustedTime +" "+
                         coordinates +" "+
                         speed);
-                conn.getInputStream().close();
-                Log.i("Bean query","closed input stream");
-                Log.i("Bean query", "parse complete");
+                httpURLconn.getInputStream().close();
+                Log.i(ACTIVITY_NAME+" query","closed input stream");
+                Log.i(ACTIVITY_NAME+" query", "parse complete");
             } catch (Exception e) {
-                Log.i("Bean query", "Exception: " + e.toString());
-                return ("Exception: " + e.toString());
+                Log.i(ACTIVITY_NAME+" query", "Exception: " + e);
+                return (ACTIVITY_NAME+" occurs exception: " + e);
             }
             return null;
         }
 
+    }
+
+    /**
+     * Return true if some information is null
+     * @return true if some information is null;
+     */
+    public boolean isNull(){
+        return (startTime == null || speed == null || coordinates == null || adjustedTime == null);
     }
 
     /**

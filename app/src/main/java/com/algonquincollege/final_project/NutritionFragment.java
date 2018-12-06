@@ -9,7 +9,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import static java.lang.Math.round;
-import static java.util.Collections.max;
+
 
 /**
  * to create the nutrition detail activity
@@ -214,8 +213,15 @@ public class NutritionFragment extends Fragment {
 
                     toastMessage(getString(R.string.no_tag_found));
                 }
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                //getFragmentManager().beginTransaction().detach(NutritionFragment.this).attach(NutritionFragment.this).commit();
+                //Log.i("IsRefresh", "Yes");
+
+               FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.detach(NutritionFragment.this).attach(NutritionFragment.this).commit();
+               // FragmentTransaction fragTransaction =   (getActivity()).getFragmentManager().beginTransaction();
+                //fragTransaction.detach(NutritionFragment.this);
+                //fragTransaction.attach(NutritionFragment.this);
+                //fragTransaction.commit();
             }
         });
 
