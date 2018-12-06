@@ -6,7 +6,6 @@
  * @Since:1.0
  */
 package com.algonquincollege.final_project;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -47,11 +46,11 @@ public class BusStopActivity extends AppCompatActivity {
     /**
      * The boolean of delete action
      */
-    private static boolean deleteStop = false;
+    private static boolean deleteStop;
     /**
      * The last station of route
      */
-    private static String lastStop = "";
+    private static String lastStop;
     /**
      * The number of bus stop
      */
@@ -59,19 +58,19 @@ public class BusStopActivity extends AppCompatActivity {
     /**
      * The name of stop
      */
-    private String stopName = "";
+    private String stopName;
     /**
      * The current context
      */
-    private Context ctx = this;
+    private Context ctx;
     /**
      * The list of routes
      */
-    private ArrayList<BusRouteBean> routeList = new ArrayList<>();
+    private ArrayList<BusRouteBean> routeList;
     /**
      * The list of routes info
      */
-    private ArrayList<String> routesInfo = new ArrayList<>();
+    private ArrayList<String> routeDetail;
     /**
      * The list view of routes
      */
@@ -106,12 +105,19 @@ public class BusStopActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bus_stop);
+        //initialize variables
+        ctx = this;
+        deleteStop = false;
+        stopName = "";
+        lastStop = "";
+        routeList = new ArrayList<>();
+        routeDetail = new ArrayList<>();
         //bind the layout
         routeListView = (ListView) findViewById(R.id.routesView);
         backButton = (Button) findViewById(R.id.busStopBackButton);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        stopNameView = (TextView) findViewById(R.id.stationName);
-        deleteStopButton = (Button) findViewById(R.id.deleteStationButton);
+        stopNameView = (TextView) findViewById(R.id.stopName);
+        deleteStopButton = (Button) findViewById(R.id.deleteStopButton);
 
         Bundle extras = getIntent().getExtras();
         if (extras == null) {
@@ -122,8 +128,6 @@ public class BusStopActivity extends AppCompatActivity {
         }
         Query query = new Query();
         query.execute("");
-
-
         adapter = new StopAdapter(this);
         routeListView.setAdapter(adapter);
 
@@ -142,8 +146,8 @@ public class BusStopActivity extends AppCompatActivity {
 
         //displays route list, when user clicks the item on the list will jump to the route detail activity
         routeListView.setOnItemClickListener((parent, view, position, id) -> {
-            String s = routesInfo.get(position);
-            Log.i(ACTIVITY_NAME, "Message: " + s);
+            String s = routeDetail.get(position);
+            Log.i(ACTIVITY_NAME, "setOnItemClickListener message: " + s);
             Intent i = new Intent(BusStopActivity.this, BusRouteActivity.class);
             i.putExtra("routeno", routeList.get(position).getRouteNum());
             i.putExtra("destination", routeList.get(position).getDestination());
@@ -191,7 +195,7 @@ public class BusStopActivity extends AppCompatActivity {
      * @param num
      * @param max
      */
-    private void updateProgressBar(int num, int max) {
+    private void loadProgressBar(int num, int max) {
         if (num > max) {
             progressBar.setProgress(max);
         }else {
@@ -226,12 +230,12 @@ public class BusStopActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return (routesInfo.size());
+            return (routeDetail.size());
         }
 
         @Override
         public String getItem(int position) {
-            return routesInfo.get(position);
+            return routeDetail.get(position);
         }
 
         @Override
@@ -343,43 +347,39 @@ public class BusStopActivity extends AppCompatActivity {
                 httpURLconn.setRequestMethod("GET");
                 httpURLconn.setDoInput(true);
                 httpURLconn.connect();
-                updateProgressBar(10, 20);
-
-                Log.i(ACTIVITY_NAME, "Attempting parse.");
-
+                loadProgressBar(10, 20);
                 XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
                 factory.setNamespaceAware(false);
-
                 XmlPullParser xpp = factory.newPullParser();
                 xpp.setInput(httpURLconn.getInputStream(), "UTF-8");
 
 
                 int eventType = xpp.getEventType();
-                updateProgressBar(10,30);
+                loadProgressBar(10,30);
 
-                Log.i(ACTIVITY_NAME, "Attempting parse: ");
+                Log.i(ACTIVITY_NAME, "Start parse: ");
                 while (eventType != XmlPullParser.END_DOCUMENT) {
                     switch (eventType) {
                         case XmlPullParser.START_TAG:
                             Log.i(ACTIVITY_NAME, "Tag is found.");
                             lastTag = xpp.getName();
-                            updateProgressBar(3,80);
+                            loadProgressBar(3,80);
                             Log.i(ACTIVITY_NAME, "Tag is " + lastTag);
                             break;
                         case XmlPullParser.TEXT:
                             if (lastTag.equals("StopDescription")) {
                                 Log.i(ACTIVITY_NAME, "Stop name found: ");
                                 stopName = xpp.getText();
-                                updateProgressBar(12,100);
+                                loadProgressBar(12,100);
                             } else if (lastTag.equals("RouteNo")) {
                                 routeNumber = xpp.getText();
-                                updateProgressBar(12,100);
+                                loadProgressBar(12,100);
                             } else if (lastTag.equals("Direction")) {
                                 direction = xpp.getText();
-                                updateProgressBar(10,100);
+                                loadProgressBar(10,100);
                             } else if (lastTag.equals("RouteHeading")) {
                                 destination = xpp.getText();
-                                updateProgressBar(10,100);
+                                loadProgressBar(10,100);
                                 routesList.add(new BusRouteBean(routeNumber, destination, direction, Integer.toString(busStopNumber)));
                             }
                             break;
@@ -391,7 +391,7 @@ public class BusStopActivity extends AppCompatActivity {
                 }
                 httpURLconn.getInputStream().close();
                 Log.i(ACTIVITY_NAME, "closed input stream");
-                updateProgressBar(100,90);
+                loadProgressBar(100,90);
                 Log.i(ACTIVITY_NAME, "parse complete");
             } catch (Exception e) {
 
@@ -409,19 +409,13 @@ public class BusStopActivity extends AppCompatActivity {
             routesView = (ListView)findViewById(R.id.routesView);
             routesView.setAdapter(adapter);
             stopNameView.setText("Stop: " + stopName);
-
             for (BusRouteBean route : routesList) {
-                String newRoute = "";
-                newRoute = newRoute.concat(route.getRouteNum());
-                newRoute = newRoute.concat(" ");
-                newRoute = newRoute.concat(route.getDestination());
-                routesInfo.add(newRoute);
+                routeDetail.add(route.getRouteNum().concat(" ").concat(route.getDestination()));
                 adapter.notifyDataSetChanged();
                 routeList.add(route);
-                updateProgressBar(5,100);
-            }
-            updateProgressBar(100,100);
 
+            }
+            loadProgressBar(100,100);
             if (stopName.equals(""))
                 stopNotFound();
         }

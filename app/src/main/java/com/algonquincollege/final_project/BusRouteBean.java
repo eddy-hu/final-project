@@ -8,10 +8,8 @@ package com.algonquincollege.final_project;
 
 import android.os.AsyncTask;
 import android.util.Log;
-
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
-
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -196,13 +194,8 @@ public class BusRouteBean {
                     xpp.next();
                     type = xpp.getEventType();
                 }
-                Log.i("FinalValues", destination +" "+
-                        startTime +" "+
-                        adjustedTime +" "+
-                        coordinates +" "+
-                        speed);
+                Log.i("Result:", destination +" "+ startTime +" "+ adjustedTime +" "+ coordinates +" "+ speed);
                 httpURLconn.getInputStream().close();
-                Log.i(ACTIVITY_NAME+" query","closed input stream");
                 Log.i(ACTIVITY_NAME+" query", "parse complete");
             } catch (Exception e) {
                 Log.i(ACTIVITY_NAME+" query", "Exception: " + e);

@@ -15,7 +15,7 @@
         />
 
     <TextView
-        android:id="@+id/stationName"
+        android:id="@+id/stopName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="TextView"
@@ -38,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <Button
-            android:id="@+id/deleteStationButton"
+            android:id="@+id/deleteStopButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/bus_deletestationbutton"
@@ -50,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/busBackButton"
-            android:layout_above="@id/deleteStationButton"
+            android:layout_above="@id/deleteStopButton"
             />
 
     </RelativeLayout>
@@ -60,7 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
-        android:layout_alignRight="@id/deleteStationButton"
+        android:layout_alignRight="@id/deleteStopButton"
         android:layout_toEndOf="@+id/listView">
 
     </FrameLayout>

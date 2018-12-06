@@ -237,10 +237,8 @@ public class BusRouteActivity extends AppCompatActivity {
         int avgAdjustedTime=0;
         Cursor cursor = dbHelper.getAverageAdjustedTime(route.getRouteNum());
         int colIndex = cursor.getColumnIndex(BusRouteBDHelper.ADJUSTED_TIME);
-
         cursor.moveToFirst();
         Log.i(ACTIVITY_NAME, "after move to first");
-
         while (!cursor.isAfterLast()) {
                Log.i(ACTIVITY_NAME, "after cursor= " + cursor.getString(colIndex));
 
@@ -263,11 +261,8 @@ public class BusRouteActivity extends AppCompatActivity {
      }else{
          avgAdjustedTime=total/count;
      }
-
       return avgAdjustedTime+"";
     }
-
-
     /**
      * Refresh the content of the layout
      */
@@ -275,9 +270,9 @@ public class BusRouteActivity extends AppCompatActivity {
         routeDestination.setText(getString(R.string.bus_route) + route.getRouteNum() + " " + route.getDestination());
         direction.setText(getString(R.string.bus_direction) + route.getDirection());
         startTime.setText(getString(R.string.bus_starttime) + route.getStartTime());
-        adjustedTime.setText(getString(R.string.bus_adjustedtime) + route.getAdjustedTime());
         coordinates.setText(getString(R.string.bus_latlong) + route.getCoordinates());
         speed.setText(getString(R.string.bus_gpsspeed) + route.getSpeed());
+        adjustedTime.setText(getString(R.string.bus_adjustedtime) + route.getAdjustedTime());
         averageAdjustedTime.setText(getString(R.string.bus_avgadjustedtime) + getAverageAdjustedTime());
 
     }
