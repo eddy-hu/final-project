@@ -50,6 +50,7 @@
         android:layout_marginRight="30dp"
         android:gravity="center"
        android:layout_alignParentEnd="true" >
+
     <ImageView
         android:id="@+id/away_logo_img"
         android:layout_width="60dp"
@@ -75,7 +76,14 @@
         android:textSize="18dp" />
     </LinearLayout>
 
-
+    <ImageView
+        android:id="@+id/fav_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:tint="#0d1fa4"
+        android:src="@drawable/ic_add_circle_black_24dp" />
     <TextView
         android:id="@+id/status"
         android:layout_width="wrap_content"

@@ -9,6 +9,18 @@
         android:id="@+id/schedule_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        />
+        >
+
+    </android.support.v7.widget.RecyclerView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:visibility="visible"
+        android:scaleX="0.10"
+        android:scaleY="0.10"
+        android:textColor="@color/colorAccent"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_gravity="center"/>
 
 </RelativeLayout>

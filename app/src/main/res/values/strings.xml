@@ -1,23 +1,45 @@
 <resources>
 
+
+
     <string name="nutrition_app_name">Food Nutrition Database</string>
 
     <string name="btn_search">Search</string>
     <string name="btn_add">Add</string>
     <string name="btn_favourite">Favourite</string>
     <string name="author">Author: Feng Cheng</string>
-    <string name="version">Activity Version Number: CST2335 2018 Fall</string>
+    <string name="version">Activity Version Number: Version 1.0</string>
     <string name="instruction">Instructions: You can search for the calories and fat content of a food. You can add it to your favourite list. On your list, you can retrieve the nutrition information of a selected food. You can also delete an item on your favourite list from the details page. You can add a tag to a food and can get statistics on each tag counting the total calories, average calories, max and min calories.
  </string>
     <string name="calories">Calories:</string>
     <string name="fat">Fat:</string>
-    <string name="delete">Delete</string>
-    <string name="delConf">Do you really want to delete it ?</string>
-    <string name="yes">YES</string>
-    <string name="no">NO</string>
+    <string name="dialogboxTitle">Food Nutrition Database</string>
+    <string name="ok">OK</string>
+    <string name="prompt_to_enter">Please enter something.</string>
+    <string name="tag_already">It has a tag already</string>
+    <string name="data_insert">Data successfully inserted</string>
+    <string name="error">Something went wrong</string>
+    <string name="no_result_found">No result found</string>
+    <string name="waitmsg">Please wait</string>
+    <string name="delConfMsg">Do you really want to delete</string>
+    <string name="no">No</string>
+    <string name="alertTitle">Alert</string>
+    <string name="no_tag_found">No tag found</string>
+    <string name="tag_delete">Tag successfully deleted</string>
+    <string name="tag_update">Data successfully updated</string>
+    <string name="tag_stat_title">Tag: </string>
+    <string name="max_cal">Max Calories: </string>
+    <string name="min_cal">Min Calories: </string>
+    <string name="total_cal">Total Calories: </string>
+    <string name="ave_cal">Average Calories: </string>
 
 
-    <string name="app_name">final-project</string>
+    <string name="your_favourite_list">My Favourite List</string>
+    <string name="delete_btn">Delete</string>
+    <string name="search_hint">Enter the name of the food</string>
+
+
+    <string name="app_name"></string>
     <string name="search_btn">Search</string>
     <string name="add_btn">Add</string>
     <string name="del_btn">Delete</string>
@@ -39,30 +61,8 @@
     <string name="hockey_button">Hockey</string>
 
 
-    <!--  OC TRANSPO STRING VARIABLES-->
-    <string name="bus_addButton">Add</string>
-    <string name="bus_deleteButton">Delete</string>
-    <string name="bus_helpButton">Help</string>
-
-    <!--  OC TRANSPO STRING VARIABLES-->
-    <string name="oc_badinput">Station number must be an integer value</string>
-    <string name="oc_station_w_number">Station with number </string>
-    <string name="oc_station_not_found"> was not found on the OC database. It is recommended to delete this station.</string>
-    <string name="oc_refresh">Refreshing...</string>
-    <string name="oc_route">Route </string>
-    <string name="oc_direction">Direction:</string>
-    <string name="oc_starttime">Start time: </string>
-    <string name="oc_adjustedtime">Adjusted time: </string>
-    <string name="oc_latlong">Latitude/Longitude:</string>
-    <string name="oc_gpsspeed">GPS Speed: </string>
-    <string name="oc_infounavailable">Information unavailable</string>
-    <string name="oc_deletestationbutton">Delete Station</string>
-    <string name="oc_refreshbutton">Refresh</string>
-    <string name="oc_addstationbutton">Add Station Number</string>
-
-    <string name="oc_authorinfo">Author:  Guanghua He\nVersion num:  1.0</string>
-    <string name="oc_instructions">\nHow to use: The main page shows a list of any stations you have entered, and will be saved. To add a new station, enter the station number in the text field and press the add station button. By selecting any of the stations in the list, you will be brought to a new page. This page will display a list of all bus routes that stop at this station number. Press delete to remove this station from your saved stations. Press any of the routes displayed to see detailed information on the route.</string>
-    <string name="oc_datasummary">\nSummary of data stored: This application stores all of the station numbers entered into a database. These station numbers will be recalled and displayed on the main page every time the app is loaded. Station numberes are deleted from the database when the user deletes a station.</string>
+    <!--  BUS APP STRINGS-->
+    <string name="bus_avgadjustedtime">Average Adjusted Time: </string>
 
     <!-- NHL bottom navigation menu labels -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -71,6 +71,30 @@
    <string name="title_favorite">Favorites</string>
    <string name="title_help">Help</string>
     <string name="away_team">Ottawa</string>
+
+   <string name="bus_addButton">Add</string>
+   <string name="bus_deleteButton">Delete</string>
+   <string name="bus_helpButton">Help</string>
+   <string name="busBackButton">Back</string>
+   <string name="bus_badinput">Must be number</string>
+   <string name="bus_stop_w_number">Stop with number </string>
+   <string name="bus_stop_not_found"> was not found on the OC database.</string>
+   <string name="bus_route">Route </string>
+   <string name="bus_direction">Direction:</string>
+   <string name="bus_starttime">Start Time: </string>
+   <string name="bus_adjustedtime">Adjusted Time: </string>
+   <string name="bus_latlong">Latitude/Longitude:</string>
+   <string name="bus_gpsspeed">GPS Speed: </string>
+   <string name="bus_infounavailable">Unavailable</string>
+   <string name="bus_deletestationbutton">Delete</string>
+    <string name="nutritionTag">Add Tag</string>
+    <string name="tagEditTxt">Add a tag here</string>
+    <string name="foodTag">Tag: </string>
+    <string name="tag_stat">Tag Stat</string>
+    <string name="help">HELP</string>
+    <string name="delete_tag">Delete Tag</string>
+
+
 
 </resources>
 

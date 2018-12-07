@@ -51,16 +51,9 @@ public class NHL_TeamFragment extends Fragment  {
         adapter = new NHL_RecyclerViewAdapter(getActivity(), getData());
         recyclerView.setAdapter(adapter);
 
-        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
-
-        recyclerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i("fuck", "fuck");
-
-            }
-        });
-
+       /* DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
+        dividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.nhal_divider));
+        recyclerView.addItemDecoration(dividerItemDecoration);*/
     }
 
     public ArrayList<NHL_team> getData(){

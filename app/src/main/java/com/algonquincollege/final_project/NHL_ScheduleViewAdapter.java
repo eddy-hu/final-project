@@ -11,7 +11,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 
 public class NHL_ScheduleViewAdapter extends RecyclerView.Adapter<NHL_ScheduleViewAdapter.ViewHolder> {
@@ -19,7 +21,7 @@ public class NHL_ScheduleViewAdapter extends RecyclerView.Adapter<NHL_ScheduleVi
     private static final String TAG = "NHL_ScheduleViewAdapter";
 
     private  FragmentActivity activity;
-    private ArrayList<NHL_ScheduleItem> scheduleItems=new ArrayList<NHL_ScheduleItem>() ;
+    private ArrayList<NHL_ScheduleItem> scheduleItems;
     private Context context;
     LayoutInflater inflater;
 
@@ -48,14 +50,218 @@ public class NHL_ScheduleViewAdapter extends RecyclerView.Adapter<NHL_ScheduleVi
         Log.d(TAG, "onBindViewHolder: called.");
 
         NHL_ScheduleItem current = scheduleItems.get(position);
-        holder.homeTeamText.setText(current.homeTeam);
-        holder.awayTeamText.setText(current.awayTeam);
-        holder.playedStatusText.setText(current.playedStatus);
-        holder.homeScoreText.setText(current.homeScore);
-        holder.awayScoreText.setText(current.awayScore);
-        holder.dateTimeText.setText(current.dateTime);
-        holder.homeLogoImg.setImageResource(current.LogoId);
-        holder.awayLogoImg.setImageResource(current.LogoId);
+        holder.homeCityText.setText(current.homeCityD);
+        holder.awayCityText.setText(current.awayCityD);
+        holder.homeTeamText.setText(current.homeTeamD);
+        holder.awayTeamText.setText(current.awayTeamD);
+        holder.playedStatusText.setText(current.playedStatusD);
+        holder.homeScoreText.setText(current.homeScoreD);
+        holder.awayScoreText.setText(current.awayScoreD);
+        holder.dateTimeText.setText(String.valueOf(current.dateTimeD));
+        holder.favButtonL.setImageResource(R.drawable.ic_add_circle_black_24dp);
+        //holder.homeLogoImgL.setImageResource(current.homeLogo);
+       // holder.awayLogoImgL.setImageResource(current.awayLogo);
+
+        switch (current.playedStatusD){
+            case "COMPLETED":
+                holder.playedStatusText.setText("FINAL");
+                break;
+            case "UNPLAYED":
+                holder.playedStatusText.setText("");
+                break;
+
+        }
+
+        switch (current.awayTeamD){
+            case "TBL":
+                holder.awayLogoImgL.setImageResource(R.drawable.id_1_tampa_bay_lightning);
+                break;
+            case "WPJ":
+                holder.awayLogoImgL.setImageResource(R.drawable.id_2_winnipeg_jets);
+                break;
+            case "CAR":
+                holder.awayLogoImgL.setImageResource(R.drawable.id_3_carolina_hurricanes);
+                break;
+            case "FLO":
+                holder.awayLogoImgL.setImageResource(R.drawable.id_4_florida_panthers);
+                break;
+            case "WSH":
+                holder.awayLogoImgL.setImageResource(R.drawable.id_5_washington_capitals);
+                break;
+            case "PHI":
+                holder.awayLogoImgL.setImageResource(R.drawable.id_6_philadelphia_flyers);
+                break;
+            case "NJD":
+                holder.awayLogoImgL.setImageResource(R.drawable.id_7_newjersey_devils);
+                break;
+            case "NYI":
+                holder.awayLogoImgL.setImageResource(R.drawable.id_8_new_york_islanders);
+                break;
+            case "NYR":
+                holder.awayLogoImgL.setImageResource(R.drawable.id_9_new_york_rangers);
+                break;
+            case "PIT":
+                holder.awayLogoImgL.setImageResource(R.drawable.id_10_pittsburgh_penguins);
+                break;
+            case "BOS":
+                holder.awayLogoImgL.setImageResource(R.drawable.id_11_boston_bruins);
+                break;
+            case "TOR":
+                holder.awayLogoImgL.setImageResource(R.drawable.id_12_toronto_mapleleafs);
+                break;
+            case "OTT":
+                holder.awayLogoImgL.setImageResource(R.drawable.id_13_ottawa_senators);
+                break;
+            case "MTL":
+                holder.awayLogoImgL.setImageResource(R.drawable.id_14_montreal_canadiens);
+                break;
+            case "BUF":
+                holder.awayLogoImgL.setImageResource(R.drawable.id_15_buffalo_sabres);
+                break;
+            case "DET":
+                holder.awayLogoImgL.setImageResource(R.drawable.id_16_detroit_redwings);
+                break;
+            case "STL":
+                holder.awayLogoImgL.setImageResource(R.drawable.id_17_stlouis_blues);
+                break;
+            case "NSH":
+                holder.awayLogoImgL.setImageResource(R.drawable.id_18_nashville_predators);
+                break;
+            case "CBJ":
+                holder.awayLogoImgL.setImageResource(R.drawable.id_19_columbus_bluejackets);
+                break;
+            case "CHI":
+                holder.awayLogoImgL.setImageResource(R.drawable.id_20_chicago_blackhawks);
+                break;
+            case "COL":
+                holder.awayLogoImgL.setImageResource(R.drawable.id_22_colorado__avalanche);
+                break;
+            case "VAN":
+                holder.homeLogoImgL.setImageResource(R.drawable.id_21_vancouver_canucks);
+            case "CGY":
+                holder.awayLogoImgL.setImageResource(R.drawable.id_23_clagary_flames);
+                break;
+            case "EDM":
+                holder.awayLogoImgL.setImageResource(R.drawable.id_24_edmontn_oilers);
+                break;
+            case "MIN":
+                holder.awayLogoImgL.setImageResource(R.drawable.id_25_minnesota_wild);
+                break;
+            case "SJS":
+                holder.awayLogoImgL.setImageResource(R.drawable.id_26_sanjose_sharks);
+                break;
+            case "DAL":
+                holder.awayLogoImgL.setImageResource(R.drawable.id_27_dallas_stars);
+                break;
+            case "LAK":
+                holder.awayLogoImgL.setImageResource(R.drawable.id_28_la_kings);
+                break;
+            case "ANA":
+                holder.awayLogoImgL.setImageResource(R.drawable.id_29_anaheim_ducks);
+                break;
+            case "ARI":
+                holder.awayLogoImgL.setImageResource(R.drawable.id_30_arizona_coyotes);
+                break;
+            case "VGK":
+                holder.awayLogoImgL.setImageResource(R.drawable.id_142_vegas_goldenknights);
+                break;
+        }
+
+        switch (current.homeTeamD){
+            case "TBL":
+                holder.homeLogoImgL.setImageResource(R.drawable.id_1_tampa_bay_lightning);
+                break;
+            case "WPJ":
+                holder.homeLogoImgL.setImageResource(R.drawable.id_2_winnipeg_jets);
+                break;
+            case "CAR":
+                holder.homeLogoImgL.setImageResource(R.drawable.id_3_carolina_hurricanes);
+                break;
+            case "FLO":
+                holder.homeLogoImgL.setImageResource(R.drawable.id_4_florida_panthers);
+                break;
+            case "WSH":
+                holder.homeLogoImgL.setImageResource(R.drawable.id_5_washington_capitals);
+                break;
+            case "PHI":
+                holder.homeLogoImgL.setImageResource(R.drawable.id_6_philadelphia_flyers);
+                break;
+            case "NJD":
+                holder.homeLogoImgL.setImageResource(R.drawable.id_7_newjersey_devils);
+                break;
+            case "NYI":
+                holder.homeLogoImgL.setImageResource(R.drawable.id_8_new_york_islanders);
+                break;
+            case "NYR":
+                holder.homeLogoImgL.setImageResource(R.drawable.id_9_new_york_rangers);
+                break;
+            case "PIT":
+                holder.homeLogoImgL.setImageResource(R.drawable.id_10_pittsburgh_penguins);
+                break;
+            case "BOS":
+                holder.homeLogoImgL.setImageResource(R.drawable.id_11_boston_bruins);
+                break;
+            case "TOR":
+                holder.homeLogoImgL.setImageResource(R.drawable.id_12_toronto_mapleleafs);
+                break;
+            case "OTT":
+                holder.homeLogoImgL.setImageResource(R.drawable.id_13_ottawa_senators);
+                break;
+            case "MTL":
+                holder.homeLogoImgL.setImageResource(R.drawable.id_14_montreal_canadiens);
+                break;
+            case "BUF":
+                holder.homeLogoImgL.setImageResource(R.drawable.id_15_buffalo_sabres);
+                break;
+            case "DET":
+                holder.homeLogoImgL.setImageResource(R.drawable.id_16_detroit_redwings);
+                break;
+            case "STL":
+                holder.homeLogoImgL.setImageResource(R.drawable.id_17_stlouis_blues);
+                break;
+            case "NSH":
+                holder.homeLogoImgL.setImageResource(R.drawable.id_18_nashville_predators);
+                break;
+            case "CBJ":
+                holder.homeLogoImgL.setImageResource(R.drawable.id_19_columbus_bluejackets);
+                break;
+            case "CHI":
+                holder.homeLogoImgL.setImageResource(R.drawable.id_20_chicago_blackhawks);
+                break;
+            case "VAN":
+                holder.homeLogoImgL.setImageResource(R.drawable.id_21_vancouver_canucks);
+                break;
+            case "COL":
+                holder.homeLogoImgL.setImageResource(R.drawable.id_22_colorado__avalanche);
+                break;
+            case "CGY":
+                holder.homeLogoImgL.setImageResource(R.drawable.id_23_clagary_flames);
+                break;
+            case "EDM":
+                holder.homeLogoImgL.setImageResource(R.drawable.id_24_edmontn_oilers);
+                break;
+            case "MIN":
+                holder.homeLogoImgL.setImageResource(R.drawable.id_25_minnesota_wild);
+                break;
+            case "SJS":
+                holder.homeLogoImgL.setImageResource(R.drawable.id_26_sanjose_sharks);
+                break;
+            case "DAL":
+                holder.homeLogoImgL.setImageResource(R.drawable.id_27_dallas_stars);
+                break;
+            case "LAK":
+                holder.homeLogoImgL.setImageResource(R.drawable.id_28_la_kings);
+                break;
+            case "ANA":
+                holder.homeLogoImgL.setImageResource(R.drawable.id_29_anaheim_ducks);
+                break;
+            case "ARI":
+                holder.homeLogoImgL.setImageResource(R.drawable.id_30_arizona_coyotes);
+                break;
+            case "VGK":
+                holder.homeLogoImgL.setImageResource(R.drawable.id_142_vegas_goldenknights);
+                break;
+        }
     }
 
 
@@ -67,26 +273,32 @@ public class NHL_ScheduleViewAdapter extends RecyclerView.Adapter<NHL_ScheduleVi
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
+        private TextView homeCityText;
+        private TextView awayCityText;
         private TextView homeTeamText;
         private TextView awayTeamText;
         private TextView playedStatusText;
         private TextView homeScoreText;
         private TextView awayScoreText;
         private TextView dateTimeText;
-        private ImageView homeLogoImg;
-        private ImageView awayLogoImg;
+        private ImageView homeLogoImgL;
+        private ImageView awayLogoImgL;
+        private ImageView favButtonL;//MAybe?
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            homeTeamText = itemView.findViewById(R.id.home_city);
-            awayTeamText = itemView.findViewById(R.id.away_city);
+            homeCityText= itemView.findViewById(R.id.home_city);
+            awayCityText= itemView.findViewById(R.id.away_city);
+            homeTeamText = itemView.findViewById(R.id.home_team);
+            awayTeamText = itemView.findViewById(R.id.away_team);
             playedStatusText = itemView.findViewById(R.id.status);
             homeScoreText = itemView.findViewById(R.id.home_score);
             awayScoreText = itemView.findViewById(R.id.away_score);
             dateTimeText = itemView.findViewById(R.id.date);
-            homeLogoImg = itemView.findViewById(R.id.home_logo_img);
-            awayLogoImg = itemView.findViewById(R.id.away_logo_img);
+            homeLogoImgL = itemView.findViewById(R.id.home_logo_img);
+            awayLogoImgL = itemView.findViewById(R.id.away_logo_img);
+            favButtonL = itemView.findViewById(R.id.fav_button);//MAybe?
         }
     }
 }

@@ -1,78 +1,83 @@
 package com.algonquincollege.final_project;
 
-import java.sql.Date;
+
+import java.util.Date;
 
 public class NHL_ScheduleItem {
 
-    public String homeTeam;
-    public String awayTeam;
-    public String playedStatus;
-    public String homeScore;
-    public String awayScore;
-    public String dateTime;
-    public int LogoId;
+    public String homeCityD;
+    public String awayCityD;
+    public String homeTeamD;
+    public String awayTeamD;
+    public String playedStatusD;
+    public String homeScoreD;
+    public String awayScoreD;
+    public String dateTimeD;
+    public int homeLogoD;
+    public int awayLogoD;
+
 
     public NHL_ScheduleItem() {
 
     }
-    public NHL_ScheduleItem(String homeTeam, String awayTeam, String playedStatus, String homeScore, String awayScore, String dateTime) {
-        this.homeTeam = homeTeam;
-        this.awayTeam = awayTeam;
-        this.playedStatus = playedStatus;
-        this.homeScore = homeScore;
-        this.awayScore = awayScore;
-        this.dateTime = dateTime;
+
+    public NHL_ScheduleItem(String homeCityD,String awayCityD,String homeTeamD, String awayTeamD, String playedStatusD, String homeScoreD, String awayScoreD, String dateTimeD,int homeLogoD,int awayLogoD) {
+        this.homeCityD = homeCityD;
+        this.awayCityD = awayCityD;
+        this.homeTeamD = homeTeamD;
+        this.awayTeamD = awayTeamD;
+        this.playedStatusD = playedStatusD;
+        this.homeScoreD = homeScoreD;
+        this.awayScoreD = awayScoreD;
+        this.dateTimeD = dateTimeD;
+        this.homeLogoD = homeLogoD;
+        this.awayLogoD = awayLogoD;
+
+
     }
-
-
-
+    public String getHomeCity() { return homeCityD; }
+    public void setHomeCity(String homeCityD) { this.homeCityD = homeCityD; }
+    public String getAwayCity() { return awayCityD; }
+    public void setAwayCity(String awayCityD) { this.awayCityD = awayCityD; }
     public String getHomeTeam() {
-        return homeTeam;
+        return homeTeamD;
     }
-
-    public void setHomeTeam(String homeTeam) {
-        this.homeTeam = homeTeam;
+    public void setHomeTeam(String homeTeamD) {
+        this.homeTeamD = homeTeamD;
     }
-
     public String getAwayTeam() {
-        return awayTeam;
+        return awayTeamD;
     }
-
-    public void setAwayTeam(String awayTeam) {
-        this.awayTeam = awayTeam;
+    public void setAwayTeam(String awayTeamD) {
+        this.awayTeamD = awayTeamD;
     }
-
     public String getPlayedStatus() {
-        return playedStatus;
+        return playedStatusD;
     }
-
-    public void setPlayedStatus(String playedStatus) {
-        this.playedStatus = playedStatus;
+    public void setPlayedStatus(String playedStatusD) {
+        this.playedStatusD = playedStatusD;
     }
-
     public String getHomeScore() {
-        return homeScore;
+        return homeScoreD;
     }
-
-    public void setHomeScore(String homeScore) {
-        this.homeScore = homeScore;
+    public void setHomeScore(String homeScoreD) {
+        this.homeScoreD = homeScoreD;
     }
-
     public String getAwayScore() {
-        return awayScore;
+        return awayScoreD;
     }
-
-    public void setAwayScore(String awayScore) {
-        this.awayScore = awayScore;
+    public void setAwayScore(String awayScoreD) {
+        this.awayScoreD = awayScoreD;
     }
-
     public String getDateTime() {
-        return dateTime;
+        return dateTimeD;
     }
-
-    public void setDateTime(String dateTime) {
-        this.dateTime = dateTime;
+    public void setDateTime(String dateTimeD) {
+        this.dateTimeD = dateTimeD;
     }
-
+    public int getHomeLogo() { return homeLogoD; }
+    public void setHomeLogo(int homeLogoD) { this.homeLogoD = homeLogoD; }
+    public int getAwayLogo() { return awayLogoD; }
+    public void setAwayLogo(int awayLogoD) { this.awayLogoD = awayLogoD; }
 
 }

@@ -35,6 +35,8 @@ public class NHL_RecyclerViewAdapter extends RecyclerView.Adapter<NHL_RecyclerVi
         this.team = data;
     }
 
+
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

@@ -74,7 +74,7 @@ private ProgressBar s_progress;
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(Spencer_MainActivity.this);
-                builder.setMessage("This will eventually delete items from the saved list")
+                builder.setMessage("This will eventually deleteStopButton items from the saved list")
                         .setTitle("Deleter")
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                             @Override

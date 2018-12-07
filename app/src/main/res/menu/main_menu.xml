@@ -2,19 +2,44 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-    android:id="@+id/author"
-    android:title="Author"
-    app:showAsAction ="never"/>
+
 
     <item
-        android:id="@+id/version"
-        android:title="Version Number"
-        app:showAsAction ="never"/>
+        android:id="@+id/octranspo"
+        android:title="Octranspo"
+        android:icon="@drawable/octranspo"
+        android:orderInCategory="101"
+        app:showAsAction="always" />
 
     <item
-        android:id="@+id/instruction"
-        android:title="Instruction"
-        app:showAsAction ="never"/>
+        android:id="@+id/movies"
+        android:title="Movies"
+        android:orderInCategory="102"
+        android:icon="@drawable/movies"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/news"
+        android:title="CBC News"
+        android:orderInCategory="103"
+        android:icon="@drawable/news"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/nhl"
+        android:title="NHL"
+        android:orderInCategory="103"
+        android:icon="@drawable/nhl"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/nutrition"
+        android:title="Nutrition"
+        android:orderInCategory="103"
+        android:icon="@drawable/nutrition"
+        app:showAsAction="never" />
 
+
+    <item
+        android:id="@+id/help"
+        android:orderInCategory="103"
+        android:title="Help"
+        app:showAsAction="never" />
 </menu>
