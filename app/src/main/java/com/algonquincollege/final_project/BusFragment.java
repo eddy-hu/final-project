@@ -18,7 +18,7 @@ import android.view.ViewGroup;
  */
 public class BusFragment extends Fragment {
     /**
-     * ACTIVITY_NAME
+     * ACTIVITY_NAME the name of class
      */
     protected static final String ACTIVITY_NAME = "BusFragment";
 

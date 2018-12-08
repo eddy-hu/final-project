@@ -78,7 +78,7 @@ public class StartActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.i(ACTIVITY_NAME, "User clicked Nutrition Chat");
-                Intent intent = new Intent(StartActivity.this, MovieStartActivity.class);
+                Intent intent = new Intent(StartActivity.this, MoviesActivity.class);
                 startActivity(intent);
 
             }
@@ -137,7 +137,7 @@ public class StartActivity extends AppCompatActivity {
                 // do your code
                 return true;
             case R.id.bus_movie_app:
-                intent = new Intent(this, MovieStartActivity.class);
+                intent = new Intent(this, MoviesActivity.class);
                 this.startActivity(intent);
                 // do your code
                 return true;

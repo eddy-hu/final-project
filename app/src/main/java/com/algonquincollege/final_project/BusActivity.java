@@ -68,7 +68,7 @@ public class BusActivity extends AppCompatActivity {
      */
     private SQLiteDatabase database;
     /**
-     * The SQLite cursor for database query results
+     * The SQLite cursor for database queryStop results
      */
     private Cursor cursor;
     /**
@@ -84,7 +84,6 @@ public class BusActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ctx = this;
-        //database helper
         BusDBHelper dbHelper = new BusDBHelper(ctx);
         database = dbHelper.getWritableDatabase();
 
@@ -97,30 +96,18 @@ public class BusActivity extends AppCompatActivity {
         stopListView.setAdapter(adapter);
         Button busHelp  = (Button) findViewById(R.id.busHelpButton);
 
-        Log.i(ACTIVITY_NAME, "Attempted query:    SELECT " +
-                BusDBHelper.STOP_NAME + ", " +
-                BusDBHelper.STOP_NO + " FROM " +
-                BusDBHelper.TABLE_NAME);
+        cursor = queryStop(database);
 
-        cursor = database.rawQuery("SELECT " +
-                BusDBHelper.STOP_NAME + ", " +
-                BusDBHelper.STOP_NO + " FROM " +
-                BusDBHelper.TABLE_NAME, null, null);
         cursor.moveToFirst();
 
         while (!cursor.isAfterLast()) {
             Log.i(ACTIVITY_NAME, "Current cursor position: " + cursor.getPosition());
-            String newStation = "Stop number ";
-            newStation = newStation.concat(cursor.getString(1));
-
-            stopList.add(newStation);
+            stopList.add("Stop number".concat(cursor.getString(1)));
             stopNumbers.add(cursor.getString(1));
-
-
             cursor.moveToNext();
         }
         /**
-         * add click listener action to help button
+         * Add click listener action to help button
          * when user clicks it, it will display the author information
          */
         busHelp.setOnClickListener(new View.OnClickListener() {
@@ -128,7 +115,8 @@ public class BusActivity extends AppCompatActivity {
             public void onClick(View v) {
                 AlertDialog alertDialog = new AlertDialog.Builder(BusActivity.this).create();
                 alertDialog.setTitle("Help dialog notification");
-                alertDialog.setMessage("Welcome to OCTranspo \nAuthor: Yongpan Hu");
+                alertDialog.setMessage("Welcome to OCTranspo \nAuthor: Yongpan Hu \n Verssion:1.0 \n 1.Add stop number" +
+                        "\n 2.Click route number\n 3.See the detail of route");
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
@@ -139,38 +127,33 @@ public class BusActivity extends AppCompatActivity {
             }
         });
         /**
-         * add click listener action to add button
+         * Add click listener action to add button
          * when user typed the stop number and clicks add button, it will add
          * the stop information to list and database;
          */
         addStopButton.setOnClickListener((e) -> {
             String stopInput = stopInputText.getText().toString();
             if (stopInput.matches("-?\\d+")) { //check the input if is an integer;
-                ContentValues newData = new ContentValues();
-
-                newData.put(BusDBHelper.STOP_NAME, "NAME_NOT_FOUND");
-                newData.put(BusDBHelper.STOP_NO, stopInput);
-
-                database.insert(BusDBHelper.TABLE_NAME, BusDBHelper.STOP_NAME, newData);
-
-                String newStop = "Stop number ";
-                newStop = newStop.concat(stopInput);
-                stopList.add(newStop);
+                ContentValues cv = new ContentValues();
+                cv.put(BusDBHelper.STOP_NAME, "NAME_NOT_FOUND");
+                cv.put(BusDBHelper.STOP_NO, stopInput);
+                database.insert(BusDBHelper.TABLE_NAME, BusDBHelper.STOP_NAME, cv);
+                stopList.add("Stop number ".concat(stopInput));
                 stopNumbers.add(stopInput);
                 stopInputText.setText("");
                 adapter.notifyDataSetChanged();
-                Toast toast = Toast.makeText(getApplicationContext(), stopInput+" has been added", Toast.LENGTH_SHORT);
-                toast.show();
+                Toast.makeText(getApplicationContext(), stopInput+" has been added", Toast.LENGTH_SHORT).show();
+
             } else {
-                Snackbar badinput = Snackbar.make(findViewById(android.R.id.content), getString(R.string.bus_badinput), Snackbar.LENGTH_SHORT);
-                badinput.show();
+                Snackbar invalidInputBar = Snackbar.make(findViewById(android.R.id.content), getString(R.string.bus_badinput), Snackbar.LENGTH_SHORT);
+                invalidInputBar.show();
                 stopInputText.setText("");
             }
 
         });
 
         /**
-         * add click listener action to stop listView
+         * Add click listener action to stop listView
          * when user clicks the item, it will jump to the BusStopActivity;
          */
         stopListView.setOnItemClickListener((parent, view, position, id) -> {
@@ -179,7 +162,6 @@ public class BusActivity extends AppCompatActivity {
             String stationNumber = stopNumbers.get(position);
             Intent i = new Intent(BusActivity.this, BusStopActivity.class);
             i.putExtra("busStopNumber", stationNumber);
-            currentStopIndex = position;
             currentStopIndex = position;
             startActivity(i);
         });
@@ -211,7 +193,8 @@ public class BusActivity extends AppCompatActivity {
             case R.id.bus_help:
                 AlertDialog alertDialog = new AlertDialog.Builder(BusActivity.this).create();
                 alertDialog.setTitle("Help dialog notification");
-                alertDialog.setMessage("Welcome to OCTranspo \nAuthor: Yongpan Hu");
+                alertDialog.setMessage("Welcome to OCTranspo \nAuthor: Yongpan Hu \n Verssion:1.0 \n 1.Add stop number" +
+                        "\n 2.Click route number\n 3.See the detail of route");
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
@@ -227,7 +210,7 @@ public class BusActivity extends AppCompatActivity {
                 // do your code
                 return true;
             case R.id.bus_movie_app:
-                intent = new Intent(this, MovieStartActivity.class);
+                intent = new Intent(this, MoviesActivity.class);
                 this.startActivity(intent);
                 // do your code
                 return true;
@@ -256,28 +239,37 @@ public class BusActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Query the stop from database
+     * @param database
+     * @return cursor
+     */
+    private Cursor queryStop(SQLiteDatabase database){
+
+        Cursor cursor= database.rawQuery("SELECT " +
+                BusDBHelper.STOP_NAME + ", " +
+                BusDBHelper.STOP_NO + " FROM " +
+                BusDBHelper.TABLE_NAME, null, null);
+        return cursor;
+    }
+
     @Override
     protected void onResume() {
         Log.i(ACTIVITY_NAME, "In onResume()");
 
-        if (BusStopActivity.getDeleteStop() == true) {
+        if (BusStopActivity.getDeleteStop()) {
             Log.i(ACTIVITY_NAME, "Deleting stop " + currentStopIndex);
             String[] params = new String[1];
             params[0] = stopNumbers.get(currentStopIndex);
             database.delete(BusDBHelper.TABLE_NAME, BusDBHelper.STOP_NO + "=?", params);
-
             adapter = new BusAdapter(this);
             stopListView.setAdapter(adapter);
-
             stopList.remove(currentStopIndex);
             stopNumbers.remove(currentStopIndex);
             adapter.notifyDataSetChanged();
-
-
             Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),
                      BusStopActivity.getDeletedStopNo() + " has been deleted", Snackbar.LENGTH_SHORT);
             snackbar.show();
-
             BusStopActivity.resetDeleteStop();
         }
 
@@ -331,12 +323,9 @@ public class BusActivity extends AppCompatActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater = BusActivity.this.getLayoutInflater();
-
             View result = inflater.inflate(R.layout.bus_stop, null);
-
             TextView stationText = (TextView) result.findViewById(R.id.station_text);
             stationText.setText(getItem(position));
-
             return result;
         }
 

@@ -229,7 +229,7 @@ public class NutritionSearchActivity extends AppCompatActivity {
                 this.startActivity(intent);
                 return true;
             case R.id.bus_movie_app:
-                intent = new Intent(this, MovieStartActivity.class);
+                intent = new Intent(this, MoviesActivity.class);
                 this.startActivity(intent);
                 return true;
             case R.id.bus_news_app:

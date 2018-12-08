@@ -96,7 +96,7 @@ public class NHL_HelpFragment extends Fragment {
                 // do your code
                 return true;
             case R.id.bus_movie_app:
-                intent = new Intent(getActivity(), MovieStartActivity.class);
+                intent = new Intent(getActivity(), MoviesActivity.class);
                 this.startActivity(intent);
                 // do your code
                 return true;
