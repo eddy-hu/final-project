@@ -105,6 +105,7 @@ public class BusStopActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bus_stop);
+        Log.i(ACTIVITY_NAME, "on create");
         //initialize variables
         ctx = this;
         deleteStop = false;
