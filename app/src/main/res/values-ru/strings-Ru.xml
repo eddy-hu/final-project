@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="searchButton">Искать</string>
+    <string name="movieName">Введите название фильма</string>
+    <string name="app_name">Финальный проект</string>
+    <string name="favourite">Добавиь в изб</string>
+    <string name="open">Открыть базу данных</string>
+    <string name="test">Фрагмент Тест</string>
+</resources>

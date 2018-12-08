@@ -95,7 +95,9 @@ public class BusActivity extends AppCompatActivity {
         adapter = new BusAdapter(this);
         stopListView.setAdapter(adapter);
         Button busHelp  = (Button) findViewById(R.id.busHelpButton);
+
         cursor = queryStop(database);
+
         cursor.moveToFirst();
 
         while (!cursor.isAfterLast()) {
@@ -208,7 +210,7 @@ public class BusActivity extends AppCompatActivity {
                 // do your code
                 return true;
             case R.id.bus_movie_app:
-                intent = new Intent(this, MovieStartActivity.class);
+                intent = new Intent(this, MoviesActivity.class);
                 this.startActivity(intent);
                 // do your code
                 return true;

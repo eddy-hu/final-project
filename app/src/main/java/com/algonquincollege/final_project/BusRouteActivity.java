@@ -146,7 +146,7 @@ public class BusRouteActivity extends AppCompatActivity {
                 // do your code
                 return true;
             case R.id.bus_movie_app:
-                intent = new Intent(this, MovieStartActivity.class);
+                intent = new Intent(this, MoviesActivity.class);
                 this.startActivity(intent);
                 // do your code
                 return true;

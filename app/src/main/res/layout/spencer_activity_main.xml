@@ -8,18 +8,55 @@
     android:background="@android:color/darker_gray"
     tools:context=".Spencer_MainActivity">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fragment"
+        >
+    </FrameLayout>
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/s_out"
+        ></android.support.v7.widget.Toolbar>
     <ProgressBar
         android:id="@+id/s_progress"
-        style="?android:attr/progressBarStyle"
         android:indeterminate="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:visibility="gone"
-        android:outlineSpotShadowColor="@color/white"
+        android:layout_below="@id/s_out"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:visibility="visible"
+        />
+
+    <LinearLayout
+        android:id="@+id/s_out"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top"
+        android:orientation="horizontal"
         android:layout_alignParentTop="true"
 
-        />
+        >
+
+        <Button
+            android:id="@+id/s_open"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/favourites"
+            android:layout_weight="1"
+            />
+        <Button
+            android:id="@+id/s_button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="@string/refresh" />
+    </LinearLayout>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,7 +64,7 @@
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@id/s_edit"
         android:layout_below="@id/s_progress"
-        android:text="Search"
+        android:text="@string/search"
         />
 
     <EditText
@@ -38,48 +75,24 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/s_progress"
         android:ems="13"
-        android:hint="Type Here"/>
+        android:hint="@string/type"/>
 
 
 
-    <TextView
+    <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_below="@id/s_edit"
-        android:text="TextView in Progress"
+        android:id="@+id/spencer_list"
         />
 
 
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="bottom"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true"
 
-        >
-
-        <Button
-            android:id="@+id/s_open"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Button"
-            android:layout_weight="1"
-            />
-        <Button
-            android:id="@+id/s_button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:text="Button" />
-    </LinearLayout>
 
 
 
