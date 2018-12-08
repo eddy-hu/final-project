@@ -3,6 +3,7 @@
     <string name="searchButton">Искать</string>
     <string name="movieName">Введите название фильма</string>
     <string name="app_name">Финальный проект</string>
-    <string name="addToFav">Добавить в избранное</string>
-    <string name="open">Открыть</string>
+    <string name="favourite">Добавиь в изб</string>
+    <string name="open">Открыть базу данных</string>
+    <string name="test">Фрагмент Тест</string>
 </resources>

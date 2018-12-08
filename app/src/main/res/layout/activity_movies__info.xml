@@ -103,7 +103,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/fragmentTester"
-        android:text="Test Fragment"
+        android:text="@string/test"
         android:layout_above="@+id/databaseButton"/>
 
     <Button
@@ -112,14 +112,14 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:gravity="bottom"
-        android:text="Add to favorites"
+        android:text="@string/favourite"
         android:textAlignment="center"
         android:id="@+id/addToFavorites"/>
     <Button
         android:id="@+id/databaseButton"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-        android:text="Open saved movies"
+        android:text="@string/open"
         android:layout_above="@id/addToFavorites"/>
 
 

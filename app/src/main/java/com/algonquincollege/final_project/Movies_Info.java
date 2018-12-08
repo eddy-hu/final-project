@@ -101,8 +101,6 @@ public class Movies_Info extends AppCompatActivity {
      * */
     private void textViewDetails(){
         try {
-            Log.i("lala", str);
-
                     JSONObject json = new JSONObject(allMovieInformation);
                     String url = json.getString("Poster");
                     Picasso.with(getApplicationContext()).load(url).into(poster);

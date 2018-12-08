@@ -64,11 +64,11 @@ class Connection extends AsyncTask<Void, Void, String> {
                 url = new URL(URL + "apiKey=" + API + "&i=" + test);
             }
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-            progressBar.setVisibility(View.GONE);
             return reader(urlConnection);
         }
         catch(Exception e) {
             Log.e("ERROR", e.getMessage(), e);
+            progressBar.setVisibility(View.VISIBLE);
             return null;
         }
 
@@ -89,17 +89,17 @@ class Connection extends AsyncTask<Void, Void, String> {
                 JSONObject movie;
                 for (int i = 0; i < jsonArray.length(); i++) {
                     movie = jsonArray.getJSONObject(i);
-                    Movies.getBunchOfMovies().add(movie.getString("Title") + "\nYear: " + movie.getString("Year") + "\nType: " + movie.getString("Type"));
-                    Movies.getMovieID().add(movie.getString("imdbID"));
+                    MoviesActivity.getBunchOfMovies().add(movie.getString("Title") + "\nYear: " + movie.getString("Year") + "\nType: " + movie.getString("Type"));
+                    MoviesActivity.getMovieID().add(movie.getString("imdbID"));
                 }
             }else {
-                Movies.testString = response;
+                MoviesActivity.testString = response;
                 someVar = response;
                 Movies_Info.allMovieInformation = response;
                 test="";
 
             }
-            Movies.getArrayAdapter().notifyDataSetChanged();
+            MoviesActivity.getArrayAdapter().notifyDataSetChanged();
             progressBar.setVisibility(View.GONE);
 
         } catch (JSONException e) {
