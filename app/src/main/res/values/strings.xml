@@ -1,5 +1,19 @@
 <resources>
 
+    <string name="app_name">final-project</string>
+    <string name="title_activity_spencer__favourites">Spencer_Favourites</string>
+    <string name="save">Save</string>
+    <string name="type">Type here!</string>
+    <string name="search">Search</string>
+    <string name="refresh">Refresh</string>
+    <string name="favourites">Favourites</string>
+    <string name="bus">OCTranspo App</string>
+    <string name="movie">Movie App</string>
+    <string name="news">CBC News</string>
+    <string name="hockey">NHL App</string>
+    <string name="nutrition">Food/Nutrition App</string>
+    <string name="home">Main Menu!</string>
+
 
 
     <string name="nutrition_app_name">Food Nutrition Database</string>
@@ -37,7 +51,6 @@
     <string name="search_hint">Enter the name of the food</string>
 
 
-    <string name="app_name"></string>
     <string name="search_btn">Search</string>
     <string name="add_btn">Add</string>
     <string name="del_btn">Delete</string>
@@ -94,7 +107,6 @@
     <string name="tag_stat">Tag Stat</string>
     <string name="help">HELP</string>
     <string name="delete_tag">Delete Tag</string>
-
 
 
 </resources>

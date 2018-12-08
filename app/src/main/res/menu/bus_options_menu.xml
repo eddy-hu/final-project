@@ -21,19 +21,19 @@
             android:orderInCategory="300"
             />
         <item android:id="@+id/bus_movie_app"
-            android:title="Nutrition"
+            android:title="Movie"
             app:showAsAction="always"
             android:icon="@drawable/movie_icon"
             android:orderInCategory="600"
             />
         <item android:id="@+id/bus_news_app"
-            android:title="Nutrition"
+            android:title="News"
             app:showAsAction="always"
             android:icon="@drawable/news_icon"
             android:orderInCategory="900"
             />
         <item android:id="@+id/bus_hockey_app"
-            android:title="Nutrition"
+            android:title="Hockey"
             app:showAsAction="always"
             android:icon="@drawable/hockey_icon"
             android:orderInCategory="1300"

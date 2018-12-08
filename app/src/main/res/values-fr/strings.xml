@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">final-project</string>
+    <string name="title_activity_spencer__favourites">Spencer_Favourites</string>
+    <string name="save">Enregistrar</string>
+    <string name="type">Écrivez ici</string>
+    <string name="search">Chercher</string>
+    <string name="refresh">rafraicher</string>
+    <string name="favourites">favoris</string>
+
+
+
+</resources>

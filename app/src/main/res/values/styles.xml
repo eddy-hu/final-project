@@ -9,6 +9,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
+
 </style>
 
 
@@ -17,5 +18,7 @@
         <item name="colorControlActivated">@color/yellow</item>
 
     </style>
+
+
 
 </resources>

@@ -25,7 +25,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.squareup.picasso.Picasso;
+//import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -103,8 +103,8 @@ public class Movies_Info extends AppCompatActivity {
         try {
                     JSONObject json = new JSONObject(allMovieInformation);
                     String url = json.getString("Poster");
-                    Picasso.with(getApplicationContext()).load(url).into(poster);
-                    Picasso.with(getApplicationContext()).setLoggingEnabled(true);
+                   // Picasso.with(getApplicationContext()).load(url).into(poster);
+                   // Picasso.with(getApplicationContext()).setLoggingEnabled(true);
                     fragmentTest = findViewById(R.id.fragmentTester);
                     titleMovie.setText(json.getString("Title").toString());
                     yearMovie.setText("Year: " + json.getString("Year").toString());
